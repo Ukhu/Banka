@@ -14,7 +14,7 @@ header {
   height: 100px;
 }
 
-.header-wrapper {
+.container {
   width: 80%;
   margin: 0 auto;
 }
@@ -60,4 +60,18 @@ header .header-links a {
 header .header-links a:hover {
   font-weight: bold;
   color: #ffffff;
+}
+
+/* FOOTER */
+
+footer {
+  background-color: #025486;
+  color: #e8ebec;
+  height: 100px;
+  text-align: center;
+}
+
+footer p {
+  line-height: 100px;
+  font-size: 16px;
 }
