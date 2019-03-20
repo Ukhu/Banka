@@ -1,0 +1,63 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  padding: 0;
+  margin: 0;
+  background-color: #f4f4f4;
+}
+
+/* HEADER */
+
+header {
+  background: #9ec7e0;
+  height: 100px;
+}
+
+.header-wrapper {
+  width: 80%;
+  margin: 0 auto;
+}
+
+header .header-title {
+  float: left;
+  line-height: 100px;
+}
+
+header .header-title a {
+  text-decoration: none;
+}
+
+header .header-title h1 {
+  margin: 0;
+  line-height: 140%;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: #e8ebec;
+  font-size: 50px;
+  margin-top: 15px;
+}
+
+header .header-links {
+  float: right;
+  line-height: 100px;
+}
+
+.post-login-link {
+  display: none;
+}
+
+.pre-login-link {
+  padding-left: 10px;
+}
+
+header .header-links a {
+  text-decoration: none;
+  color: #e8ebec;
+  font-size: 16px;
+}
+
+header .header-links a:hover {
+  font-weight: bold;
+  color: #ffffff;
+}
