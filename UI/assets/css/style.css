@@ -68,7 +68,7 @@ main .section {
   height: 467px;
 }
 
-main .section .login-form {
+main .section .form-input {
   width: 450px;
   height: fit-content;
   overflow: hidden;
@@ -77,7 +77,7 @@ main .section .login-form {
   padding-right: 200px;
 }
 
-main .section .login-form h2 {
+main .section .form-input h2 {
   width: 250px;
   float: right;
   text-align: center;
@@ -88,14 +88,14 @@ main .section .login-form h2 {
   color: #013144;
 }
 
-main .section .login-form div {
+main .section .form-input div {
   float: right;
   width: 100%;
   text-align: right;
   margin-bottom: 10px;
 }
 
-main .section .login-form div input {
+main .section .form-input div input {
   width: 250px;
   height: 30px;
   border: 1px solid #dfe2e6;
@@ -103,7 +103,7 @@ main .section .login-form div input {
   padding-left: 5px;
 }
 
-main .section .login-form div label {
+main .section .form-input div label {
   color: #013144;
   text-transform: uppercase;
   font-weight: 100;
@@ -153,7 +153,7 @@ main .section button {
     padding: 0 10px 0 0;
   }
 
-  main .section .login-form {
+  main .section .form-input {
     width: 250px;
     height: 100%;
     margin: auto;
@@ -166,7 +166,7 @@ main .section button {
     margin: 0;
   }
 
-  main .section .login-form div label {
+  main .section .form-input div label {
     color: #013144;
     display: block;
     text-align: left;
