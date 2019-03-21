@@ -68,12 +68,6 @@ main .section {
   height: 467px;
 }
 
-/* main .section .section-content {
-  
-  margin-right: 25%;
-  height: 100%;
-} */
-
 main .section .login-form {
   width: 450px;
   height: fit-content;
@@ -104,7 +98,7 @@ main .section .login-form div {
 main .section .login-form div input {
   width: 250px;
   height: 30px;
-  border: 1px solid #ffffff;
+  border: 1px solid #dfe2e6;
   border-radius: 5px;
   padding-left: 5px;
 }

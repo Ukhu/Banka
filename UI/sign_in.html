@@ -1,0 +1,54 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <title>Banka | Sign Up</title>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-title">
+          <a href="#"><h1>Banka</h1></a>
+        </div>
+        <div class="header-links">
+          <a class="pre-login-link" href="#">Sign Up</a>
+          <a class="pre-login-link" href="#">Login</a>
+          <a class="post-login-link" href="#">Osaukhu</a>
+        </div>
+      </div>
+    </header>
+    <main>
+      <section class="container section">
+        <div class="login-form">
+          <h2 class="form-title">Sign In</h2>
+          <form>
+            <div>
+              <label for="username">Username:</label>
+              <input
+                id="username"
+                type="text"
+                pattern="[a-zA-Z0-9]{5,30}"
+                title="Alphanumeric only. At least 5 characters"
+              />
+            </div>
+            <div>
+              <label for="pswrd">Password:</label>
+              <input
+                id="pswrd"
+                type="password"
+                pattern=".{6,10}"
+                title="At least six(6) characters"
+              />
+            </div>
+            <button type="submit">Login</button>
+          </form>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <p>Banka, Copyright &copy; 2019</p>
+    </footer>
+  </body>
+</html>
