@@ -106,7 +106,7 @@ main .section .login-form div input {
   height: 30px;
   border: 1px solid #ffffff;
   border-radius: 5px;
-  /* box-shadow: 1px 1px 10px #eeeeee inset; */
+  padding-left: 5px;
 }
 
 main .section .login-form div label {
