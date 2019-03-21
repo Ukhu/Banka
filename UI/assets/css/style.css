@@ -1,0 +1,195 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  padding: 0;
+  margin: 0;
+  background-color: #dfe2e6;
+}
+
+/* HEADER */
+
+header {
+  background: #9ec7e0;
+  height: 100px;
+}
+
+.container {
+  width: 80%;
+  margin: 0 auto;
+}
+
+header .header-title {
+  float: left;
+  line-height: 100px;
+}
+
+header .header-title a {
+  text-decoration: none;
+}
+
+header .header-title h1 {
+  margin-bottom: 0;
+  line-height: 150%;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: #e8ebec;
+  font-size: 50px;
+  margin-top: 15px;
+}
+
+header .header-links {
+  float: right;
+  line-height: 100px;
+}
+
+.post-login-link {
+  display: none;
+}
+
+.pre-login-link {
+  padding-left: 10px;
+}
+
+header .header-links a {
+  text-decoration: none;
+  color: #e8ebec;
+  font-size: 16px;
+}
+
+header .header-links a:hover {
+  font-weight: bold;
+  color: #013144;
+}
+
+/* SECTION */
+
+main .section {
+  height: 467px;
+}
+
+/* main .section .section-content {
+  
+  margin-right: 25%;
+  height: 100%;
+} */
+
+main .section .login-form {
+  width: 450px;
+  height: fit-content;
+  overflow: hidden;
+  margin: auto;
+  padding-top: 50px;
+  padding-right: 200px;
+}
+
+main .section .login-form h2 {
+  width: 250px;
+  float: right;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: #013144;
+}
+
+main .section .login-form div {
+  float: right;
+  width: 100%;
+  text-align: right;
+  margin-bottom: 10px;
+}
+
+main .section .login-form div input {
+  width: 250px;
+  height: 30px;
+  border: 1px solid #ffffff;
+  border-radius: 5px;
+  padding-left: 5px;
+}
+
+main .section .login-form div label {
+  color: #013144;
+  text-transform: uppercase;
+  font-weight: 100;
+  font-size: 14px;
+}
+
+main .section button {
+  width: 250px;
+  float: right;
+  height: 50px;
+  font-size: 20px;
+  color: #e8ebec;
+  text-transform: uppercase;
+  background-color: #013144;
+  border: 1px solid #013144;
+  border-radius: 5px;
+}
+
+/* MEDIA QUERIES */
+
+@media (max-width: 738px) {
+  header {
+    text-align: center;
+  }
+
+  header .header-title {
+    float: none;
+  }
+
+  header .header-title h1 {
+    line-height: 50px;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: #e8ebec;
+    font-size: 50px;
+    margin-top: 0px;
+    padding-top: 10px;
+  }
+
+  header .header-links {
+    float: none;
+    line-height: 40px;
+    text-align: center;
+  }
+
+  .pre-login-link {
+    padding: 0 10px 0 0;
+  }
+
+  main .section .login-form {
+    width: 250px;
+    height: 100%;
+    margin: auto;
+    padding-top: 20px;
+    padding-right: 0;
+  }
+
+  .container {
+    width: 100%;
+    margin: 0;
+  }
+
+  main .section .login-form div label {
+    color: #013144;
+    display: block;
+    text-align: left;
+  }
+}
+
+/* FOOTER */
+
+footer {
+  background-color: #013144;
+  height: 100px;
+  text-align: center;
+}
+
+footer p {
+  line-height: 100px;
+  font-size: 16px;
+  color: #e8ebec;
+  margin-top: 0;
+}
