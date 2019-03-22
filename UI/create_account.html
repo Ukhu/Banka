@@ -21,31 +21,34 @@
     </header>
     <main>
       <section class="create-acc-container section">
-        <h2 class="form-title">Open a bank account</h2>
+        <div>
+          <h2 class="form-title">Open a bank account</h2>
+        </div>
+
         <form class="create-acc-form">
           <div class="form-section">
             <h3 class="form-section-title">Personal Information</h3>
             <div class="form-field">
               <label for="firstname">First Name:</label>
-              <input id="firstname" type="text" />
+              <input id="firstname" type="text" pattern="[a-zA-Z]{2,15}" />
             </div>
             <div class="form-field">
               <label for="lastname">Last Name:</label>
-              <input id="lastname" type="text" />
+              <input id="lastname" type="text" pattern="[a-zA-Z]{2,15}" />
             </div>
             <div class="form-field">
               <label for="nationality">Nationality:</label>
-              <input id="nationality" type="text" />
+              <input id="nationality" type="text" pattern="[a-zA-Z]{2,10}" />
             </div>
             <div class="form-field">
               <label for="occupation">Occupation:</label>
-              <input id="occupation" type="text" />
+              <input id="occupation" type="text" pattern="[a-zA-Z ]{4,20}" />
             </div>
             <div class="form-field">
               <div id="form-gender" class="left">
                 <label for="gender">Gender:</label>
-                <input type="radio" name="gender" id="gender" />
-                <input type="radio" name="gender" id="gender" />
+                <span>M</span> <input type="radio" name="gender" id="gender" />
+                <span>F</span> <input type="radio" name="gender" id="gender" />
               </div>
               <div id="form-date" class="left">
                 <label for="date">Date:</label>
@@ -54,28 +57,33 @@
             </div>
             <div class="form-field">
               <label for="phone">Phone:</label>
-              <input id="phone" type="number" />
+              <input id="phone" type="tel" pattern="[0-9]{11}" />
             </div>
           </div>
           <div class="form-section">
             <h3 class="form-section-title">Residential Address</h3>
             <div class="form-field">
               <label for="firstname">Address Line 1:</label>
-              <input id="firstname" type="text" />
+              <input id="firstname" type="text" pattern="[a-zA-Z0-9 ,]{4,30}" />
             </div>
             <div class="form-field">
               <label for="lastname">Address Line 2:</label>
-              <input id="lastname" type="text" />
+              <input id="lastname" type="text" pattern="[a-zA-Z0-9 ,]{4,30}" />
             </div>
             <div class="form-field">
               <label for="nationality">City:</label>
-              <input id="nationality" type="text" />
+              <input
+                id="nationality"
+                type="text"
+                pattern="[a-zA-Z0-9 ]{3,15}"
+              />
             </div>
             <div class="form-field">
               <label for="occupation">State:</label>
-              <input id="occupation" type="text" />
+              <input id="occupation" type="text" pattern="[a-zA-Z0-9 ]{3,15}" />
             </div>
           </div>
+          <button class="form-button" type="submit">Create Account</button>
         </form>
       </section>
     </main>
