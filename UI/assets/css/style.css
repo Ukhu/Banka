@@ -43,7 +43,7 @@ header .header-links {
   line-height: 100px;
 }
 
-.post-login-link {
+.unused-link {
   display: none;
 }
 
@@ -57,18 +57,22 @@ header .header-links a {
   font-size: 16px;
 }
 
-header .header-links a:hover {
+header .header-links .pre-login-link:hover {
   font-weight: bold;
   color: #013144;
 }
 
 /* SECTION */
 
-main .section {
-  height: 467px;
+main {
+  overflow: auto;
 }
 
-main .section .login-form {
+main .section {
+  /* min-height: 467px; */
+}
+
+main .section .form-input {
   width: 450px;
   height: fit-content;
   overflow: hidden;
@@ -77,7 +81,7 @@ main .section .login-form {
   padding-right: 200px;
 }
 
-main .section .login-form h2 {
+main .section .form-input h2 {
   width: 250px;
   float: right;
   text-align: center;
@@ -88,14 +92,14 @@ main .section .login-form h2 {
   color: #013144;
 }
 
-main .section .login-form div {
+main .section .form-input div {
   float: right;
   width: 100%;
   text-align: right;
   margin-bottom: 10px;
 }
 
-main .section .login-form div input {
+main .section .form-input div input {
   width: 250px;
   height: 30px;
   border: 1px solid #dfe2e6;
@@ -103,7 +107,7 @@ main .section .login-form div input {
   padding-left: 5px;
 }
 
-main .section .login-form div label {
+main .section .form-input div label {
   color: #013144;
   text-transform: uppercase;
   font-weight: 100;
@@ -111,8 +115,11 @@ main .section .login-form div label {
 }
 
 main .section button {
-  width: 250px;
   float: right;
+}
+
+main .section .form-button {
+  min-width: 250px;
   height: 50px;
   font-size: 20px;
   color: #e8ebec;
@@ -120,6 +127,128 @@ main .section button {
   background-color: #013144;
   border: 1px solid #013144;
   border-radius: 5px;
+}
+
+/* FOOTER */
+
+footer {
+  background-color: #013144;
+  height: 100px;
+  text-align: center;
+  /* margin-top: 244px; */
+  margin-top: calc(100vh - 643px);
+}
+
+footer p {
+  line-height: 100px;
+  font-size: 16px;
+  color: #e8ebec;
+  margin-top: 0;
+}
+
+/* CREATE ACCOUNT */
+
+.section .form-title {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 0;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: #013144;
+  padding-top: 40px;
+}
+
+.create-acc-container {
+  max-width: 740px;
+  margin: 0 auto;
+}
+
+.create-acc-form {
+  /* height: calc(100% - 83px); */
+  padding-top: 10px;
+  margin-bottom: 0;
+}
+
+.create-acc-form button.form-button {
+  float: none;
+  margin: 0 auto;
+  display: block;
+}
+
+/* .form-section {
+  margin-top: 20px;
+  height: 35%;
+  padding: 0 0 0 10px;
+} */
+
+.form-section {
+  margin-top: 20px;
+  height: 148px;
+  padding: 0 0 0 10px;
+}
+
+.form-section-title {
+  margin: 0 0 10px 0;
+  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: 100;
+  color: #013144;
+  text-align: left;
+}
+
+div.form-field {
+  width: 50%;
+  float: left;
+  padding-bottom: 5px;
+}
+
+div.form-field .left {
+  float: left;
+}
+
+div.form-field #form-gender {
+  width: 40%;
+}
+
+div.form-field #form-gender span {
+  padding-left: 5px;
+}
+
+div.form-field #form-date {
+  width: 60%;
+}
+
+div.form-field input[type="text"],
+div.form-field input[type="number"],
+div.form-field input[type="tel"] {
+  float: right;
+  margin-right: 30px;
+  width: 220px;
+  height: 30px;
+  border: 1px solid #dfe2e6;
+  border-radius: 5px;
+}
+
+div.form-field input[type="date"] {
+  width: 130px;
+  height: 30px;
+  border: 1px solid #dfe2e6;
+  border-radius: 5px;
+}
+
+div.form-field label,
+div.form-field #form-gender span {
+  color: #013144;
+  font-weight: 100;
+  font-size: 14px;
+}
+
+div.form-field .left label {
+  line-height: 30px;
+}
+
+div.form-field .left input[type="radio"] {
+  margin: 0 0 0 5px;
 }
 
 /* MEDIA QUERIES */
@@ -153,9 +282,9 @@ main .section button {
     padding: 0 10px 0 0;
   }
 
-  main .section .login-form {
+  main .section .form-input {
     width: 250px;
-    height: 100%;
+    /* height: 100%; */
     margin: auto;
     padding-top: 20px;
     padding-right: 0;
@@ -166,24 +295,46 @@ main .section button {
     margin: 0;
   }
 
-  main .section .login-form div label {
+  main .section .form-input div label {
     color: #013144;
     display: block;
     text-align: left;
   }
-}
 
-/* FOOTER */
+  main .section {
+    overflow: hidden;
+  }
 
-footer {
-  background-color: #013144;
-  height: 100px;
-  text-align: center;
-}
+  /* CREATE ACCOUNT MEDIA QUERIES */
 
-footer p {
-  line-height: 100px;
-  font-size: 16px;
-  color: #e8ebec;
-  margin-top: 0;
+  .section .form-title {
+    padding-top: 40px;
+  }
+
+  .form-section {
+    margin: 0 auto;
+    max-width: 380px;
+    padding: 0 0 0 20px;
+    height: 36.48%;
+  }
+
+  .form-section-title {
+    text-align: center;
+  }
+
+  div.form-field {
+    min-width: 380px;
+  }
+
+  div.form-field input[type="text"],
+  div.form-field input[type="number"],
+  div.form-field input[type="tel"] {
+    margin-right: 40px;
+  }
+
+  /* FOOTER */
+
+  footer {
+    margin-top: calc(100vh - 435px);
+  }
 }
