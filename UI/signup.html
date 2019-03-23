@@ -9,56 +9,48 @@
   <body>
     <header>
       <div class="container">
-        <div class="header-title">
+        <div id="header-title">
           <a href="#"><h1>Banka</h1></a>
         </div>
-        <div class="header-links">
+        <div id="header-links">
           <a class="pre-login-link" href="#">Sign Up</a>
           <a class="pre-login-link" href="#">Login</a>
-          <a class="post-login-link unused-link" href="#">Osaukhu</a>
+          <a class="unused-link" href="#">Logged in as Osaukhu</a>
         </div>
       </div>
     </header>
     <main>
-      <section class="container section">
-        <div class="form-input">
+      <section id="signup-login" class="container">
+        <div id="signup-login-form">
           <h2>Sign Up Form</h2>
           <form>
             <div>
-              <label for="fname">Fullname:</label>
-              <input id="fname" type="text" pattern="[a-zA-Z ]{5,30}" />
-            </div>
-            <div>
-              <label for="username">Username:</label>
               <input
-                id="username"
                 type="text"
+                placeholder="Username"
                 pattern="[a-zA-Z0-9]{5,30}"
                 title="Alphanumeric only. At least 5 characters"
               />
             </div>
             <div>
-              <label for="email">Email:</label>
               <input
-                id="email"
-                type="text"
+                type="email"
+                placeholder="Email"
                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
               />
             </div>
             <div>
-              <label for="pwrd">Password:</label>
               <input
-                id="pwrd"
                 type="password"
+                placeholder="Password"
                 pattern=".{6,10}"
                 title="At least six(6) characters"
               />
             </div>
             <div>
-              <label for="confirm-pwrd">Confirm Password:</label>
               <input
-                id="confirm-pwrd"
                 type="password"
+                placeholder="Confirm password"
                 pattern=".{6,10}"
                 title="At least six(6) characters"
               />

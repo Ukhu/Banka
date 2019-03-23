@@ -4,14 +4,8 @@ body {
   line-height: 1.5;
   padding: 0;
   margin: 0;
-  background-color: #dfe2e6;
-}
-
-/* HEADER */
-
-header {
-  background: #9ec7e0;
-  height: 100px;
+  background-color: #e8ebec;
+  /* background-color: #dfe2e6; */
 }
 
 .container {
@@ -19,16 +13,47 @@ header {
   margin: 0 auto;
 }
 
-header .header-title {
+input,
+select {
+  width: 100%;
+  height: 50px;
+  color: #013144;
+  border: 1px solid #616263;
+  font-size: 18px;
+  padding-left: 10px;
+  margin-bottom: 10px;
+}
+
+.form-button {
+  height: 50px;
+  font-size: 20px;
+  color: #e8ebec;
+  text-transform: uppercase;
+  background-color: #9ec7e0;
+  border: 1px solid #9ec7e0;
+}
+
+main {
+  overflow: auto;
+}
+
+/******** HEADER *******/
+
+header {
+  background: #9ec7e0;
+  height: 100px;
+}
+
+#header-title {
   float: left;
   line-height: 100px;
 }
 
-header .header-title a {
+#header-title a {
   text-decoration: none;
 }
 
-header .header-title h1 {
+#header-title h1 {
   margin-bottom: 0;
   line-height: 150%;
   text-decoration: none;
@@ -38,7 +63,7 @@ header .header-title h1 {
   margin-top: 15px;
 }
 
-header .header-links {
+#header-links {
   float: right;
   line-height: 100px;
 }
@@ -51,92 +76,213 @@ header .header-links {
   padding-left: 10px;
 }
 
-header .header-links a {
+.pre-login-link:hover {
+  font-weight: bold;
+}
+
+#header-links a {
   text-decoration: none;
   color: #e8ebec;
   font-size: 16px;
 }
 
-header .header-links .pre-login-link:hover {
-  font-weight: bold;
-  color: #013144;
+/***** SIGN-UP LOGIN SECTION *****/
+
+#signup-login {
+  height: calc(100vh - 220px);
 }
 
-/* SECTION */
-
-main {
-  overflow: auto;
-}
-
-main .section {
-  /* min-height: 467px; */
-}
-
-main .section .form-input {
-  width: 450px;
+#signup-login-form {
+  max-width: 450px;
   height: fit-content;
   overflow: hidden;
   margin: auto;
   padding-top: 50px;
-  padding-right: 200px;
 }
 
-main .section .form-input h2 {
-  width: 250px;
-  float: right;
+#signup-login-form h2 {
+  width: 100%;
   text-align: center;
   margin-top: 0;
   margin-bottom: 10px;
   text-transform: uppercase;
   font-weight: 500;
-  color: #013144;
+  color: #616263;
 }
 
-main .section .form-input div {
-  float: right;
+#signup-login-form div {
   width: 100%;
   text-align: right;
+}
+
+#signup-login-form button {
+  margin: 0 auto;
+  display: block;
+  width: 100%;
+}
+
+/****** CREATE ACCOUNT SECTION *****/
+
+#create-account .form-title {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 0;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: #616263;
+}
+
+.create-acc-form {
+  height: fit-content;
+  padding-top: 50px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.create-acc-form form {
+  margin-bottom: 25px;
+  margin-top: 25px;
+}
+
+.create-acc-form button {
+  margin: 0 auto;
+  display: block;
+  width: 50%;
+}
+
+.display-half-div {
+  width: 49.2%;
+  float: left;
+  height: 50px;
   margin-bottom: 10px;
 }
 
-main .section .form-input div input {
-  width: 250px;
-  height: 30px;
-  border: 1px solid #dfe2e6;
-  border-radius: 5px;
+.left-side {
+  padding-right: 5px;
+}
+
+.right-side {
   padding-left: 5px;
 }
 
-main .section .form-input div label {
-  color: #013144;
-  text-transform: uppercase;
-  font-weight: 100;
+/******* ACCOUNT DETAILS SECTION *******/
+
+.account-details {
+  padding: 20px 0;
+  overflow: auto;
+  border-bottom: 2px solid #616263;
+}
+
+.acc-details-div {
+  width: 50%;
+  float: left;
+}
+
+.left {
+  text-align: right;
+}
+
+#dashboard-main-title {
+  text-align: center;
+  font-size: 30px;
+  font-weight: 500;
+  height: 40px;
+}
+
+.details-div {
+  max-width: 800px;
+  margin: 0 auto;
+  overflow: auto;
+  padding: 20px;
+  border: 2px solid #ffffff;
+}
+
+.display-full-div {
+  overflow: auto;
+}
+
+.acc-details-div p {
+  margin: 0;
+  color: #616263;
+}
+
+.acc-details-title {
   font-size: 14px;
+  border-bottom: #ffffff 2px solid;
 }
 
-main .section button {
-  float: right;
+.acc-details-val {
+  font-size: 24px;
 }
 
-main .section .form-button {
-  min-width: 250px;
-  height: 50px;
-  font-size: 20px;
-  color: #e8ebec;
+/****** PROFILE ********/
+
+.dashboard-section-title {
+  max-width: 800px;
+  text-align: left;
+  margin: 0 auto 10px auto;
   text-transform: uppercase;
-  background-color: #013144;
-  border: 1px solid #013144;
-  border-radius: 5px;
+  font-weight: 500;
+  color: #616263;
 }
 
-/* FOOTER */
+#profile .details-div p {
+  width: 100%;
+  height: 50px;
+  color: #013144;
+  /* border: 1px solid #013144; */
+  font-size: 18px;
+  /* padding-left: 10px; */
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+/****** TRANSACTION HISTORY ********/
+
+#trnsc-hstr .details-div p {
+  /* width: 100%; */
+  line-height: 50px;
+  color: #013144;
+  border-bottom: 1px solid #013144;
+  font-size: 18px;
+  /* padding-left: 10px; */
+  margin-top: 0;
+  margin-bottom: 0px;
+}
+
+#trnsc-hstr .trns-hist-details {
+  height: 270px;
+}
+
+.details-div ul {
+  padding: 0;
+  margin: 0;
+}
+
+.details-div ul li {
+  list-style: none;
+  display: inline;
+}
+
+.display-full-div .trns-details-side {
+  width: 25%;
+  float: left;
+  text-align: center;
+}
+
+.display-full-div .trns-details-mid {
+  width: 50%;
+  float: left;
+  text-align: center;
+}
+
+/******* FOOTER *******/
 
 footer {
   background-color: #013144;
   height: 100px;
   text-align: center;
-  /* margin-top: 244px; */
-  margin-top: calc(100vh - 643px);
+  margin-top: 20px;
 }
 
 footer p {
@@ -146,123 +292,25 @@ footer p {
   margin-top: 0;
 }
 
-/* CREATE ACCOUNT */
+/********************** MEDIA QUERIES ************************/
 
-.section .form-title {
-  text-align: center;
-  margin-top: 0;
-  margin-bottom: 0;
-  text-transform: uppercase;
-  font-weight: 500;
-  color: #013144;
-  padding-top: 40px;
-}
+@media (max-width: 796px) {
+  .container {
+    width: 100%;
+    margin: 0;
+  }
 
-.create-acc-container {
-  max-width: 740px;
-  margin: 0 auto;
-}
+  /**** Header Media Query ****/
 
-.create-acc-form {
-  /* height: calc(100% - 83px); */
-  padding-top: 10px;
-  margin-bottom: 0;
-}
-
-.create-acc-form button.form-button {
-  float: none;
-  margin: 0 auto;
-  display: block;
-}
-
-/* .form-section {
-  margin-top: 20px;
-  height: 35%;
-  padding: 0 0 0 10px;
-} */
-
-.form-section {
-  margin-top: 20px;
-  height: 148px;
-  padding: 0 0 0 10px;
-}
-
-.form-section-title {
-  margin: 0 0 10px 0;
-  text-transform: uppercase;
-  font-size: 14px;
-  font-weight: 100;
-  color: #013144;
-  text-align: left;
-}
-
-div.form-field {
-  width: 50%;
-  float: left;
-  padding-bottom: 5px;
-}
-
-div.form-field .left {
-  float: left;
-}
-
-div.form-field #form-gender {
-  width: 40%;
-}
-
-div.form-field #form-gender span {
-  padding-left: 5px;
-}
-
-div.form-field #form-date {
-  width: 60%;
-}
-
-div.form-field input[type="text"],
-div.form-field input[type="number"],
-div.form-field input[type="tel"] {
-  float: right;
-  margin-right: 30px;
-  width: 220px;
-  height: 30px;
-  border: 1px solid #dfe2e6;
-  border-radius: 5px;
-}
-
-div.form-field input[type="date"] {
-  width: 130px;
-  height: 30px;
-  border: 1px solid #dfe2e6;
-  border-radius: 5px;
-}
-
-div.form-field label,
-div.form-field #form-gender span {
-  color: #013144;
-  font-weight: 100;
-  font-size: 14px;
-}
-
-div.form-field .left label {
-  line-height: 30px;
-}
-
-div.form-field .left input[type="radio"] {
-  margin: 0 0 0 5px;
-}
-
-/* MEDIA QUERIES */
-
-@media (max-width: 738px) {
   header {
     text-align: center;
   }
 
-  header .header-title {
+  header #header-title {
     float: none;
   }
 
-  header .header-title h1 {
+  header #header-title h1 {
     line-height: 50px;
     text-decoration: none;
     text-transform: uppercase;
@@ -272,69 +320,86 @@ div.form-field .left input[type="radio"] {
     padding-top: 10px;
   }
 
-  header .header-links {
+  header #header-links {
     float: none;
     line-height: 40px;
     text-align: center;
   }
 
-  .pre-login-link {
+  header .pre-login-link {
     padding: 0 10px 0 0;
   }
 
-  main .section .form-input {
-    width: 250px;
-    /* height: 100%; */
-    margin: auto;
-    padding-top: 20px;
-    padding-right: 0;
-  }
+  /**** Sign-up Login section Media Queries ****/
 
-  .container {
-    width: 100%;
-    margin: 0;
-  }
-
-  main .section .form-input div label {
-    color: #013144;
-    display: block;
-    text-align: left;
-  }
-
-  main .section {
+  #signup-login {
     overflow: hidden;
   }
 
-  /* CREATE ACCOUNT MEDIA QUERIES */
-
-  .section .form-title {
-    padding-top: 40px;
+  #signup-login #signup-login-form {
+    max-width: 450px;
+    margin: auto;
+    padding: 50px 10px 0 10px;
   }
 
-  .form-section {
+  /**** Create-Account Section Media Queries ****/
+
+  .create-acc-form {
+    height: fit-content;
+    padding: 50px 10px 0 10px;
+    max-width: 350px;
     margin: 0 auto;
-    max-width: 380px;
-    padding: 0 0 0 20px;
-    height: 36.48%;
   }
 
-  .form-section-title {
+  .display-half-div {
+    width: 100%;
+    float: none;
+  }
+
+  .left-side {
+    padding-right: 0;
+  }
+
+  .right-side {
+    padding-left: 0;
+  }
+
+  .create-acc-form button {
+    width: 100%;
+  }
+
+  /****** Transaction History Section Media Queries ******/
+
+  .dashboard-section-title {
+    max-width: 500px;
+    padding-left: 10px;
+  }
+
+  #trnsc-hstr .details-div p {
+    line-height: 50px;
+    color: #013144;
+    border-bottom: 1px solid #013144;
+    font-size: 12px;
+    margin-top: 0;
+    margin-bottom: 0px;
+  }
+
+  .details-div {
+    max-width: 500px;
+    margin: 0 auto;
+    overflow: auto;
+    padding: 20px;
+  }
+
+  .display-full-div .trns-details-side {
+    width: 30%;
+    float: left;
     text-align: center;
   }
 
-  div.form-field {
-    min-width: 380px;
-  }
-
-  div.form-field input[type="text"],
-  div.form-field input[type="number"],
-  div.form-field input[type="tel"] {
-    margin-right: 40px;
-  }
-
-  /* FOOTER */
-
-  footer {
-    margin-top: calc(100vh - 435px);
+  .display-full-div .trns-details-mid {
+    width: 40%;
+    float: left;
+    text-align: center;
   }
 }
