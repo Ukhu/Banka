@@ -4,7 +4,8 @@ body {
   line-height: 1.5;
   padding: 0;
   margin: 0;
-  background-color: #dfe2e6;
+  background-color: #e8ebec;
+  /* background-color: #dfe2e6; */
 }
 
 .container {
@@ -17,7 +18,7 @@ select {
   width: 100%;
   height: 50px;
   color: #013144;
-  border: 1px solid #013144;
+  border: 1px solid #616263;
   font-size: 18px;
   padding-left: 10px;
   margin-bottom: 10px;
@@ -106,7 +107,7 @@ header {
   margin-bottom: 10px;
   text-transform: uppercase;
   font-weight: 500;
-  color: #013144;
+  color: #616263;
 }
 
 #signup-login-form div {
@@ -128,17 +129,12 @@ header {
   margin-bottom: 0;
   text-transform: uppercase;
   font-weight: 500;
-  color: #013144;
-}
-
-.create-acc-container {
-  max-width: 740px;
-  margin: 0 auto;
+  color: #616263;
 }
 
 .create-acc-form {
   height: fit-content;
-  padding-top: 40px;
+  padding-top: 50px;
   max-width: 700px;
   margin: 0 auto;
 }
@@ -167,6 +163,117 @@ header {
 
 .right-side {
   padding-left: 5px;
+}
+
+/******* ACCOUNT DETAILS SECTION *******/
+
+.account-details {
+  padding: 20px 0;
+  overflow: auto;
+  border-bottom: 2px solid #616263;
+}
+
+.acc-details-div {
+  width: 50%;
+  float: left;
+}
+
+.left {
+  text-align: right;
+}
+
+#dashboard-main-title {
+  text-align: center;
+  font-size: 30px;
+  font-weight: 500;
+  height: 40px;
+}
+
+.details-div {
+  max-width: 800px;
+  margin: 0 auto;
+  overflow: auto;
+  padding: 20px;
+  border: 2px solid #ffffff;
+}
+
+.display-full-div {
+  overflow: auto;
+}
+
+.acc-details-div p {
+  margin: 0;
+  color: #616263;
+}
+
+.acc-details-title {
+  font-size: 14px;
+  border-bottom: #ffffff 2px solid;
+}
+
+.acc-details-val {
+  font-size: 24px;
+}
+
+/****** PROFILE ********/
+
+.dashboard-section-title {
+  max-width: 800px;
+  text-align: left;
+  margin: 0 auto 10px auto;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: #616263;
+}
+
+#profile .details-div p {
+  width: 100%;
+  height: 50px;
+  color: #013144;
+  /* border: 1px solid #013144; */
+  font-size: 18px;
+  /* padding-left: 10px; */
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+/****** TRANSACTION HISTORY ********/
+
+#trnsc-hstr .details-div p {
+  /* width: 100%; */
+  line-height: 50px;
+  color: #013144;
+  border-bottom: 1px solid #013144;
+  font-size: 18px;
+  /* padding-left: 10px; */
+  margin-top: 0;
+  margin-bottom: 0px;
+}
+
+#trnsc-hstr .trns-hist-details {
+  height: 270px;
+}
+
+.details-div ul {
+  padding: 0;
+  margin: 0;
+}
+
+.details-div ul li {
+  list-style: none;
+  display: inline;
+}
+
+.display-full-div .trns-details-side {
+  width: 25%;
+  float: left;
+  text-align: center;
+}
+
+.display-full-div .trns-details-mid {
+  width: 50%;
+  float: left;
+  text-align: center;
 }
 
 /******* FOOTER *******/
@@ -239,7 +346,7 @@ footer p {
 
   .create-acc-form {
     height: fit-content;
-    padding: 40px 10px 0 10px;
+    padding: 50px 10px 0 10px;
     max-width: 350px;
     margin: 0 auto;
   }
@@ -259,5 +366,40 @@ footer p {
 
   .create-acc-form button {
     width: 100%;
+  }
+
+  /****** Transaction History Section Media Queries ******/
+
+  .dashboard-section-title {
+    max-width: 500px;
+    padding-left: 10px;
+  }
+
+  #trnsc-hstr .details-div p {
+    line-height: 50px;
+    color: #013144;
+    border-bottom: 1px solid #013144;
+    font-size: 12px;
+    margin-top: 0;
+    margin-bottom: 0px;
+  }
+
+  .details-div {
+    max-width: 500px;
+    margin: 0 auto;
+    overflow: auto;
+    padding: 20px;
+  }
+
+  .display-full-div .trns-details-side {
+    width: 30%;
+    float: left;
+    text-align: center;
+  }
+
+  .display-full-div .trns-details-mid {
+    width: 40%;
+    float: left;
+    text-align: center;
   }
 }
