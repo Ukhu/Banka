@@ -9,25 +9,21 @@
   <body>
     <header>
       <div class="container">
-        <div class="header-title">
+        <div id="header-title">
           <a href="#"><h1>Banka</h1></a>
         </div>
-        <div class="header-links">
+        <div id="header-links">
           <a class="pre-login-link unused-link" href="#">Sign Up</a>
           <a class="pre-login-link unused-link" href="#">Login</a>
-          <a class="post-login-link" href="#">Logged in as Osaukhu</a>
+          <a href="#">Logged in as Osaukhu</a>
         </div>
       </div>
     </header>
     <main>
-      <section class="container section">
+      <section id="create-account" class="container">
         <div class="create-acc-form">
           <h2 class="form-title">Open a bank account</h2>
           <form>
-            <!-- <div class="form-section"> -->
-
-            <!-- <div class="form-field">
-              <label for="firstname">First Name:</label> -->
             <div>
               <div class="display-half-div left-side">
                 <input
@@ -45,29 +41,16 @@
                 />
               </div>
             </div>
-
-            <!-- </div>
-            <div class="form-field">
-              <label for="lastname">Last Name:</label> -->
-
-            <!-- </div>
-            <div class="form-field">
-              <label for="nationality">Nationality:</label> -->
             <input
               placeholder="Nationality"
               type="text"
               pattern="[a-zA-Z]{2,10}"
             />
-            <!-- </div>
-            <div class="form-field">
-              <label for="occupation">Occupation:</label> -->
             <input
               placeholder="Occupation"
               type="text"
               pattern="[a-zA-Z ]{4,20}"
             />
-            <!-- </div>
-            <div class="form-field"> -->
             <div>
               <div class="display-half-div left-side">
                 <select name="gender">
@@ -80,33 +63,17 @@
                 <input type="number" placeholder="Age" />
               </div>
             </div>
-            <!-- <div id="form-date" class="left"> -->
-
-            <!-- </div> -->
-            <!-- </div>
-            <div class="form-field">
-              <label for="phone">Phone:</label> -->
             <input placeholder="Phone Number" type="tel" pattern="[0-9]{11}" />
-            <!-- </div>
-            <h3 class="form-section-title">Residential Address</h3>
-            <div class="form-field">
-              <label for="firstname">Address Line 1:</label> -->
             <input
               placeholder="Address Line 1"
               type="text"
               pattern="[a-zA-Z0-9 ,]{4,30}"
             />
-            <!-- </div>
-            <div class="form-field">
-              <label for="lastname">Address Line 2:</label> -->
             <input
               placeholder="Address Line 2"
               type="text"
               pattern="[a-zA-Z0-9 ,]{4,30}"
             />
-            <!-- </div>
-            <div class="form-field">
-              <label for="nationality">City:</label> -->
             <div>
               <div class="display-half-div left-side">
                 <input
@@ -123,39 +90,9 @@
                 />
               </div>
             </div>
-
-            <!-- </div>
-            <div class="form-field">
-              <label for="occupation">State:</label> -->
-
             <button class="form-button" type="submit">Create Account</button>
-            <!-- </div> -->
           </form>
         </div>
-
-        <!-- </div> -->
-        <!-- <div class="form-section"> -->
-        <!-- <h3 class="form-section-title">Residential Address</h3> -->
-        <!--
-            <div class="form-field">
-            <label for="firstname">Address Line 1:</label>
-            <input id="firstname" type="text" pattern="[a-zA-Z0-9 ,]{4,30}" />
-          </div>
-          <div class="form-field">
-            <label for="lastname">Address Line 2:</label>
-            <input id="lastname" type="text" pattern="[a-zA-Z0-9 ,]{4,30}" />
-          </div>
-          <div class="form-field">
-            <label for="nationality">City:</label>
-            <input id="nationality" type="text" pattern="[a-zA-Z0-9 ]{3,15}" />
-          </div>
-          <div class="form-field">
-            <label for="occupation">State:</label>
-            <input id="occupation" type="text" pattern="[a-zA-Z0-9 ]{3,15}" />
-          </div> 
-        -->
-        <!-- </div> -->
-        <!-- </form> -->
       </section>
     </main>
     <footer>

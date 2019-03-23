@@ -12,23 +12,47 @@ body {
   margin: 0 auto;
 }
 
-/* HEADER */
+input,
+select {
+  width: 100%;
+  height: 50px;
+  color: #013144;
+  border: 1px solid #013144;
+  font-size: 18px;
+  padding-left: 10px;
+  margin-bottom: 10px;
+}
+
+.form-button {
+  height: 50px;
+  font-size: 20px;
+  color: #e8ebec;
+  text-transform: uppercase;
+  background-color: #9ec7e0;
+  border: 1px solid #9ec7e0;
+}
+
+main {
+  overflow: auto;
+}
+
+/******** HEADER *******/
 
 header {
   background: #9ec7e0;
   height: 100px;
 }
 
-.header-title {
+#header-title {
   float: left;
   line-height: 100px;
 }
 
-.header-title a {
+#header-title a {
   text-decoration: none;
 }
 
-.header-title h1 {
+#header-title h1 {
   margin-bottom: 0;
   line-height: 150%;
   text-decoration: none;
@@ -38,7 +62,7 @@ header {
   margin-top: 15px;
 }
 
-.header-links {
+#header-links {
   float: right;
   line-height: 100px;
 }
@@ -51,39 +75,32 @@ header {
   padding-left: 10px;
 }
 
-.header-links a {
+.pre-login-link:hover {
+  font-weight: bold;
+}
+
+#header-links a {
   text-decoration: none;
   color: #e8ebec;
   font-size: 16px;
 }
 
-.pre-login-link:hover {
-  font-weight: bold;
-  color: #013144;
-}
+/***** SIGN-UP LOGIN SECTION *****/
 
-/* SECTION */
-
-main {
-  overflow: auto;
-}
-
-main .signup-login {
+#signup-login {
   height: calc(100vh - 220px);
 }
 
-main .signup-login .form-input {
+#signup-login-form {
   max-width: 450px;
   height: fit-content;
   overflow: hidden;
   margin: auto;
   padding-top: 50px;
-  /* padding-right: 200px; */
 }
 
-main .signup-login .form-input h2 {
+#signup-login-form h2 {
   width: 100%;
-  /* float: right; */
   text-align: center;
   margin-top: 0;
   margin-bottom: 10px;
@@ -92,72 +109,20 @@ main .signup-login .form-input h2 {
   color: #013144;
 }
 
-main .signup-login .form-input div {
-  /* float: right; */
+#signup-login-form div {
   width: 100%;
   text-align: right;
-  /* margin-bottom: 10px; */
 }
 
-main .signup-login .form-input div input {
-  width: 100%;
-  height: 50px;
-  border: 1px solid #013144;
-  font-size: 18px;
-  /* border-radius: 5px; */
-  padding-left: 10px;
-  color: #013144;
-  margin-bottom: 10px;
-}
-
-main .signup-login .form-input div label {
-  color: #013144;
-  text-transform: uppercase;
-  font-weight: 100;
-  font-size: 14px;
-}
-
-main .signup-login button {
-  /* float: right; */
+#signup-login-form button {
   margin: 0 auto;
   display: block;
-}
-
-.form-button {
   width: 100%;
-  height: 50px;
-  font-size: 20px;
-  color: #e8ebec;
-  text-transform: uppercase;
-  background-color: #9ec7e0;
-  border: 1px solid #9ec7e0;
-  /* border-radius: 5px; */
 }
 
-/* FOOTER */
+/****** CREATE ACCOUNT SECTION *****/
 
-footer {
-  background-color: #013144;
-  height: 100px;
-  text-align: center;
-  margin-top: 20px;
-  /* margin-top: calc(100vh - 643px); */
-}
-
-footer p {
-  line-height: 100px;
-  font-size: 16px;
-  color: #e8ebec;
-  margin-top: 0;
-}
-
-/* CREATE ACCOUNT */
-
-.section {
-  /* height: calc(100vh - 200px); */
-}
-
-.section .form-title {
+#create-account .form-title {
   text-align: center;
   margin-top: 0;
   margin-bottom: 0;
@@ -173,7 +138,6 @@ footer p {
 
 .create-acc-form {
   height: fit-content;
-  /* height: calc(100% - 83px); */
   padding-top: 40px;
   max-width: 700px;
   margin: 0 auto;
@@ -184,139 +148,62 @@ footer p {
   margin-top: 25px;
 }
 
-.create-acc-form button.form-button {
-  float: none;
+.create-acc-form button {
   margin: 0 auto;
   display: block;
   width: 50%;
 }
 
-/* .form-section {
-  margin-top: 20px;
-  height: 35%;
-  padding: 0 0 0 10px;
-} */
-
-/* .form-section {
-  margin-top: 20px;
-  height: 148px;
-  padding: 0 0 0 10px;
-} */
-
-.form-section-title {
-  margin: 0 0 10px 0;
-  text-transform: uppercase;
-  font-size: 14px;
-  font-weight: 100;
-  color: #013144;
-  text-align: left;
-}
-
-div.form-field {
-  /* width: 50%; */
-  height: 30px;
-  /* float: left; */
-  padding-bottom: 15px;
-}
-
-div.form-field .left {
-  float: left;
-}
-
-div.form-field #form-gender {
-  /* width: 40%; */
-}
-
-div.form-field #form-gender span {
-  /* padding-left: 5px; */
-}
-
-div.form-field #form-date {
-  /* width: 60%; */
-  margin-left: 15px;
-}
-
-/* div.form-field input[type="text"],
-div.form-field input[type="number"],
-div.form-field input[type="tel"] { */
-/* float: right; */
-/* margin-right: 30px;
-  margin-left: 5px;
-  width: 220px;
-  height: 30px;
-  border: 1px solid #dfe2e6;
-  border-radius: 5px;
-} */
-
-input[type="text"],
-input[type="number"],
-input[type="tel"],
-select {
-  width: 100%;
-  height: 50px;
-  color: #013144;
-  border: 1px solid #013144;
-  font-size: 18px;
-  /* border-radius: 5px; */
-  padding-left: 10px;
-  margin-bottom: 10px;
-}
-
-div .display-half-div {
+.display-half-div {
   width: 49.2%;
   float: left;
   height: 50px;
-  /* border: 1px solid #dfe2e6; */
-  /* font-size: 18px; */
-  /* border-radius: 5px; */
-  /* padding-left: 10px; */
   margin-bottom: 10px;
 }
 
-div div .left-side {
+.left-side {
   padding-right: 5px;
 }
 
-div div .right-side {
+.right-side {
   padding-left: 5px;
 }
 
-div.form-field input[type="date"] {
-  width: 130px;
-  height: 30px;
-  border: 1px solid #013144;
-  /* border-radius: 5px; */
-  margin-left: 5px;
+/******* FOOTER *******/
+
+footer {
+  background-color: #013144;
+  height: 100px;
+  text-align: center;
+  margin-top: 20px;
 }
 
-div.form-field label,
-div.form-field #form-gender span {
-  color: #013144;
-  font-weight: 100;
-  line-height: 30px;
-  font-size: 14px;
+footer p {
+  line-height: 100px;
+  font-size: 16px;
+  color: #e8ebec;
+  margin-top: 0;
 }
 
-div.form-field .left label {
-  line-height: 30px;
-}
-
-div.form-field .left input[type="radio"] {
-  margin: 0;
-}
-
-/* MEDIA QUERIES */
+/********************** MEDIA QUERIES ************************/
 
 @media (max-width: 796px) {
+  .container {
+    width: 100%;
+    margin: 0;
+  }
+
+  /**** Header Media Query ****/
+
   header {
     text-align: center;
   }
 
-  header .header-title {
+  header #header-title {
     float: none;
   }
 
-  header .header-title h1 {
+  header #header-title h1 {
     line-height: 50px;
     text-decoration: none;
     text-transform: uppercase;
@@ -326,89 +213,51 @@ div.form-field .left input[type="radio"] {
     padding-top: 10px;
   }
 
-  header .header-links {
+  header #header-links {
     float: none;
     line-height: 40px;
     text-align: center;
   }
 
-  .pre-login-link {
+  header .pre-login-link {
     padding: 0 10px 0 0;
   }
 
-  main .signup-login .form-input {
+  /**** Sign-up Login section Media Queries ****/
+
+  #signup-login {
+    overflow: hidden;
+  }
+
+  #signup-login #signup-login-form {
     max-width: 450px;
-    /* height: 100%; */
     margin: auto;
     padding: 50px 10px 0 10px;
   }
 
-  .container {
-    width: 100%;
-    margin: 0;
-  }
-
-  main .signup-login .form-input div label {
-    color: #013144;
-    display: block;
-    text-align: left;
-  }
-
-  main .signup-login {
-    overflow: hidden;
-  }
-
-  /* CREATE ACCOUNT MEDIA QUERIES */
+  /**** Create-Account Section Media Queries ****/
 
   .create-acc-form {
     height: fit-content;
-    /* height: calc(100% - 83px); */
     padding: 40px 10px 0 10px;
     max-width: 350px;
     margin: 0 auto;
   }
 
-  div .display-half-div {
+  .display-half-div {
     width: 100%;
     float: none;
   }
 
-  div div .left-side {
+  .left-side {
     padding-right: 0;
   }
 
-  div div .right-side {
+  .right-side {
     padding-left: 0;
   }
 
-  .create-acc-form button.form-button {
+  .create-acc-form button {
     width: 100%;
   }
-
-  .form-section {
-    margin: 0 auto;
-    max-width: 380px;
-    padding: 0 0 0 20px;
-    height: 36.48%;
-  }
-
-  .form-section-title {
-    text-align: center;
-  }
-
-  div.form-field {
-    min-width: 380px;
-  }
-
-  div.form-field input[type="text"],
-  div.form-field input[type="number"],
-  div.form-field input[type="tel"] {
-    margin-right: 40px;
-  }
-
-  /* FOOTER */
-
-  /* footer {
-    margin-top: calc(100vh - 435px);
-  } */
 }
