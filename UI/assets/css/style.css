@@ -92,7 +92,7 @@ header {
   height: calc(100vh - 220px);
 }
 
-#signup-login-form {
+#all-form {
   max-width: 450px;
   height: fit-content;
   overflow: hidden;
@@ -100,7 +100,7 @@ header {
   padding-top: 50px;
 }
 
-#signup-login-form h2 {
+#all-form h2 {
   width: 100%;
   text-align: center;
   margin-top: 0;
@@ -110,12 +110,12 @@ header {
   color: #616263;
 }
 
-#signup-login-form div {
+#all-form div {
   width: 100%;
   text-align: right;
 }
 
-#signup-login-form button {
+#all-form button {
   margin: 0 auto;
   display: block;
   width: 100%;
@@ -379,6 +379,14 @@ header {
   border: 1px solid #9ec7e0;
 }
 
+/****** DEPOSIT MONEY *******/
+
+#deposit {
+  height: calc(100vh - 205px);
+}
+
+/***** WITHDRAWALS *******/
+
 /******* FOOTER *******/
 
 footer {
@@ -439,7 +447,7 @@ footer p {
     overflow: hidden;
   }
 
-  #signup-login #signup-login-form {
+  #signup-login #all-form {
     max-width: 450px;
     margin: auto;
     padding: 50px 10px 0 10px;
@@ -510,5 +518,16 @@ footer p {
 
   #accounts-list .accounts-list-div p {
     font-size: 12px;
+  }
+
+  /***** Deposit ******/
+  #deposit {
+    overflow: hidden;
+  }
+
+  #deposit #all-form {
+    max-width: 450px;
+    margin: auto;
+    padding: 50px 10px 0 10px;
   }
 }
