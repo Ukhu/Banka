@@ -379,13 +379,11 @@ header {
   border: 1px solid #9ec7e0;
 }
 
-/****** DEPOSIT MONEY *******/
+/****** DEPOSIT & WITHDRAWALS *******/
 
-#deposit {
+#deposit-withdraw {
   height: calc(100vh - 205px);
 }
-
-/***** WITHDRAWALS *******/
 
 /******* FOOTER *******/
 
@@ -521,11 +519,11 @@ footer p {
   }
 
   /***** Deposit ******/
-  #deposit {
+  #deposit-withdraw {
     overflow: hidden;
   }
 
-  #deposit #all-form {
+  #deposit-withdraw #all-form {
     max-width: 450px;
     margin: auto;
     padding: 50px 10px 0 10px;
