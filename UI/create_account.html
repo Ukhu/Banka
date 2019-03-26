@@ -22,75 +22,17 @@
     </header>
     <main>
       <section id="create-account" class="container">
-        <div class="create-acc-form">
-          <h2 class="form-title">Open a bank account</h2>
+        <div id="all-form">
+          <h2>Step 2: Open A Bank Account</h2>
           <form>
             <div>
-              <div class="display-half-div left-side">
-                <input
-                  placeholder="First Name"
-                  type="text"
-                  pattern="[a-zA-Z]{2,15}"
-                />
-              </div>
-              <div class="display-half-div right-side">
-                <input
-                  placeholder="Last Name"
-                  type="text"
-                  pattern="[a-zA-Z]{2,15}"
-                />
-              </div>
+              <select name="accountType">
+                <option disabled selected>Type</option>
+                <option value="savings">Savings</option>
+                <option value="current">Current</option>
+              </select>
             </div>
-            <input
-              placeholder="Nationality"
-              type="text"
-              pattern="[a-zA-Z]{2,10}"
-            />
-            <input
-              placeholder="Occupation"
-              type="text"
-              pattern="[a-zA-Z ]{4,20}"
-            />
-            <div>
-              <div class="display-half-div left-side">
-                <select name="gender">
-                  <option disabled selected>Gender</option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                </select>
-              </div>
-              <div class="display-half-div right-side">
-                <input type="number" placeholder="Age" />
-              </div>
-            </div>
-            <input placeholder="Phone Number" type="tel" pattern="[0-9]{11}" />
-            <input
-              placeholder="Address Line 1"
-              type="text"
-              pattern="[a-zA-Z0-9 ,]{4,30}"
-            />
-            <input
-              placeholder="Address Line 2"
-              type="text"
-              pattern="[a-zA-Z0-9 ,]{4,30}"
-            />
-            <div>
-              <div class="display-half-div left-side">
-                <input
-                  type="text"
-                  placeholder="City"
-                  pattern="[a-zA-Z0-9 ]{3,15}"
-                />
-              </div>
-              <div class="display-half-div right-side">
-                <input
-                  placeholder="State"
-                  type="text"
-                  pattern="[a-zA-Z0-9 ]{3,15}"
-                />
-              </div>
-            </div>
-            <button class="form-button" type="submit">Create Account</button>
+            <button class="form-button" type="submit">Open Account</button>
           </form>
         </div>
       </section>

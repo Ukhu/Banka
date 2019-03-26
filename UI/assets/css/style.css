@@ -88,7 +88,62 @@ header {
 
 /***** SIGN-UP LOGIN SECTION *****/
 
-#signup-login {
+#signup .form-title {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 0;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: #616263;
+}
+
+.signup-form {
+  height: fit-content;
+  padding-top: 50px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.signup-form form {
+  margin-bottom: 25px;
+  margin-top: 25px;
+}
+
+.signup-form button {
+  margin: 0 auto;
+  display: block;
+  width: 50%;
+}
+
+.signup-form h3 {
+  margin: 0 0 5px 0;
+  text-transform: uppercase;
+  font-size: 15px;
+  color: #616262;
+}
+
+.display-half-div {
+  width: 49.2%;
+  float: left;
+  height: 50px;
+  margin-bottom: 10px;
+}
+
+.left-side {
+  padding-right: 5px;
+}
+
+.right-side {
+  padding-left: 5px;
+}
+
+/***** LOGIN *****/
+#login {
+  height: calc(100vh - 220px);
+}
+
+/****** CREATE ACCOUNT SECTION *****/
+#create-account {
   height: calc(100vh - 220px);
 }
 
@@ -119,50 +174,6 @@ header {
   margin: 0 auto;
   display: block;
   width: 100%;
-}
-
-/****** CREATE ACCOUNT SECTION *****/
-
-#create-account .form-title {
-  text-align: center;
-  margin-top: 0;
-  margin-bottom: 0;
-  text-transform: uppercase;
-  font-weight: 500;
-  color: #616263;
-}
-
-.create-acc-form {
-  height: fit-content;
-  padding-top: 50px;
-  max-width: 700px;
-  margin: 0 auto;
-}
-
-.create-acc-form form {
-  margin-bottom: 25px;
-  margin-top: 25px;
-}
-
-.create-acc-form button {
-  margin: 0 auto;
-  display: block;
-  width: 50%;
-}
-
-.display-half-div {
-  width: 49.2%;
-  float: left;
-  height: 50px;
-  margin-bottom: 10px;
-}
-
-.left-side {
-  padding-right: 5px;
-}
-
-.right-side {
-  padding-left: 5px;
 }
 
 /********** DASHBOARD PAGE ***************/
@@ -456,25 +467,29 @@ footer p {
     padding: 0 10px 0 0;
   }
 
-  /**** Sign-up Login section Media Queries ****/
+  /**** Login section Media Queries ****/
 
-  #signup-login {
+  #login {
     overflow: hidden;
   }
 
-  #signup-login #all-form {
+  #all-form {
     max-width: 450px;
     margin: auto;
     padding: 50px 10px 0 10px;
   }
 
-  /**** Create-Account Section Media Queries ****/
+  /**** Sign-up Section Media Queries ****/
 
-  .create-acc-form {
+  .signup-form {
     height: fit-content;
     padding: 50px 10px 0 10px;
     max-width: 350px;
     margin: 0 auto;
+  }
+
+  #signup .form-title {
+    font-size: 19px;
   }
 
   .display-half-div {
@@ -490,7 +505,7 @@ footer p {
     padding-left: 0;
   }
 
-  .create-acc-form button {
+  .signup-form button {
     width: 100%;
   }
 
