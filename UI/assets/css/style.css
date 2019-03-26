@@ -396,6 +396,12 @@ header {
   height: calc(100vh - 205px);
 }
 
+/****** CREATE STAFF ACCOUNT ******/
+
+#cr-staff-account {
+  height: calc(100vh - 205px);
+}
+
 /******* FOOTER *******/
 
 footer {
@@ -530,7 +536,14 @@ footer p {
     font-size: 12px;
   }
 
-  /***** Deposit ******/
+  /***** Account Record ****/
+  .acc-rec-bck-btn {
+    /* height: 100%; */
+    font-size: 15px;
+    text-align: center;
+  }
+
+  /***** Deposit - Withraw ******/
   #deposit-withdraw {
     overflow: hidden;
   }
@@ -541,9 +554,13 @@ footer p {
     padding: 50px 10px 0 10px;
   }
 
-  .acc-rec-bck-btn {
-    /* height: 100%; */
-    font-size: 15px;
-    text-align: center;
+  #cr-staff-account {
+    overflow: hidden;
+  }
+
+  #cr-staff-account #all-form {
+    max-width: 450px;
+    margin: auto;
+    padding: 50px 10px 0 10px;
   }
 }
