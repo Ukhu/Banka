@@ -290,6 +290,42 @@ header {
   text-align: center;
 }
 
+/********* ACCOUNT TRANSACTION ********/
+
+#transaction {
+  border: none;
+}
+
+.trans-section-title {
+  max-width: 800px;
+  text-align: left;
+  margin: 0 auto 10px auto;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: #616263;
+}
+
+#transaction .details-div p {
+  width: 100%;
+  height: 50px;
+  color: #013144;
+  /* border: 1px solid #013144; */
+  font-size: 18px;
+  /* padding-left: 10px; */
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+#trans-bck-btn {
+  font-size: 18px;
+  color: #e8ebec;
+  width: 15%;
+  float: right;
+  background-color: #9ec7e0;
+  border: 1px solid #9ec7e0;
+  text-transform: uppercase;
+}
+
 /************** ACCOUNTS LIST PAGE ***********/
 
 #accounts-list {
@@ -543,6 +579,19 @@ footer p {
     width: 40%;
     float: left;
     text-align: center;
+  }
+
+  /***** Account Transaction ******/
+
+  #trans-bck-btn {
+    font-size: 15px;
+    text-align: center;
+  }
+
+  .trans-section-title {
+    max-width: 500px;
+    padding-left: 10px;
+    padding-right: 10px;
   }
 
   /****** Accounts List *********/
