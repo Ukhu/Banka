@@ -374,9 +374,20 @@ header {
   margin-right: 10px;
 }
 
-.acc-rec-back-btn {
+.acc-rec-activate-btn {
   background-color: #9ec7e0;
   border: 1px solid #9ec7e0;
+}
+
+.acc-rec-bck-btn {
+  /* height: 100%; */
+  font-size: 18px;
+  color: #e8ebec;
+  width: 15%;
+  float: right;
+  background-color: #9ec7e0;
+  border: 1px solid #9ec7e0;
+  text-transform: uppercase;
 }
 
 /****** DEPOSIT & WITHDRAWALS *******/
@@ -482,6 +493,7 @@ footer p {
   .dashboard-section-title {
     max-width: 500px;
     padding-left: 10px;
+    padding-right: 10px;
   }
 
   #trnsc-hstr .details-div p {
@@ -527,5 +539,11 @@ footer p {
     max-width: 450px;
     margin: auto;
     padding: 50px 10px 0 10px;
+  }
+
+  .acc-rec-bck-btn {
+    /* height: 100%; */
+    font-size: 15px;
+    text-align: center;
   }
 }
