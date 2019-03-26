@@ -21,41 +21,90 @@
       </div>
     </header>
     <main>
-      <section id="signup-login" class="container">
-        <div id="all-form">
-          <h2>Sign Up Form</h2>
+      <section id="signup" class="container">
+        <div class="signup-form">
+          <h2 class="form-title">Step 1: Register As A Banka User</h2>
           <form>
+            <h3>Personal Information</h3>
             <div>
-              <input
-                type="text"
-                placeholder="Username"
-                pattern="[a-zA-Z0-9]{5,30}"
-                title="Alphanumeric only. At least 5 characters"
-              />
+              <div class="display-half-div left-side">
+                <input
+                  placeholder="First Name"
+                  type="text"
+                  pattern="[a-zA-Z]{2,15}"
+                />
+              </div>
+              <div class="display-half-div right-side">
+                <input
+                  placeholder="Last Name"
+                  type="text"
+                  pattern="[a-zA-Z]{2,15}"
+                />
+              </div>
             </div>
+            <input
+              placeholder="Nationality"
+              type="text"
+              pattern="[a-zA-Z]{2,10}"
+            />
+            <input
+              placeholder="Occupation"
+              type="text"
+              pattern="[a-zA-Z ]{4,20}"
+            />
             <div>
-              <input
-                type="email"
-                placeholder="Email"
-                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-              />
+              <div class="display-half-div left-side">
+                <select name="gender">
+                  <option disabled selected>Gender</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select>
+              </div>
+              <div class="display-half-div right-side">
+                <input type="number" placeholder="Age" />
+              </div>
             </div>
+            <h3>Contact Information</h3>
+            <input placeholder="Phone Number" type="tel" pattern="[0-9]{11}" />
+            <input
+              type="email"
+              placeholder="Email"
+              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+            />
+            <h3>Residential Information</h3>
+            <input
+              placeholder="Address Line 1"
+              type="text"
+              pattern="[a-zA-Z0-9 ,]{4,30}"
+            />
+            <input
+              placeholder="Address Line 2"
+              type="text"
+              pattern="[a-zA-Z0-9 ,]{4,30}"
+            />
             <div>
-              <input
-                type="password"
-                placeholder="Password"
-                pattern=".{6,10}"
-                title="At least six(6) characters"
-              />
+              <div class="display-half-div left-side">
+                <input
+                  type="text"
+                  placeholder="City"
+                  pattern="[a-zA-Z0-9 ]{3,15}"
+                />
+              </div>
+              <div class="display-half-div right-side">
+                <input
+                  placeholder="State"
+                  type="text"
+                  pattern="[a-zA-Z0-9 ]{3,15}"
+                />
+              </div>
             </div>
-            <div>
-              <input
-                type="password"
-                placeholder="Confirm password"
-                pattern=".{6,10}"
-                title="At least six(6) characters"
-              />
-            </div>
+            <h3>Security</h3>
+            <input
+              type="password"
+              placeholder="Password"
+              pattern=".{6,10}"
+              title="At least six(6) characters"
+            />
             <button class="form-button" type="submit">Sign Up</button>
           </form>
         </div>
