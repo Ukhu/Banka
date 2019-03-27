@@ -628,19 +628,19 @@ footer p {
     overflow: hidden;
   }
 
-  #deposit-withdraw #all-form {
+  /* #deposit-withdraw #all-form {
     max-width: 450px;
     margin: auto;
     padding: 50px 10px 0 10px;
-  }
+  } */
 
   #cr-staff-account {
     overflow: hidden;
   }
 
-  #cr-staff-account #all-form {
-    max-width: 450px;
+  /* #cr-staff-account #all-form {
+    max-width: 350px;
     margin: auto;
     padding: 50px 10px 0 10px;
-  }
+  } */
 }
