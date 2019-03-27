@@ -445,6 +445,10 @@ header {
   text-transform: uppercase;
 }
 
+.display-half-div form {
+  display: inline;
+}
+
 /****** DEPOSIT & WITHDRAWALS *******/
 
 #deposit-withdraw {
