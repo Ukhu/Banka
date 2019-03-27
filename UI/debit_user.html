@@ -28,10 +28,11 @@
             <div>
               <input
                 type="text"
-                name="firstname"
                 placeholder="First Name"
-                pattern="[a-zA-Z0-9]{2,15}"
-                title="Alphanumeric only. At least 5 characters"
+                name="firstname"
+                pattern="[a-zA-Z]{2,15}"
+                title="Alphabets only. Max 15 characters"
+                required
               />
             </div>
             <div>
@@ -39,33 +40,36 @@
                 type="text"
                 placeholder="Last Name"
                 name="lastname"
-                pattern="[a-zA-Z0-9]{2,15}"
-                title="Alphanumeric only. At least 5 characters"
+                pattern="[a-zA-Z]{2,15}"
+                title="Alphabets only. Max 15 characters"
+                required
               />
             </div>
             <div>
               <input
-                type="number"
+                type="text"
                 placeholder="Account Number"
                 name="accountNumber"
-                pattern="[a-zA-Z0-9]{10}"
+                pattern="[0-9]{10}"
                 title="User's ten(10) digit account number"
+                required
               />
             </div>
             <div>
-              <select name="type">
-                <option disabled selected>Type</option>
+              <select name="accountType" required>
+                <option disabled selected value="">Type</option>
                 <option value="savings">Savings</option>
                 <option value="current">Current</option>
               </select>
             </div>
             <div>
               <input
-                type="number"
+                type="text"
                 placeholder="Amount"
                 name="amount"
-                pattern="[a-zA-Z0-9]{10}"
-                title="Ten(10) digits"
+                pattern="[0-9]{1,10}"
+                title="Max Ten(10) digits"
+                required
               />
             </div>
             <button class="form-button" type="submit">Debit Account</button>

@@ -30,6 +30,8 @@
                 type="email"
                 placeholder="Email"
                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                title="Must follow standard email format"
+                required
               />
             </div>
             <div>
@@ -37,7 +39,8 @@
                 type="password"
                 placeholder="Password"
                 pattern=".{6,10}"
-                title="At least six(6) characters"
+                title="Must be between Six(6) to Ten(10) characters"
+                required
               />
             </div>
             <button class="form-button" type="submit">Login</button>
