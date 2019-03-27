@@ -86,6 +86,14 @@ header {
   font-size: 16px;
 }
 
+#header-links p {
+  padding-left: 10px;
+  text-decoration: none;
+  color: #e8ebec;
+  font-size: 16px;
+  margin: 0;
+}
+
 /***** SIGN-UP LOGIN SECTION *****/
 
 #signup .form-title {
@@ -510,9 +518,13 @@ footer p {
   }
 
   #all-form {
-    max-width: 450px;
+    max-width: 350px;
     margin: auto;
     padding: 50px 10px 0 10px;
+  }
+
+  #all-form h2 {
+    font-size: 19px;
   }
 
   /**** Sign-up Section Media Queries ****/
