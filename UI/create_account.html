@@ -16,7 +16,8 @@
         <div id="header-links">
           <a class="pre-login-link unused-link" href="#">Sign Up</a>
           <a class="pre-login-link unused-link" href="#">Login</a>
-          <a href="#">Logged in as Osaukhu</a>
+          <p class="header-p">Logged In As Osaukhumwen</p>
+          <!-- <a href="#">Logged in as Osaukhu</a> -->
         </div>
       </div>
     </header>
@@ -26,8 +27,8 @@
           <h2>Step 2: Open A Bank Account</h2>
           <form>
             <div>
-              <select name="accountType">
-                <option disabled selected>Type</option>
+              <select name="accountType" required>
+                <option disabled selected value="">Type</option>
                 <option value="savings">Savings</option>
                 <option value="current">Current</option>
               </select>
