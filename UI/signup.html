@@ -22,7 +22,7 @@
     </header>
     <main>
       <section id="signup" class="container">
-        <div class="signup-form">
+        <div id="signup-form" class="all-form">
           <h2 class="form-title">Step 1: Register As A Banka User</h2>
           <form>
             <h3>Personal Information</h3>
@@ -63,7 +63,7 @@
             <div>
               <div class="display-half-div left-side">
                 <select name="gender" required>
-                  <option disabled value="" selected>Gender</option>
+                  <option disabled selected value="">Gender</option>
                   <option value="male" required>Male</option>
                   <option value="female" required>Female</option>
                 </select>
@@ -89,6 +89,7 @@
             <input
               type="email"
               placeholder="Email"
+              name="email"
               pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
               title="Must follow standard email format"
               required
@@ -97,6 +98,7 @@
             <input
               type="text"
               placeholder="Address Line 1"
+              name="address1"
               pattern="[a-zA-Z0-9 ,]{4,30}"
               title="No special characters. Max 30 characters"
               required
@@ -104,6 +106,7 @@
             <input
               type="text"
               placeholder="Address Line 2 (Optional)"
+              name="address2"
               pattern="[a-zA-Z0-9 ,]{4,30}"
               title="No special characters. Max 30 characters"
             />
@@ -112,6 +115,7 @@
                 <input
                   type="text"
                   placeholder="City"
+                  name="city"
                   pattern="[a-zA-Z0-9 ]{3,15}"
                   title="No special characters. Three(3) to Fifteen(15) characters"
                   required
@@ -121,6 +125,7 @@
                 <input
                   type="text"
                   placeholder="State"
+                  name="state"
                   pattern="[a-zA-Z0-9 ]{3,15}"
                   title="No special characters. Three(3) to Fifteen(15) characters"
                   required
@@ -131,6 +136,7 @@
             <input
               type="password"
               placeholder="Password"
+              name="password"
               pattern=".{6,10}"
               title="Must be between Six(6) to Ten(10) characters"
               required

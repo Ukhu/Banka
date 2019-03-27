@@ -5,7 +5,6 @@ body {
   padding: 0;
   margin: 0;
   background-color: #e8ebec;
-  /* background-color: #dfe2e6; */
 }
 
 .container {
@@ -31,6 +30,8 @@ select {
   text-transform: uppercase;
   background-color: #9ec7e0;
   border: 1px solid #9ec7e0;
+  display: block;
+  margin: 0 auto;
 }
 
 main {
@@ -105,25 +106,20 @@ header {
   color: #616263;
 }
 
-.signup-form {
-  height: fit-content;
-  padding-top: 50px;
+#signup-form {
   max-width: 700px;
-  margin: 0 auto;
 }
 
-.signup-form form {
+#signup-form form {
   margin-bottom: 25px;
   margin-top: 25px;
 }
 
-.signup-form button {
-  margin: 0 auto;
-  display: block;
-  width: 50%;
+#signup-form button {
+  width: 350px;
 }
 
-.signup-form h3 {
+#signup-form h3 {
   margin: 0 0 5px 0;
   text-transform: uppercase;
   font-size: 15px;
@@ -145,25 +141,17 @@ header {
   padding-left: 5px;
 }
 
-/***** LOGIN *****/
-#login {
-  height: calc(100vh - 220px);
-}
-
 /****** CREATE ACCOUNT SECTION *****/
-#create-account {
-  height: calc(100vh - 220px);
-}
 
-#all-form {
+.all-form {
   max-width: 450px;
   height: fit-content;
-  overflow: hidden;
-  margin: auto;
+  margin: 0 auto;
   padding-top: 50px;
+  min-height: calc(100vh - 255px);
 }
 
-#all-form h2 {
+.all-form h2 {
   width: 100%;
   text-align: center;
   margin-top: 0;
@@ -173,14 +161,7 @@ header {
   color: #616263;
 }
 
-#all-form div {
-  width: 100%;
-  text-align: right;
-}
-
-#all-form button {
-  margin: 0 auto;
-  display: block;
+.all-form button {
   width: 100%;
 }
 
@@ -252,9 +233,7 @@ header {
   width: 100%;
   height: 50px;
   color: #013144;
-  /* border: 1px solid #013144; */
   font-size: 18px;
-  /* padding-left: 10px; */
   margin-top: 0;
   margin-bottom: 10px;
 }
@@ -302,6 +281,7 @@ header {
 
 #transaction {
   border: none;
+  min-height: calc(100vh - 255px);
 }
 
 .trans-section-title {
@@ -317,9 +297,7 @@ header {
   width: 100%;
   height: 50px;
   color: #013144;
-  /* border: 1px solid #013144; */
   font-size: 18px;
-  /* padding-left: 10px; */
   margin-top: 0;
   margin-bottom: 10px;
 }
@@ -344,7 +322,6 @@ header {
 .accounts-list-div {
   max-width: 900px;
   margin: 0 auto;
-  /* overflow: auto; */
   padding: 0 20px 20px 20px;
   border: 2px solid #ffffff;
   background-color: #ffffff;
@@ -359,12 +336,10 @@ header {
 }
 
 #accounts-list .accounts-list-div p {
-  /* width: 100%; */
   line-height: 50px;
   color: #013144;
   border-bottom: 1px solid #013144;
   font-size: 18px;
-  /* padding-left: 10px; */
   margin-top: 0;
   margin-bottom: 0px;
 }
@@ -407,9 +382,7 @@ header {
   width: 100%;
   height: 50px;
   color: #013144;
-  /* border: 1px solid #013144; */
   font-size: 18px;
-  /* padding-left: 10px; */
   margin-top: 0;
   margin-bottom: 10px;
 }
@@ -435,7 +408,6 @@ header {
 }
 
 .acc-rec-bck-btn {
-  /* height: 100%; */
   font-size: 18px;
   color: #e8ebec;
   width: 15%;
@@ -447,18 +419,6 @@ header {
 
 .display-half-div form {
   display: inline;
-}
-
-/****** DEPOSIT & WITHDRAWALS *******/
-
-#deposit-withdraw {
-  height: calc(100vh - 205px);
-}
-
-/****** CREATE STAFF ACCOUNT ******/
-
-#cr-staff-account {
-  height: calc(100vh - 205px);
 }
 
 /******* FOOTER *******/
@@ -517,31 +477,19 @@ footer p {
 
   /**** Login section Media Queries ****/
 
-  #login {
-    overflow: hidden;
-  }
-
-  #all-form {
+  .all-form {
     max-width: 350px;
-    margin: auto;
     padding: 50px 10px 0 10px;
   }
 
-  #all-form h2 {
+  .all-form h2 {
     font-size: 19px;
   }
 
   /**** Sign-up Section Media Queries ****/
 
-  .signup-form {
-    height: fit-content;
-    padding: 50px 10px 0 10px;
+  #signup-form {
     max-width: 350px;
-    margin: 0 auto;
-  }
-
-  #signup .form-title {
-    font-size: 19px;
   }
 
   .display-half-div {
@@ -555,10 +503,6 @@ footer p {
 
   .right-side {
     padding-left: 0;
-  }
-
-  .signup-form button {
-    width: 100%;
   }
 
   /****** Transaction History Section Media Queries ******/
@@ -618,29 +562,7 @@ footer p {
 
   /***** Account Record ****/
   .acc-rec-bck-btn {
-    /* height: 100%; */
     font-size: 15px;
     text-align: center;
   }
-
-  /***** Deposit - Withraw ******/
-  #deposit-withdraw {
-    overflow: hidden;
-  }
-
-  /* #deposit-withdraw #all-form {
-    max-width: 450px;
-    margin: auto;
-    padding: 50px 10px 0 10px;
-  } */
-
-  #cr-staff-account {
-    overflow: hidden;
-  }
-
-  /* #cr-staff-account #all-form {
-    max-width: 350px;
-    margin: auto;
-    padding: 50px 10px 0 10px;
-  } */
 }

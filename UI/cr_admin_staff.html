@@ -22,43 +22,52 @@
     </header>
     <main>
       <section id="cr-staff-account" class="container">
-        <div id="all-form">
+        <div class="all-form">
           <h2>Create A Staff Account</h2>
           <form>
             <div>
               <input
                 type="text"
                 placeholder="First Name"
-                pattern="[a-zA-Z0-9]{5,15}"
-                title="Fifteen (15) characters max"
+                name="firstname"
+                pattern="[a-zA-Z]{2,15}"
+                title="Alphabets only. Max 15 characters"
+                required
               />
             </div>
             <div>
               <input
                 type="text"
                 placeholder="Last Name"
-                pattern="[a-zA-Z0-9]{5,15}"
-                title="Fifteen (15) characters max"
+                name="lastname"
+                pattern="[a-zA-Z]{2,15}"
+                title="Alphabets only. Max 15 characters"
+                required
               />
             </div>
             <div>
               <input
                 type="email"
                 placeholder="Email"
+                name="email"
                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                title="Must follow standard email format"
+                required
               />
             </div>
             <div>
               <input
                 type="password"
                 placeholder="Password"
+                name="password"
                 pattern=".{6,10}"
-                title="At least six(6) characters"
+                title="Must be between Six(6) to Ten(10) characters"
+                required
               />
             </div>
             <div>
-              <select name="typeOfStaff">
-                <option disabled selected>Type</option>
+              <select name="typeOfStaff" required>
+                <option disabled selected value="">Type</option>
                 <option value="cashier">Cashier</option>
                 <option value="admin">Admin</option>
               </select>
