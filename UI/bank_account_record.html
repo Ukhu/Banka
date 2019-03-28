@@ -11,12 +11,13 @@
     <header>
       <div class="container">
         <div id="header-title">
-          <a href="#"><h1>Banka</h1></a>
+          <a href="accounts_list.html"><h1>Banka</h1></a>
         </div>
         <div id="header-links">
           <a class="pre-login-link unused-link" href="#">Sign Up</a>
           <a class="pre-login-link unused-link" href="#">Login</a>
           <p>Logged In As Admin</p>
+          <a id="logout" href="index.html">Logout</a>
         </div>
       </div>
     </header>
@@ -132,87 +133,69 @@
         <h3 class="dashboard-section-title">Transaction History</h3>
         <div class="trns-hist-details details-div">
           <ul>
-            <a href="#"
-              ><li>
-                <div class="display-full-div">
-                  <p class="trns-details-side">23 MAR 2019</p>
-                  <p class="trns-details-mid">N720,000</p>
-                  <p class="trns-details-side">CREDIT</p>
-                </div>
-              </li></a
-            >
-            <a href="#">
-              <li>
-                <div class="display-full-div">
-                  <p class="trns-details-side">16 FEB 2019</p>
-                  <p class="trns-details-mid">N380,000</p>
-                  <p class="trns-details-side">CREDIT</p>
-                </div>
-              </li>
-            </a>
-            <a href="#">
-              <li>
-                <div class="display-full-div">
-                  <p class="trns-details-side">26 JAN 2019</p>
-                  <p class="trns-details-mid">N31,000</p>
-                  <p class="trns-details-side">DEBIT</p>
-                </div>
-              </li>
-            </a>
-            <a href="#">
-              <li>
-                <div class="display-full-div">
-                  <p class="trns-details-side">7 DEC 2018</p>
-                  <p class="trns-details-mid">N160,000</p>
-                  <p class="trns-details-side">DEBIT</p>
-                </div>
-              </li>
-            </a>
-            <a href="#">
-              <li>
-                <div class="display-full-div">
-                  <p class="trns-details-side">1 DEC 2018</p>
-                  <p class="trns-details-mid">N1,650,000</p>
-                  <p class="trns-details-side">CREDIT</p>
-                </div>
-              </li>
-            </a>
-            <a href="#">
-              <li>
-                <div class="display-full-div">
-                  <p class="trns-details-side">20 NOV 2018</p>
-                  <p class="trns-details-mid">N50,000</p>
-                  <p class="trns-details-side">CREDIT</p>
-                </div>
-              </li>
-            </a>
-            <a href="#">
-              <li>
-                <div class="display-full-div">
-                  <p class="trns-details-side">16 FEB 2019</p>
-                  <p class="trns-details-mid">N380,000</p>
-                  <p class="trns-details-side">CREDIT</p>
-                </div>
-              </li>
-            </a>
-            <a href="#">
-              <li>
-                <div class="display-full-div">
-                  <p class="trns-details-side">26 JAN 2019</p>
-                  <p class="trns-details-mid">N31,000</p>
-                  <p class="trns-details-side">DEBIT</p>
-                </div>
-              </li>
-            </a>
-            <a href="#">
-              <li>
-                <div class="display-full-div">
-                  <p class="trns-details-side">7 DEC 2018</p>
-                  <p class="trns-details-mid">N160,000</p>
-                  <p class="trns-details-side">DEBIT</p>
-                </div>
-              </li>
-            </a>
+            <li>
+              <div class="display-full-div">
+                <p class="trns-details-side">23 MAR 2019</p>
+                <p class="trns-details-mid">N720,000</p>
+                <p class="trns-details-side">CREDIT</p>
+              </div>
+            </li>
+            <li>
+              <div class="display-full-div">
+                <p class="trns-details-side">16 FEB 2019</p>
+                <p class="trns-details-mid">N380,000</p>
+                <p class="trns-details-side">CREDIT</p>
+              </div>
+            </li>
+            <li>
+              <div class="display-full-div">
+                <p class="trns-details-side">26 JAN 2019</p>
+                <p class="trns-details-mid">N31,000</p>
+                <p class="trns-details-side">DEBIT</p>
+              </div>
+            </li>
+            <li>
+              <div class="display-full-div">
+                <p class="trns-details-side">7 DEC 2018</p>
+                <p class="trns-details-mid">N160,000</p>
+                <p class="trns-details-side">DEBIT</p>
+              </div>
+            </li>
+            <li>
+              <div class="display-full-div">
+                <p class="trns-details-side">1 DEC 2018</p>
+                <p class="trns-details-mid">N1,650,000</p>
+                <p class="trns-details-side">CREDIT</p>
+              </div>
+            </li>
+            <li>
+              <div class="display-full-div">
+                <p class="trns-details-side">20 NOV 2018</p>
+                <p class="trns-details-mid">N50,000</p>
+                <p class="trns-details-side">CREDIT</p>
+              </div>
+            </li>
+            <li>
+              <div class="display-full-div">
+                <p class="trns-details-side">16 FEB 2019</p>
+                <p class="trns-details-mid">N380,000</p>
+                <p class="trns-details-side">CREDIT</p>
+              </div>
+            </li>
+            <li>
+              <div class="display-full-div">
+                <p class="trns-details-side">26 JAN 2019</p>
+                <p class="trns-details-mid">N31,000</p>
+                <p class="trns-details-side">DEBIT</p>
+              </div>
+            </li>
+            <li>
+              <div class="display-full-div">
+                <p class="trns-details-side">7 DEC 2018</p>
+                <p class="trns-details-mid">N160,000</p>
+                <p class="trns-details-side">DEBIT</p>
+              </div>
+            </li>
           </ul>
         </div>
       </section>
