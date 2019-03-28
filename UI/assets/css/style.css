@@ -12,6 +12,10 @@ body {
   margin: 0 auto;
 }
 
+a {
+  text-decoration: none;
+}
+
 input,
 select {
   width: 100%;
@@ -93,9 +97,79 @@ header {
   color: #e8ebec;
   font-size: 16px;
   margin: 0;
+  float: left;
 }
 
-/***** SIGN-UP LOGIN SECTION *****/
+#logout {
+  padding-left: 15px;
+  text-decoration: none;
+  color: #e8ebec;
+  font-size: 16px;
+  margin: 0;
+  float: left;
+}
+
+#logout:hover {
+  font-weight: bold;
+}
+
+/**** HOME PAGE *****/
+
+#homepage {
+  width: 100%;
+  height: calc(100vh - 200px);
+  background: url("../img/banking.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  text-align: center;
+  color: #ffffff;
+}
+
+#homepage h1 {
+  margin: 0;
+  padding-top: 100px;
+  font-weight: 900;
+  font-size: 60px;
+  line-height: 100%;
+  padding-bottom: 10px;
+  text-shadow: 2px 2px 8px #111;
+}
+
+#homepage p {
+  max-width: 650px;
+  margin: 0 auto;
+  font-size: 20px;
+  font-style: italic;
+  text-shadow: 2px 2px 8px #111;
+}
+
+#homepage button {
+  height: 40px;
+  width: 100px;
+  color: #ffffff;
+  margin: 5px;
+  font-size: 18px;
+  text-align: center;
+  box-shadow: 1px 1px 8px #ffffff;
+  border-radius: 5px;
+}
+
+.signup-btn {
+  background-color: #9ec7e0;
+  border: 1px solid #9ec7e0;
+}
+
+.login-btn {
+  background-color: #013144;
+  border: 1px solid #013144;
+}
+
+#hp-footer {
+  margin-top: 0;
+}
+
+/***** SIGN-UP SECTION *****/
 
 #signup .form-title {
   text-align: center;
@@ -111,7 +185,7 @@ header {
 }
 
 #signup-form form {
-  margin-bottom: 25px;
+  margin-bottom: 20px;
   margin-top: 25px;
 }
 
@@ -151,6 +225,10 @@ header {
   min-height: calc(100vh - 255px);
 }
 
+.all-form form {
+  margin-bottom: 0;
+}
+
 .all-form h2 {
   width: 100%;
   text-align: center;
@@ -172,7 +250,7 @@ header {
 .account-details {
   padding: 20px 0;
   overflow: auto;
-  border-bottom: 2px solid #616263;
+  /* border-bottom: 2px solid #616263; */
 }
 
 .acc-details-div {
@@ -471,8 +549,33 @@ footer p {
     text-align: center;
   }
 
+  #header-links p {
+    display: inline;
+    padding-left: 10px;
+    text-decoration: none;
+    color: #e8ebec;
+    font-size: 16px;
+    margin: 0;
+    float: none;
+  }
+
+  #logout {
+    float: none;
+    padding-left: 10px;
+  }
+
   header .pre-login-link {
     padding: 0 10px 0 0;
+  }
+
+  /**** Home Page *****/
+
+  #homepage h1 {
+    padding-top: 70px;
+  }
+
+  #homepage p {
+    max-width: 380px;
   }
 
   /**** Login section Media Queries ****/

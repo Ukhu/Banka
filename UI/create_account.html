@@ -11,13 +11,13 @@
     <header>
       <div class="container">
         <div id="header-title">
-          <a href="#"><h1>Banka</h1></a>
+          <a href="create_account.html"><h1>Banka</h1></a>
         </div>
         <div id="header-links">
-          <a class="pre-login-link unused-link" href="#">Sign Up</a>
-          <a class="pre-login-link unused-link" href="#">Login</a>
-          <p class="header-p">Logged In As Osaukhumwen</p>
-          <!-- <a href="#">Logged in as Osaukhu</a> -->
+          <a class="pre-login-link unused-link" href="signup.html">Sign Up</a>
+          <a class="pre-login-link unused-link" href="sign_in.html">Login</a>
+          <p>Logged In As Osaukhumwen</p>
+          <a id="logout" href="index.html">Logout</a>
         </div>
       </div>
     </header>
@@ -33,8 +33,12 @@
                 <option value="current">Current</option>
               </select>
             </div>
-            <button class="form-button" type="submit">Open Account</button>
           </form>
+          <!-- I placed the button here so that it doesn't submit the form just yet,
+          but should rather serve as a link to the Dashboard page -->
+          <a href="dashboard.html"
+            ><button class="form-button">Open Account</button></a
+          >
         </div>
       </section>
     </main>
