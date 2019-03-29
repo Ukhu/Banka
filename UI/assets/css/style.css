@@ -215,7 +215,7 @@ header {
   padding-left: 5px;
 }
 
-/****** CREATE ACCOUNT SECTION *****/
+/****** ALL PAGES WITH FORMS *****/
 
 .all-form {
   max-width: 450px;
@@ -243,7 +243,14 @@ header {
   width: 100%;
 }
 
-/********** DASHBOARD PAGE ***************/
+/***** SIGN IN PAGE *****/
+
+#admin-link {
+  color: #616262;
+  text-align: center;
+}
+
+/****************** DASHBOARD PAGE **********************/
 
 /******* ACCOUNT DETAILS SECTION *******/
 
@@ -392,6 +399,37 @@ header {
 
 /************** ACCOUNTS LIST PAGE ***********/
 
+/****** Navbar ****/
+#staff-navbar {
+  height: 50px;
+  background-color: #616262;
+}
+
+#staff-navbar div {
+  max-width: 940px;
+}
+
+#staff-navbar a {
+  color: #e8ebec;
+  line-height: 50px;
+  font-size: 18px;
+}
+
+#staff-navbar a:hover {
+  font-weight: bold;
+}
+
+.bnk-ops {
+  display: inline;
+  float: right;
+}
+
+.bnk-ops a {
+  margin-left: 10px;
+}
+
+/********/
+
 #accounts-list {
   padding: 20px 0;
   overflow: auto;
@@ -406,7 +444,7 @@ header {
 }
 
 #accounts-list .accounts-list-div .acc-list-title {
-  font-size: 14px;
+  font-size: 13px;
   line-height: 30px;
   border-bottom: 1px solid #616263;
   color: #616263;
@@ -658,6 +696,17 @@ footer p {
   }
 
   /****** Accounts List *********/
+
+  /**** Navbar ****/
+  #staff-navbar {
+    padding: 0 20px;
+  }
+
+  #staff-navbar a {
+    font-size: 16px;
+  }
+
+  /****/
 
   #accounts-list .accounts-list-div p {
     font-size: 12px;
