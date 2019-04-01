@@ -1,0 +1,24 @@
+{
+  "name": "banka",
+  "version": "1.0.0",
+  "description": "Banka is a light-weight core banking application that powers banking\r operations like account creation, customer deposit and withdrawals.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ukhu/Banka.git"
+  },
+  "author": "Osaukhumwen Iyamuosa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ukhu/Banka/issues"
+  },
+  "homepage": "https://github.com/Ukhu/Banka#readme",
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.16.0"
+  }
+}
