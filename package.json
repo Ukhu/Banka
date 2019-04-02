@@ -4,7 +4,8 @@
   "description": "Banka is a light-weight core banking application that powers banking\r operations like account creation, customer deposit and withdrawals.",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js",
+    "test": "mocha --timeout 10000"
   },
   "repository": {
     "type": "git",
@@ -18,9 +19,13 @@
   "homepage": "https://github.com/Ukhu/Banka#readme",
   "devDependencies": {
     "chai": "^4.2.0",
+    "chai-http": "^4.2.1",
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.16.0",
     "mocha": "^6.0.2"
+  },
+  "dependencies": {
+    "express": "^4.16.4"
   }
 }
