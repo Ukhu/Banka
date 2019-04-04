@@ -10,3 +10,4 @@ deposit money.
 This project is part of my Andela Developer Challenge.
 
 [![Build Status](https://travis-ci.com/Ukhu/Banka.svg?branch=develop)](https://travis-ci.com/Ukhu/Banka)
+[![Coverage Status](https://coveralls.io/repos/github/Ukhu/Banka/badge.svg)](https://coveralls.io/github/Ukhu/Banka)
