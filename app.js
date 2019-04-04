@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const users = [];
 
 app.post('/api/v1/auth/signup', (req, res) => {
-  const id = Math.floor(Math.random() * 1001);
+  const id = Math.floor(Math.random() * 1001); // generate User ID
 
   let errMsg;
 
@@ -25,8 +25,6 @@ app.post('/api/v1/auth/signup', (req, res) => {
     type: req.body.type,
     isAdmin: req.body.isAdmin,
   };
-
-  // console.log(newUser);
 
   Object.keys(newUser).forEach((key) => {
     if (newUser[key] === '' || newUser[key] === undefined) {
@@ -42,8 +40,6 @@ app.post('/api/v1/auth/signup', (req, res) => {
   } else {
     // add the user to the database
     users.push(newUser);
-
-    // console.log(users);
 
     // create token
     const token = jwt.sign(newUser, 'examplesecretword');
