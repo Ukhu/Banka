@@ -8,3 +8,5 @@ create bank accounts online, but must visit the branch to withdraw or
 deposit money.
 
 This project is part of my Andela Developer Challenge.
+
+[![Build Status](https://travis-ci.com/Ukhu/Banka.svg?branch=develop)](https://travis-ci.com/Ukhu/Banka)
