@@ -4,22 +4,23 @@ const isAuthorized = (req, res, next) => {
   const token = req.body.token || req.query.token || req.headers['x-access-token'];
 
   if (token) {
-    jwt.verify(token, 'examplesecretword', (err, decoded) => {
+    jwt.verify(token, 'examplesecretword', (err, decod) => {
       if (err) {
-        return res.status(403).json({
+        res.status(403).json({
           status: 403,
           error: 'FORBIDDEN REQUEST - Wrong Token',
         });
+      } else {
+        req.decoded = decod;
+        next();
       }
-      req.decoded = decoded;
-      return next();
+    });
+  } else {
+    res.status(403).json({
+      status: 403,
+      error: 'FORBIDDEN REQUEST - No Token Provided',
     });
   }
-
-  return res.status(403).json({
-    status: 200,
-    error: 'FORBIDDEN REQUEST - No Token Provided',
-  });
 };
 
 module.exports = isAuthorized;
