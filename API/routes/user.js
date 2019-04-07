@@ -2,7 +2,7 @@
 
 import { Router } from 'express';
 
-import UserController from '../controllers/userController';
+import UserController from '../controllers/UserController';
 import userValidation from '../validations/userValidations';
 import validateEmail from '../middlewares/validateEmail';
 
