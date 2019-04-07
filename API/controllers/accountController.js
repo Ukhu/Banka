@@ -1,4 +1,4 @@
-import { users } from '../models/User';
+import { users } from './UserController';
 
 export default class AccountController {
   static createAccount(req, res) {

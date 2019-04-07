@@ -1,15 +1,16 @@
 // User controller
 
 import { sign } from 'jsonwebtoken';
-import { getUsersLength, pushToDataStorage } from '../models/User';
 
-export default class UserController {
+export const users = [];
+
+export class UserController {
   static createUser(req, res) {
     const {
       email, firstname, lastname, password, type, isAdmin,
     } = req.body;
 
-    const id = getUsersLength() + 1;
+    const id = users.length + 1;
 
     const newUser = {
       id,
@@ -22,7 +23,7 @@ export default class UserController {
     };
 
     // add the user to the database
-    pushToDataStorage(newUser);
+    users.push(newUser);
 
     // create token
     const token = sign(newUser, 'examplesecretword', { expiresIn: '1hr' });

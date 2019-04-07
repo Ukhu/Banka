@@ -1,5 +1,5 @@
 import { validationResult } from 'express-validator/check';
-import { users } from '../models/User';
+import { users } from '../controllers/UserController';
 
 const validateEmail = (req, res, next) => {
   const errorFormatter = ({ location, msg, param }) => `${location}[${param}]: ${msg}`;
@@ -19,7 +19,7 @@ const validateEmail = (req, res, next) => {
   });
 
   if (msg) {
-    return res.json({ error: msg });
+    return res.status(400).json({ status: 400, error: msg });
   }
 
   return next();
