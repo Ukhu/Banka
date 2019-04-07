@@ -34,8 +34,8 @@ export default class AccountController {
       status: 201,
       data: {
         accountNumber: newAccount.accountNumber,
-        firstName: ownerFirstname,
-        lastName: ownerLastname,
+        firstname: ownerFirstname,
+        lastname: ownerLastname,
         email: ownerEmail,
         type,
         openingBalance: newAccount.balance,

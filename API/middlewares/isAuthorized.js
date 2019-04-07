@@ -7,7 +7,7 @@ const isAuthorized = (req, res, next) => {
   const result = validationResult(req).formatWith(errorFormatter);
 
   if (!result.isEmpty()) {
-    res.status(400).json({ errors: result.array({ onlyFirstError: true }) });
+    res.status(400).json({ status: 400, error: result.array({ onlyFirstError: true }) });
   } else {
     const token = req.body.token || req.query.token || req.headers['x-access-token'];
 
