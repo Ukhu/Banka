@@ -1,1 +1,4 @@
-node_modules
+API/node_modules
+API/.nyc_output
+.vscode/
+API/coverage/
