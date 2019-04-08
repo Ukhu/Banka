@@ -1,5 +1,6 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
+import { debug } from 'debug';
 import app from '../app';
 
 chai.should();
@@ -111,27 +112,49 @@ describe('Authentication', () => {
 });
 
 describe('Account', () => {
-  let resToken;
+  // let resToken;
 
-  before((done) => {
-    const userDetails = {
-      email: 'oshu.bi@gmail.com',
-      firstname: 'Osaukhu',
-      lastname: 'Iyamuosa',
-      password: 'ukhu7',
-      type: 'client',
-      isAdmin: 'false',
-    };
-    chai.request(app)
-      .post('/api/v1/auth/signup')
-      .send(userDetails)
-      .end((err, res) => {
-        resToken = res.body.data.token;
-      });
-    done();
-  });
+  // before((done) => {
+  //   const userDetails = {
+  //     email: 'oshu.bi@gmail.com',
+  //     firstname: 'Osaukhu',
+  //     lastname: 'Iyamuosa',
+  //     password: 'ukhu7',
+  //     type: 'client',
+  //     isAdmin: 'false',
+  //   };
+  //   chai.request(app)
+  //     .post('/api/v1/auth/signup')
+  //     .send(userDetails)
+  //     .end((err, res) => {
+  //       console.log(res.body);
+  //       resToken = res.body.data.token;
+  //     });
+  //   done();
+  // });
 
   describe('POST /accounts', () => {
+    let resToken;
+
+    beforeEach((done) => {
+      const userDetails = {
+        email: 'oshu.bi@gmail.com',
+        firstname: 'Osaukhu',
+        lastname: 'Iyamuosa',
+        password: 'ukhu7',
+        type: 'client',
+        isAdmin: 'false',
+      };
+      chai.request(app)
+        .post('/api/v1/auth/signup')
+        .send(userDetails)
+        .end((err, res) => {
+          console.log(res.body);
+          resToken = res.body.data.token;
+        });
+      done();
+    });
+
     it('it should create a bank account if all fields are filled correctly', (done) => {
       const accountOpeningDetails = {
         userId: 2,
@@ -142,6 +165,7 @@ describe('Account', () => {
         .post('/api/v1/accounts')
         .send(accountOpeningDetails)
         .end((err, res) => {
+          // debug('test/resBody')(res.body);
           res.should.have.status(201);
           res.body.should.be.a('object');
           res.body.should.have.property('data');
