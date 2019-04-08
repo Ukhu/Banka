@@ -9,5 +9,6 @@ import validateEmail from '../middlewares/validateEmail';
 const router = Router();
 
 router.post('/signup', userValidation(), validateEmail, UserController.createUser);
+router.post('/signin', UserController.loginUser);
 
 export default router;

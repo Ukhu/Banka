@@ -18,28 +18,33 @@ export default class AccountController {
 
     accountdb.push(newAccount);
 
-    let ownerFirstname;
-    let ownerLastname;
-    let ownerEmail;
+    let owner;
 
     users.forEach((user) => {
       if (user.id === Number(userId)) {
-        ownerFirstname = user.firstname;
-        ownerLastname = user.lastname;
-        ownerEmail = user.email;
+        owner = {
+          firstname: user.firstname,
+          lastname: user.lastname,
+          email: user.email,
+        };
       }
+      return owner;
     });
 
-    res.status(201).json({
-      status: 201,
-      data: {
-        accountNumber: newAccount.accountNumber,
-        firstname: ownerFirstname,
-        lastname: ownerLastname,
-        email: ownerEmail,
-        type,
-        openingBalance: newAccount.balance,
-      },
-    });
+    if (owner) {
+      res.status(201).json({
+        status: 201,
+        data: {
+          accountNumber: newAccount.accountNumber,
+          firstname: owner.firstname,
+          lastname: owner.lastname,
+          email: owner.email,
+          type,
+          openingBalance: newAccount.balance,
+        },
+      });
+    } else {
+      res.status(404).json({ status: 404, error: 'Account owner not found' });
+    }
   }
 }
