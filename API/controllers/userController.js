@@ -89,7 +89,7 @@ export class UserController {
       });
 
       if (!owner) {
-        res.status(401).json({ status: 401, error: 'Authentication failed!' });
+        res.status(401).json({ status: 401, error: 'No User found for the provided email!' });
       } else {
         bcrypt.compare(req.body.password, owner.password, (err, result) => {
           if (err) {
@@ -110,7 +110,7 @@ export class UserController {
               },
             );
           } else {
-            res.status(401).json({ status: 401, error: 'Authentication failed' });
+            res.status(401).json({ status: 401, error: 'Incorrect password' });
           }
         });
       }
