@@ -8,8 +8,8 @@ export class TransactionController {
       type, accountNumber, amount,
     } = req.body;
 
-    if (type !== 'credit') {
-      return res.status(400).json({ status: 400, error: 'Bad Request' });
+    if (req.params.accountNumber !== accountNumber) {
+      return res.status(400).json({ status: 400, error: 'Account number in params must match account number given' });
     }
 
     let foundAccount;
@@ -56,6 +56,6 @@ export class TransactionController {
         },
       });
     }
-    return res.status(404).json({ status: 400, error: 'Account not found for the given account number' });
+    return res.status(404).json({ status: 404, error: 'Account not found for the given account number' });
   }
 }
