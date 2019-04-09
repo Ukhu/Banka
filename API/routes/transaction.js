@@ -7,5 +7,6 @@ import transactionValidation from '../validations/transactionValidations';
 const router = express.Router();
 
 router.post('/:accountNumber/credit', transactionValidation('credit'), isAuthorized, isCashier, TransactionController.credit);
+router.post('/:accountNumber/debit', transactionValidation('debit'), isAuthorized, isCashier, TransactionController.debit);
 
 export default router;
