@@ -20,7 +20,10 @@ const isAuthorized = (req, res, next) => {
           });
         } else {
           req.decoded = decod;
-          next();
+
+          if (req.decoded) {
+            next();
+          }
         }
       });
     } else {

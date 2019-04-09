@@ -1,11 +1,12 @@
 import { accountdb } from './accountController';
+import { request } from 'https';
 
 export const transactionsdb = [];
 
 export class TransactionController {
   static credit(req, res) {
     const {
-      type, accountNumber, cashierId, amount,
+      type, accountNumber, amount,
     } = req.body;
 
     if (type !== 'credit') {
@@ -28,7 +29,7 @@ export class TransactionController {
         createdOn: new Date().toLocaleString(),
         type,
         accountNumber: Number(accountNumber),
-        cashier: Number(cashierId),
+        cashier: req.decoded.id,
         amount: Number(amount),
         oldBalance: foundAccount.balance,
         newBalance: foundAccount.balance + Number(amount),
