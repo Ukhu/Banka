@@ -9,9 +9,9 @@ chai.use(chaiHttp);
 
 describe('Authentication', () => {
   describe('POST /auth/signup', () => {
-    it('should create user account if all fields are filled correctly', (done) => {
-      const user = {
-        email: 'osaukhu.bi@gmail.com',
+    before((done) => {
+      const userDetails1 = {
+        email: 'osaukhu1.bi@gmail.com',
         firstname: 'Osaukhu',
         lastname: 'Iyamuosa',
         password: 'ukhu7',
@@ -20,7 +20,24 @@ describe('Authentication', () => {
       };
       chai.request(app)
         .post('/api/v1/auth/signup')
-        .send(user)
+        .send(userDetails1)
+        .end((err, res) => {
+        });
+      done();
+    });
+
+    it('should create user account if all fields are filled correctly', (done) => {
+      const userDetails2 = {
+        email: 'osaukhu2.bi@gmail.com',
+        firstname: 'Osaukhu',
+        lastname: 'Iyamuosa',
+        password: 'ukhu7',
+        type: 'client',
+        isAdmin: 'false',
+      };
+      chai.request(app)
+        .post('/api/v1/auth/signup')
+        .send(userDetails2)
         .end((err, res) => {
           res.should.have.status(201);
           res.body.should.be.a('object');
@@ -31,24 +48,8 @@ describe('Authentication', () => {
     });
 
     it('should respond with a 400 Bad Request Error if user tries to signup with an already existent email', (done) => {
-      before(() => {
-        const userDetails = {
-          email: 'osaukhu.bi@gmail.com',
-          firstname: 'Osaukhu',
-          lastname: 'Iyamuosa',
-          password: 'ukhu7',
-          type: 'client',
-          isAdmin: 'false',
-        };
-        chai.request(app)
-          .post('/api/v1/auth/signup')
-          .send(userDetails)
-          .end();
-        done();
-      });
-
-      const user = {
-        email: 'osaukhu.bi@gmail.com',
+      const userDetails3 = {
+        email: 'osaukhu1.bi@gmail.com',
         firstname: 'Osaukhu',
         lastname: 'Iyamuosa',
         password: 'ukhu7',
@@ -57,7 +58,7 @@ describe('Authentication', () => {
       };
       chai.request(app)
         .post('/api/v1/auth/signup')
-        .send(user)
+        .send(userDetails3)
         .end((err, res) => {
           res.should.have.status(400);
           res.body.should.be.a('object');
@@ -68,8 +69,8 @@ describe('Authentication', () => {
     });
 
     it('should respond with a 400 Bad Request Error if any of the fields are missing', (done) => {
-      const user = {
-        email: 'osaukhu.bi@gmail.com',
+      const userDetails4 = {
+        email: 'osaukhu4.bi@gmail.com',
         lastname: 'Iyamuosa',
         password: 'ukhu7',
         type: 'client',
@@ -77,7 +78,7 @@ describe('Authentication', () => {
       };
       chai.request(app)
         .post('/api/v1/auth/signup')
-        .send(user)
+        .send(userDetails4)
         .end((err, res) => {
           res.should.have.status(400);
           res.body.should.be.a('object');
@@ -88,8 +89,8 @@ describe('Authentication', () => {
     });
 
     it('should respond with a 400 Bad Request Error if any of the fields are empty or undefined', (done) => {
-      const user = {
-        email: 'osaukhu.bi@gmail.com',
+      const userDetails5 = {
+        email: 'osaukhu5.bi@gmail.com',
         firstname: '',
         lastname: 'Iyamuosa',
         password: 'ukhu7',
@@ -98,7 +99,7 @@ describe('Authentication', () => {
       };
       chai.request(app)
         .post('/api/v1/auth/signup')
-        .send(user)
+        .send(userDetails5)
         .end((err, res) => {
           res.should.have.status(400);
           res.body.should.be.a('object');
@@ -229,6 +230,7 @@ describe('Authentication', () => {
 describe('Account', () => {
   describe('POST /accounts', () => {
     let resToken;
+    let id;
 
     before((done) => {
       const userDetails = {
@@ -243,6 +245,7 @@ describe('Account', () => {
         .post('/api/v1/auth/signup')
         .send(userDetails)
         .end((err, res) => {
+          id = res.body.data.id;
           resToken = res.body.data.token;
           if (res) {
             Promise.resolve(done());
@@ -254,7 +257,7 @@ describe('Account', () => {
 
     it('should create a bank account if all fields are filled correctly', (done) => {
       const accountOpeningDetails = {
-        userId: 2,
+        userId: id,
         type: 'current',
         token: resToken,
       };
@@ -274,7 +277,7 @@ describe('Account', () => {
 
     it('should return a 404 Not Found error if there is no user in the DB with the given userID', (done) => {
       const accountOpeningDetails = {
-        userId: 4,
+        userId: 0,
         type: 'current',
         token: resToken,
       };
@@ -292,7 +295,7 @@ describe('Account', () => {
 
     it('should return a 403 Forbidden Error if no token is provided', (done) => {
       const accountOpeningDetails = {
-        userId: 2,
+        userId: id,
         type: 'current',
       };
       chai.request(app)
@@ -308,7 +311,7 @@ describe('Account', () => {
 
     it('should return a 403 Forbidden Error if a wrong token is provided', (done) => {
       const accountOpeningDetails = {
-        userId: 2,
+        userId: id,
         type: 'current',
         token: 'wr@ngtoke#',
       };
@@ -325,7 +328,7 @@ describe('Account', () => {
 
     it('should return a 400 Bad Request Error if any of the other fields are missing', (done) => {
       const accountOpeningDetails = {
-        userId: 2,
+        userId: id,
         token: resToken,
       };
       chai.request(app)
@@ -341,7 +344,7 @@ describe('Account', () => {
 
     it('should return a 400 Bad Request Error if any of the other fields are of the wrong type or value', (done) => {
       const accountOpeningDetails = {
-        userId: 2,
+        userId: id,
         token: resToken,
       };
       chai.request(app)

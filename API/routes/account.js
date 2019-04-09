@@ -1,5 +1,5 @@
 import express from 'express';
-import AccountController from '../controllers/AccountController';
+import AccountController from '../controllers/accountController';
 import isAuthorized from '../middlewares/isAuthorized';
 import accountValidations from '../validations/accountValidations';
 

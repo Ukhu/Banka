@@ -1,5 +1,5 @@
 import { validationResult } from 'express-validator/check';
-import { users } from '../controllers/UserController';
+import { users } from '../controllers/userController';
 
 const validateEmail = (req, res, next) => {
   const errorFormatter = ({ location, msg, param }) => `${location}[${param}]: ${msg}`;
