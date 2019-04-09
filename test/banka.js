@@ -594,6 +594,26 @@ describe('Transactions', () => {
         });
     });
 
+    before((done) => {
+      const creditTransDetails = {
+        type: 'credit',
+        accountNumber: String(userAccountNum),
+        amount: '5000',
+        token: cashierToken,
+      };
+
+      chai.request(app)
+        .post(`/api/v1/transactions/${userAccountNum}/credit`)
+        .send(creditTransDetails)
+        .end((err, res) => {
+          if (res) {
+            Promise.resolve(done());
+          } else {
+            Promise.reject(done(err));
+          }
+        });
+    });
+
     it('should successfully debit the user bank account if the correct details are provided', (done) => {
       const debitTransDetails = {
         type: 'debit',
@@ -612,6 +632,27 @@ describe('Transactions', () => {
           res.body.data.should.be.a('object');
           res.body.data.should.have.keys('transactionId', 'accountNumber', 'amount', 'cashier',
             'transactionType', 'accountBalance');
+        });
+      done();
+    });
+
+    it('should successfully debit the user bank account if the correct details are provided', (done) => {
+      const debitTransDetails = {
+        type: 'debit',
+        accountNumber: String(userAccountNum),
+        amount: '6720.55',
+        token: cashierToken,
+      };
+
+      chai.request(app)
+        .post(`/api/v1/transactions/${userAccountNum}/debit`)
+        .send(debitTransDetails)
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.body.should.be.a('object');
+          res.body.should.have.keys('status', 'error');
+          res.body.error.should.be.a('string');
+          res.body.error.should.equal('Insufficient Funds');
         });
       done();
     });

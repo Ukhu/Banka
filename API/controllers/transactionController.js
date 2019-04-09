@@ -79,6 +79,10 @@ export class TransactionController {
     });
 
     if (foundAccount) {
+      if (foundAccount.balance < Number(amount)) {
+        return res.status(400).json({ status: 400, error: 'Insufficient Funds' });
+      }
+
       const newTransaction = {
         id: transactionsdb.length + 1,
         createdOn: new Date().toLocaleString(),
