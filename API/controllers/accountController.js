@@ -1,10 +1,10 @@
 import { users } from './userController';
 
-export default class AccountController {
+export const accountdb = [];
+
+export class AccountController {
   static createAccount(req, res) {
     const { userId, type } = req.body;
-
-    const accountdb = [];
 
     const newAccount = {
       id: accountdb.length + 100,
