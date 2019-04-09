@@ -9,9 +9,9 @@ chai.use(chaiHttp);
 
 describe('Authentication', () => {
   describe('POST /auth/signup', () => {
-    it('should create user account if all fields are filled correctly', (done) => {
-      const user = {
-        email: 'osaukhu.bi@gmail.com',
+    before((done) => {
+      const userDetails1 = {
+        email: 'osaukhu1.bi@gmail.com',
         firstname: 'Osaukhu',
         lastname: 'Iyamuosa',
         password: 'ukhu7',
@@ -20,7 +20,23 @@ describe('Authentication', () => {
       };
       chai.request(app)
         .post('/api/v1/auth/signup')
-        .send(user)
+        .send(userDetails1)
+        .end();
+      done();
+    });
+
+    it('should create user account if all fields are filled correctly', (done) => {
+      const userDetails2 = {
+        email: 'osaukhu2.bi@gmail.com',
+        firstname: 'Osaukhu',
+        lastname: 'Iyamuosa',
+        password: 'ukhu7',
+        type: 'client',
+        isAdmin: 'false',
+      };
+      chai.request(app)
+        .post('/api/v1/auth/signup')
+        .send(userDetails2)
         .end((err, res) => {
           res.should.have.status(201);
           res.body.should.be.a('object');
@@ -31,24 +47,8 @@ describe('Authentication', () => {
     });
 
     it('should respond with a 400 Bad Request Error if user tries to signup with an already existent email', (done) => {
-      before(() => {
-        const userDetails = {
-          email: 'osaukhu.bi@gmail.com',
-          firstname: 'Osaukhu',
-          lastname: 'Iyamuosa',
-          password: 'ukhu7',
-          type: 'client',
-          isAdmin: 'false',
-        };
-        chai.request(app)
-          .post('/api/v1/auth/signup')
-          .send(userDetails)
-          .end();
-        done();
-      });
-
-      const user = {
-        email: 'osaukhu.bi@gmail.com',
+      const userDetails3 = {
+        email: 'osaukhu1.bi@gmail.com',
         firstname: 'Osaukhu',
         lastname: 'Iyamuosa',
         password: 'ukhu7',
@@ -57,7 +57,7 @@ describe('Authentication', () => {
       };
       chai.request(app)
         .post('/api/v1/auth/signup')
-        .send(user)
+        .send(userDetails3)
         .end((err, res) => {
           res.should.have.status(400);
           res.body.should.be.a('object');
@@ -68,8 +68,8 @@ describe('Authentication', () => {
     });
 
     it('should respond with a 400 Bad Request Error if any of the fields are missing', (done) => {
-      const user = {
-        email: 'osaukhu.bi@gmail.com',
+      const userDetails4 = {
+        email: 'osaukhu4.bi@gmail.com',
         lastname: 'Iyamuosa',
         password: 'ukhu7',
         type: 'client',
@@ -77,7 +77,7 @@ describe('Authentication', () => {
       };
       chai.request(app)
         .post('/api/v1/auth/signup')
-        .send(user)
+        .send(userDetails4)
         .end((err, res) => {
           res.should.have.status(400);
           res.body.should.be.a('object');
@@ -88,8 +88,8 @@ describe('Authentication', () => {
     });
 
     it('should respond with a 400 Bad Request Error if any of the fields are empty or undefined', (done) => {
-      const user = {
-        email: 'osaukhu.bi@gmail.com',
+      const userDetails5 = {
+        email: 'osaukhu5.bi@gmail.com',
         firstname: '',
         lastname: 'Iyamuosa',
         password: 'ukhu7',
@@ -98,7 +98,7 @@ describe('Authentication', () => {
       };
       chai.request(app)
         .post('/api/v1/auth/signup')
-        .send(user)
+        .send(userDetails5)
         .end((err, res) => {
           res.should.have.status(400);
           res.body.should.be.a('object');
@@ -229,6 +229,7 @@ describe('Authentication', () => {
 describe('Account', () => {
   describe('POST /accounts', () => {
     let resToken;
+    let userid;
 
     before((done) => {
       const userDetails = {
@@ -243,6 +244,7 @@ describe('Account', () => {
         .post('/api/v1/auth/signup')
         .send(userDetails)
         .end((err, res) => {
+          userid = res.body.data.id;
           resToken = res.body.data.token;
           if (res) {
             Promise.resolve(done());
@@ -254,7 +256,7 @@ describe('Account', () => {
 
     it('should create a bank account if all fields are filled correctly', (done) => {
       const accountOpeningDetails = {
-        userId: 2,
+        userId: userid,
         type: 'current',
         token: resToken,
       };
@@ -274,7 +276,7 @@ describe('Account', () => {
 
     it('should return a 404 Not Found error if there is no user in the DB with the given userID', (done) => {
       const accountOpeningDetails = {
-        userId: 4,
+        userId: 0,
         type: 'current',
         token: resToken,
       };
@@ -292,7 +294,7 @@ describe('Account', () => {
 
     it('should return a 403 Forbidden Error if no token is provided', (done) => {
       const accountOpeningDetails = {
-        userId: 2,
+        userId: userid,
         type: 'current',
       };
       chai.request(app)
@@ -308,7 +310,7 @@ describe('Account', () => {
 
     it('should return a 403 Forbidden Error if a wrong token is provided', (done) => {
       const accountOpeningDetails = {
-        userId: 2,
+        userId: userid,
         type: 'current',
         token: 'wr@ngtoke#',
       };
@@ -325,7 +327,7 @@ describe('Account', () => {
 
     it('should return a 400 Bad Request Error if any of the other fields are missing', (done) => {
       const accountOpeningDetails = {
-        userId: 2,
+        userId: userid,
         token: resToken,
       };
       chai.request(app)
@@ -341,7 +343,7 @@ describe('Account', () => {
 
     it('should return a 400 Bad Request Error if any of the other fields are of the wrong type or value', (done) => {
       const accountOpeningDetails = {
-        userId: 2,
+        userId: userid,
         token: resToken,
       };
       chai.request(app)
@@ -353,6 +355,168 @@ describe('Account', () => {
           res.body.should.have.property('error');
           done();
         });
+    });
+  });
+});
+
+describe('Transactions', () => {
+  describe('POST /transactions', () => {
+    let userToken;
+    let userid;
+    let cashierToken;
+    let userAccountNum;
+
+    before((done) => {
+      const userDetails = {
+        email: 'depositor@gmail.com',
+        firstname: 'Money',
+        lastname: 'Depositor',
+        password: 'credit1',
+        type: 'client',
+        isAdmin: 'false',
+      };
+
+      chai.request(app)
+        .post('/api/v1/auth/signup')
+        .send(userDetails)
+        .end((err, res) => {
+          userid = res.body.data.id;
+          userToken = res.body.data.token;
+
+          if (res) {
+            Promise.resolve(done());
+          } else {
+            Promise.resolve(done(err));
+          }
+        });
+    });
+
+    before((done) => {
+      const cashierDetails = {
+        email: 'cashier@gmail.com',
+        firstname: 'Staff',
+        lastname: 'Cashier',
+        password: 'cashier1',
+        type: 'staff',
+        isAdmin: 'false',
+      };
+
+      chai.request(app)
+        .post('/api/v1/auth/signup')
+        .send(cashierDetails)
+        .end((err, res) => {
+          cashierToken = res.body.data.token;
+          if (res) {
+            Promise.resolve(done());
+          } else {
+            Promise.reject(done(err));
+          }
+        });
+    });
+
+    before((done) => {
+      const userCreateAccDetails = {
+        userId: userid,
+        type: 'current',
+        token: userToken,
+      };
+
+      chai.request(app)
+        .post('/api/v1/accounts')
+        .send(userCreateAccDetails)
+        .end((err, res) => {
+          userAccountNum = res.body.data.accountNumber;
+          if (res) {
+            Promise.resolve(done());
+          } else {
+            Promise.reject(done(err));
+          }
+        });
+    });
+
+    it('should successfully credit the user bank account if the correct details are provided', (done) => {
+      const creditTransDetails = {
+        type: 'credit',
+        accountNumber: String(userAccountNum),
+        amount: '400.50',
+        token: cashierToken,
+      };
+
+      chai.request(app)
+        .post(`/api/v1/transactions/${userAccountNum}/credit`)
+        .send(creditTransDetails)
+        .end((err, res) => {
+          res.should.have.status(201);
+          res.body.should.be.a('object');
+          res.body.should.have.keys('status', 'data');
+          res.body.data.should.be.a('object');
+          res.body.data.should.have.keys('transactionId', 'accountNumber', 'amount', 'cashier',
+            'transactionType', 'accountBalance');
+        });
+      done();
+    });
+
+    it('should return a 404 Not Found Error if there is no bank account for the specified account number', (done) => {
+      const creditTransDetails = {
+        type: 'credit',
+        accountNumber: '1234567',
+        amount: '400.50',
+        token: cashierToken,
+      };
+
+      chai.request(app)
+        .post('/api/v1/transactions/1234567/credit')
+        .send(creditTransDetails)
+        .end((err, res) => {
+          res.should.have.status(404);
+          res.body.should.be.a('object');
+          res.body.should.have.property('error');
+          res.body.error.should.be.a('string');
+          res.body.error.should.equal('Account not found for the given account number');
+        });
+      done();
+    });
+
+    it('should return a 403 Forbidden Error if a user who is not a cashier tries to access the endpoint', (done) => {
+      const creditTransDetails = {
+        type: 'credit',
+        accountNumber: String(userAccountNum),
+        amount: '400.50',
+        token: userToken,
+      };
+
+      chai.request(app)
+        .post(`/api/v1/transactions/${userAccountNum}/credit`)
+        .send(creditTransDetails)
+        .end((err, res) => {
+          res.should.have.status(403);
+          res.body.should.be.a('object');
+          res.body.should.have.property('error');
+          res.body.error.should.be.a('string');
+          res.body.error.should.equal('FORBIDDEN - Only Cashier can access make this transaction!');
+        });
+      done();
+    });
+
+    it('should return a 400 Bad Request Error if the account number in the request params does not match the one in the body', (done) => {
+      const creditTransDetails = {
+        type: 'credit',
+        accountNumber: String(1234567),
+        amount: '400.50',
+        token: cashierToken,
+      };
+
+      chai.request(app)
+        .post('/api/v1/transactions/7654321/credit')
+        .send(creditTransDetails)
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.body.should.be.a('object');
+          res.body.should.have.property('error');
+          res.body.error.should.be.a('string');
+          res.body.error.should.equal('Account number in params must match account number given');
+        });
+      done();
     });
   });
 });
