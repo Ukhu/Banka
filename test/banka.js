@@ -639,7 +639,7 @@ describe('Transactions', () => {
 
     it('should return a 403 Forbidden Error if a user who is not a cashier tries to access the endpoint', (done) => {
       const debitTransDetails = {
-        type: 'credit',
+        type: 'debit',
         accountNumber: String(userAccountNum),
         amount: '400.50',
         token: userToken,
@@ -649,6 +649,7 @@ describe('Transactions', () => {
         .post(`/api/v1/transactions/${userAccountNum}/debit`)
         .send(debitTransDetails)
         .end((err, res) => {
+          console.log(res.body);
           res.should.have.status(403);
           res.body.should.be.a('object');
           res.body.should.have.property('error');
@@ -660,7 +661,7 @@ describe('Transactions', () => {
 
     it('should return a 400 Bad Request Error if the account number in the request params does not match the one in the body', (done) => {
       const debitTransDetails = {
-        type: 'credit',
+        type: 'debit',
         accountNumber: String(1234567),
         amount: '400.50',
         token: cashierToken,
