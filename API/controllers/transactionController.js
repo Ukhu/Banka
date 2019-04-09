@@ -1,5 +1,4 @@
 import { accountdb } from './accountController';
-import { request } from 'https';
 
 export const transactionsdb = [];
 
@@ -36,7 +35,7 @@ export class TransactionController {
       };
 
       accountdb.forEach((acc) => {
-        if (acc.accountNumber === accountNumber) {
+        if (acc.accountNumber === Number(accountNumber)) {
           acc.balance = newTransaction.newBalance;
         }
       });
