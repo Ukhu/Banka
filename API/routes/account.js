@@ -8,5 +8,6 @@ const router = express.Router();
 
 router.post('/', accountValidations(), isAuthorized, AccountController.createAccount);
 router.patch('/:accountNumber', isAuthorized, isStaff, AccountController.activateOrDeactivate);
+router.delete('/:accountNumber', isAuthorized, isStaff, AccountController.deleteAccount);
 
 export default router;
