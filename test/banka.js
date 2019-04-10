@@ -360,7 +360,7 @@ describe('Account', () => {
 });
 
 describe('Transactions', () => {
-  describe('POST /transactions', () => {
+  describe('POST /transactions/<accountNumber>/credit', () => {
     let userToken;
     let userid;
     let cashierToken;
@@ -509,6 +509,208 @@ describe('Transactions', () => {
       chai.request(app)
         .post('/api/v1/transactions/7654321/credit')
         .send(creditTransDetails)
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.body.should.be.a('object');
+          res.body.should.have.property('error');
+          res.body.error.should.be.a('string');
+          res.body.error.should.equal('Account number in params must match account number given');
+        });
+      done();
+    });
+  });
+
+  describe('POST /transactions/<accountNumber>/debit', () => {
+    let userToken;
+    let userid;
+    let cashierToken;
+    let userAccountNum;
+
+    before((done) => {
+      const userDetails = {
+        email: 'withdrawer@gmail.com',
+        firstname: 'Money',
+        lastname: 'Withdrawer',
+        password: 'debit1',
+        type: 'client',
+        isAdmin: 'false',
+      };
+
+      chai.request(app)
+        .post('/api/v1/auth/signup')
+        .send(userDetails)
+        .end((err, res) => {
+          userid = res.body.data.id;
+          userToken = res.body.data.token;
+
+          if (res) {
+            Promise.resolve(done());
+          } else {
+            Promise.resolve(done(err));
+          }
+        });
+    });
+
+    before((done) => {
+      const cashierDetails = {
+        email: 'cashier2@gmail.com',
+        firstname: 'Staff',
+        lastname: 'Cashier',
+        password: 'cashier2',
+        type: 'staff',
+        isAdmin: 'false',
+      };
+
+      chai.request(app)
+        .post('/api/v1/auth/signup')
+        .send(cashierDetails)
+        .end((err, res) => {
+          cashierToken = res.body.data.token;
+          if (res) {
+            Promise.resolve(done());
+          } else {
+            Promise.reject(done(err));
+          }
+        });
+    });
+
+    before((done) => {
+      const userCreateAccDetails = {
+        userId: userid,
+        type: 'savings',
+        token: userToken,
+      };
+
+      chai.request(app)
+        .post('/api/v1/accounts')
+        .send(userCreateAccDetails)
+        .end((err, res) => {
+          userAccountNum = res.body.data.accountNumber;
+          if (res) {
+            Promise.resolve(done());
+          } else {
+            Promise.reject(done(err));
+          }
+        });
+    });
+
+    before((done) => {
+      const creditTransDetails = {
+        type: 'credit',
+        accountNumber: String(userAccountNum),
+        amount: '5000',
+        token: cashierToken,
+      };
+
+      chai.request(app)
+        .post(`/api/v1/transactions/${userAccountNum}/credit`)
+        .send(creditTransDetails)
+        .end((err, res) => {
+          if (res) {
+            Promise.resolve(done());
+          } else {
+            Promise.reject(done(err));
+          }
+        });
+    });
+
+    it('should successfully debit the user bank account if the correct details are provided', (done) => {
+      const debitTransDetails = {
+        type: 'debit',
+        accountNumber: String(userAccountNum),
+        amount: '400.50',
+        token: cashierToken,
+      };
+
+      chai.request(app)
+        .post(`/api/v1/transactions/${userAccountNum}/debit`)
+        .send(debitTransDetails)
+        .end((err, res) => {
+          res.should.have.status(201);
+          res.body.should.be.a('object');
+          res.body.should.have.keys('status', 'data');
+          res.body.data.should.be.a('object');
+          res.body.data.should.have.keys('transactionId', 'accountNumber', 'amount', 'cashier',
+            'transactionType', 'accountBalance');
+        });
+      done();
+    });
+
+    it('should successfully debit the user bank account if the correct details are provided', (done) => {
+      const debitTransDetails = {
+        type: 'debit',
+        accountNumber: String(userAccountNum),
+        amount: '6720.55',
+        token: cashierToken,
+      };
+
+      chai.request(app)
+        .post(`/api/v1/transactions/${userAccountNum}/debit`)
+        .send(debitTransDetails)
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.body.should.be.a('object');
+          res.body.should.have.keys('status', 'error');
+          res.body.error.should.be.a('string');
+          res.body.error.should.equal('Insufficient Funds');
+        });
+      done();
+    });
+
+    it('should return a 404 Not Found Error if there is no bank account for the specified account number', (done) => {
+      const debitTransDetails = {
+        type: 'debit',
+        accountNumber: '1234567',
+        amount: '400.50',
+        token: cashierToken,
+      };
+
+      chai.request(app)
+        .post('/api/v1/transactions/1234567/debit')
+        .send(debitTransDetails)
+        .end((err, res) => {
+          res.should.have.status(404);
+          res.body.should.be.a('object');
+          res.body.should.have.property('error');
+          res.body.error.should.be.a('string');
+          res.body.error.should.equal('Account not found for the given account number');
+        });
+      done();
+    });
+
+    it('should return a 403 Forbidden Error if a user who is not a cashier tries to access the endpoint', (done) => {
+      const debitTransDetails = {
+        type: 'debit',
+        accountNumber: String(userAccountNum),
+        amount: '400.50',
+        token: userToken,
+      };
+
+      chai.request(app)
+        .post(`/api/v1/transactions/${userAccountNum}/debit`)
+        .send(debitTransDetails)
+        .end((err, res) => {
+          console.log(res.body);
+          res.should.have.status(403);
+          res.body.should.be.a('object');
+          res.body.should.have.property('error');
+          res.body.error.should.be.a('string');
+          res.body.error.should.equal('FORBIDDEN - Only Cashier can access make this transaction!');
+        });
+      done();
+    });
+
+    it('should return a 400 Bad Request Error if the account number in the request params does not match the one in the body', (done) => {
+      const debitTransDetails = {
+        type: 'debit',
+        accountNumber: String(1234567),
+        amount: '400.50',
+        token: cashierToken,
+      };
+
+      chai.request(app)
+        .post('/api/v1/transactions/7654321/debit')
+        .send(debitTransDetails)
         .end((err, res) => {
           res.should.have.status(400);
           res.body.should.be.a('object');
