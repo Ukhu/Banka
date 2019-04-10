@@ -46,5 +46,9 @@ export class AccountController {
     } else {
       res.status(404).json({ status: 404, error: 'Account owner not found' });
     }
-  }
+  };
+
+  static activateOrDeactivate(req, res) {
+
+  };
 }
