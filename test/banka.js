@@ -585,7 +585,7 @@ describe('ACCOUNTS', () => {
           res.should.have.status(200);
           res.body.should.be.a('object');
           res.body.should.have.property('message');
-          res.body.data.message.should.equal('Account successfully deleted');
+          res.body.message.should.equal('Account successfully deleted');
         });
       done();
     });
