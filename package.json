@@ -5,8 +5,9 @@
   "main": "app.js",
   "scripts": {
     "dev": "nodemon --exec babel-node API/app.js",
-    "test": "nyc --reporter=text --register @babel/register mocha --exit",
-    "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls"
+    "test": "nyc --reporter=lcov --reporter=text --register @babel/register mocha --exit",
+    "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
+    "codeclimate": "codeclimate-test-reporter < ./coverage/lcov.info"
   },
   "nyc": {
     "require": [
@@ -29,6 +30,7 @@
     "@babel/node": "^7.2.2",
     "@babel/preset-env": "^7.4.3",
     "@babel/register": "^7.4.0",
+    "codeclimate-test-reporter": "^0.5.1",
     "coveralls": "^3.0.3",
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
