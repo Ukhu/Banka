@@ -88,4 +88,30 @@ export class AccountController {
       error: 'No account found for the provided entity',
     });
   }
+
+  static deleteAccount(req, res) {
+    const { accountNumber } = req.params;
+
+    let accountIndex;
+
+    accountdb.forEach((acc) => {
+      if (acc.accountNumber === Number(accountNumber)) {
+        accountIndex = accountdb.indexOf(acc);
+      }
+    });
+
+    if (accountIndex) {
+      accountdb.splice(accountIndex, 1);
+
+      return res.status(200).json({
+        status: 200,
+        message: 'Account successfully deleted',
+      });
+    }
+
+    return res.status(404).json({
+      status: 404,
+      error: 'No account found for the provided entity',
+    });
+  }
 }
