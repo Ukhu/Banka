@@ -441,7 +441,7 @@ describe('Account', () => {
         .patch(`/api/v1/accounts/${userAccountNum}`)
         .send(token)
         .end((err, res) => {
-          res.should.have.status(204);
+          res.should.have.status(200);
           res.body.should.be.a('object');
           res.body.should.have.property('data');
           res.body.data.should.have.keys('accountNumber', 'status');
@@ -462,7 +462,7 @@ describe('Account', () => {
           res.body.should.be.a('object');
           res.body.should.have.property('error');
           res.body.error.should.be.a('string');
-          res.body.error.should.equal('No account found for the specified entity');
+          res.body.error.should.equal('No account found for the provided entity');
         });
       done();
     });

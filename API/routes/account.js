@@ -7,6 +7,6 @@ import accountValidations from '../validations/accountValidations';
 const router = express.Router();
 
 router.post('/', accountValidations(), isAuthorized, AccountController.createAccount);
-router.post('/:accountNumber', isAuthorized, isStaff, AccountController.activateOrDeactivate);
+router.patch('/:accountNumber', isAuthorized, isStaff, AccountController.activateOrDeactivate);
 
 export default router;
