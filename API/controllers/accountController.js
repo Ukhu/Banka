@@ -47,4 +47,45 @@ export class AccountController {
       res.status(404).json({ status: 404, error: 'Account owner not found' });
     }
   }
+
+  static activateOrDeactivate(req, res) {
+    const { accountNumber } = req.params;
+
+    let foundAccount;
+
+    accountdb.forEach((acc) => {
+      if (acc.accountNumber === Number(accountNumber)) {
+        foundAccount = {
+          accNum: acc.accountNumber,
+          status: acc.status,
+        };
+      }
+    });
+
+    if (foundAccount) {
+      if (foundAccount.status === 'active') {
+        foundAccount.status = 'dormant';
+      } else {
+        foundAccount.status = 'active';
+      }
+
+      accountdb.forEach((acc) => {
+        if (acc.accountNumber === Number(accountNumber)) {
+          acc.status = foundAccount.status;
+        }
+      });
+      return res.status(200).json({
+        status: 200,
+        data: {
+          accountNumber: foundAccount.accNum,
+          status: foundAccount.status,
+        },
+      });
+    }
+
+    return res.status(404).json({
+      status: 404,
+      error: 'No account found for the provided entity',
+    });
+  }
 }

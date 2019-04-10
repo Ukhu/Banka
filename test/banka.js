@@ -357,6 +357,147 @@ describe('Account', () => {
         });
     });
   });
+
+  describe('PATCH /accounts/<accountNumber>', () => {
+    let userToken;
+    let userid;
+    let staffToken;
+    let userAccountNum;
+
+    before((done) => {
+      const userDetails = {
+        email: 'dummyuser@gmail.com',
+        firstname: 'Dummy',
+        lastname: 'User',
+        password: 'userdummy1',
+        type: 'client',
+        isAdmin: 'false',
+      };
+
+      chai.request(app)
+        .post('/api/v1/auth/signup')
+        .send(userDetails)
+        .end((err, res) => {
+          userid = res.body.data.id;
+          userToken = res.body.data.token;
+
+          if (res) {
+            Promise.resolve(done());
+          } else {
+            Promise.resolve(done(err));
+          }
+        });
+    });
+
+    before((done) => {
+      const staffDetails = {
+        email: 'staff@gmail.com',
+        firstname: 'Staff',
+        lastname: 'Admin',
+        password: 'admin123',
+        type: 'staff',
+        isAdmin: 'true',
+      };
+
+      chai.request(app)
+        .post('/api/v1/auth/signup')
+        .send(staffDetails)
+        .end((err, res) => {
+          staffToken = res.body.data.token;
+          if (res) {
+            Promise.resolve(done());
+          } else {
+            Promise.reject(done(err));
+          }
+        });
+    });
+
+    before((done) => {
+      const userCreateAccDetails = {
+        userId: userid,
+        type: 'current',
+        token: userToken,
+      };
+
+      chai.request(app)
+        .post('/api/v1/accounts')
+        .send(userCreateAccDetails)
+        .end((err, res) => {
+          userAccountNum = res.body.data.accountNumber;
+          if (res) {
+            Promise.resolve(done());
+          } else {
+            Promise.reject(done(err));
+          }
+        });
+    });
+
+    it('should successfully update the user status to active or dormant', (done) => {
+      const token = {
+        token: staffToken,
+      };
+
+      chai.request(app)
+        .patch(`/api/v1/accounts/${userAccountNum}`)
+        .send(token)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.be.a('object');
+          res.body.should.have.property('data');
+          res.body.data.should.have.keys('accountNumber', 'status');
+        });
+      done();
+    });
+
+    it('should return a 404 Not Found Error if the account number specified in the params is not in the database', (done) => {
+      const token = {
+        token: staffToken,
+      };
+
+      chai.request(app)
+        .patch('/api/v1/accounts/2468123')
+        .send(token)
+        .end((err, res) => {
+          res.should.have.status(404);
+          res.body.should.be.a('object');
+          res.body.should.have.property('error');
+          res.body.error.should.be.a('string');
+          res.body.error.should.equal('No account found for the provided entity');
+        });
+      done();
+    });
+
+    it('should return a 403 Forbidden Error if an unauthenticated user tries to access the endpoint', (done) => {
+      chai.request(app)
+        .patch(`/api/v1/accounts/${userAccountNum}`)
+        .end((err, res) => {
+          res.should.have.status(403);
+          res.body.should.be.a('object');
+          res.body.should.have.property('error');
+          res.body.error.should.be.a('string');
+          res.body.error.should.equal('FORBIDDEN REQUEST - No Token Provided');
+        });
+      done();
+    });
+
+    it('should return a 403 Forbidden Error if a user who is not a staff tries to access the endpoint', (done) => {
+      const token = {
+        token: userToken,
+      };
+
+      chai.request(app)
+        .patch(`/api/v1/accounts/${userAccountNum}`)
+        .send(token)
+        .end((err, res) => {
+          res.should.have.status(403);
+          res.body.should.be.a('object');
+          res.body.should.have.property('error');
+          res.body.error.should.be.a('string');
+          res.body.error.should.equal('FORBIDDEN - Only Staff can access make this transaction!');
+        });
+      done();
+    });
+  });
 });
 
 describe('Transactions', () => {
@@ -636,7 +777,7 @@ describe('Transactions', () => {
       done();
     });
 
-    it('should successfully debit the user bank account if the correct details are provided', (done) => {
+    it('should return a 400 Bad Request Error if the user tries to withdraw above his account balance', (done) => {
       const debitTransDetails = {
         type: 'debit',
         accountNumber: String(userAccountNum),
@@ -690,7 +831,6 @@ describe('Transactions', () => {
         .post(`/api/v1/transactions/${userAccountNum}/debit`)
         .send(debitTransDetails)
         .end((err, res) => {
-          console.log(res.body);
           res.should.have.status(403);
           res.body.should.be.a('object');
           res.body.should.have.property('error');
