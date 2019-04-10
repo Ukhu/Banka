@@ -1,8 +1,12 @@
 language: node_js
 node_js:
   - "stable"
+addons:
+    code_climate:
+        repo_token: b7e1e3cc59f73a6b9dd60efd8b150e219219657ba10957cedb0b69fdc9b3eb7b
 cache: 
   directories:
     - "node_modules"
 after_success:
 - npm run coveralls
+- npm run codeclimate
