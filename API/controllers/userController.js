@@ -3,6 +3,7 @@
 import { sign } from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import checkLoginStatus from '../helpers/checkLoginStatus';
+import handleCorrectPswrd from '../helpers/handleCorrectPswrd';
 
 export const users = [];
 
@@ -61,48 +62,12 @@ export class UserController {
     if (req.body.token || req.query.token || req.headers['x-access-token']) {
       checkLoginStatus(req, res);
     } else {
-      let owner;
+      const owner = users.filter(user => user.email === req.body.email);
 
-      users.forEach((user) => {
-        if (user.email === req.body.email) {
-          owner = {
-            id: user.id,
-            firstname: user.firstname,
-            lastname: user.lastname,
-            email: user.email,
-            password: user.password,
-            type: user.type,
-            isAdmin: user.isAdmin,
-          };
-        }
-        return owner;
-      });
-
-      if (!owner) {
+      if (owner.length === 0) {
         res.status(401).json({ status: 401, error: 'No User found for the provided email!' });
       } else {
-        bcrypt.compare(req.body.password, owner.password, (err, result) => {
-          if (err) {
-            res.status(401).json({ status: 401, error: 'Authentication failed!' });
-          } else if (result) {
-            const token = sign(owner, 'examplesecretword', { expiresIn: '1hr' });
-
-            res.status(200).json(
-              {
-                status: 200,
-                data: {
-                  token,
-                  id: owner.id,
-                  firstname: owner.firstname,
-                  lastname: owner.lastname,
-                  email: owner.email,
-                },
-              },
-            );
-          } else {
-            res.status(401).json({ status: 401, error: 'Incorrect password' });
-          }
-        });
+        handleCorrectPswrd(res, owner[0], req.body.password, owner[0].password);
       }
     }
   }
