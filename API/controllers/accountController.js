@@ -1,4 +1,5 @@
 import { users } from './userController';
+import handleNewAccount from '../helpers/handleNewAccount';
 
 export const accountdb = [];
 
@@ -6,43 +7,22 @@ export class AccountController {
   static createAccount(req, res) {
     const { userId, type } = req.body;
 
-    const newAccount = {
-      id: accountdb.length + 100,
-      accountNumber: Math.floor(Math.random() * (10000000 - 1000000) + 1000000),
-      createdOn: new Date().toLocaleString(),
-      owner: Number(userId),
-      type,
-      status: 'active',
-      balance: 0.00,
-    };
+    const owner = users.filter(user => user.id === Number(userId));
 
-    accountdb.push(newAccount);
+    if (owner.length > 0) {
+      const newAccount = {
+        id: accountdb.length + 100,
+        accountNumber: Math.floor(Math.random() * (10000000 - 1000000) + 1000000),
+        createdOn: new Date().toLocaleString(),
+        owner: Number(userId),
+        type,
+        status: 'active',
+        balance: 0.00,
+      };
 
-    let owner;
+      accountdb.push(newAccount);
 
-    users.forEach((user) => {
-      if (user.id === Number(userId)) {
-        owner = {
-          firstname: user.firstname,
-          lastname: user.lastname,
-          email: user.email,
-        };
-      }
-      return owner;
-    });
-
-    if (owner) {
-      res.status(201).json({
-        status: 201,
-        data: {
-          accountNumber: newAccount.accountNumber,
-          firstname: owner.firstname,
-          lastname: owner.lastname,
-          email: owner.email,
-          type,
-          openingBalance: newAccount.balance,
-        },
-      });
+      handleNewAccount(res, newAccount, owner[0]);
     } else {
       res.status(404).json({ status: 404, error: 'Account owner not found' });
     }
