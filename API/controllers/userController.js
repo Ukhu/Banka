@@ -3,7 +3,7 @@
 import { sign } from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import checkLoginStatus from '../helpers/checkLoginStatus';
-import handleCorrectPswrd from '../helpers/handleCorrectPswrd';
+import handlePswrdComparison from '../helpers/handlePswrdComparison';
 
 export const users = [];
 
@@ -67,7 +67,7 @@ export class UserController {
       if (owner.length === 0) {
         res.status(401).json({ status: 401, error: 'No User found for the provided email!' });
       } else {
-        handleCorrectPswrd(res, owner[0], req.body.password, owner[0].password);
+        handlePswrdComparison(res, owner[0], req.body.password, owner[0].password);
       }
     }
   }
