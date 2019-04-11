@@ -1,9 +1,8 @@
 // User controller
-
-import { sign } from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import checkLoginStatus from '../helpers/checkLoginStatus';
 import handlePswrdComparison from '../helpers/handlePswrdComparison';
+import hanldeNewUser from '../helpers/handleNewUser';
 
 export const users = [];
 
@@ -17,10 +16,8 @@ export class UserController {
       if (err) {
         res.status(500).json({ status: 500, error: err });
       } else {
-        const id = users.length + 1;
-
         const newUser = {
-          id,
+          id: users.length + 1,
           email,
           firstname,
           lastname,
@@ -29,31 +26,9 @@ export class UserController {
           isAdmin,
         };
 
-        // add the user to the database
         users.push(newUser);
 
-        const createdUser = {
-          id: newUser.id,
-          email: newUser.email,
-          firstname: newUser.firstname,
-          lastname: newUser.lastname,
-          type: newUser.type,
-          isAdmin: newUser.isAdmin,
-        };
-
-        // create token
-        const token = sign(createdUser, 'examplesecretword', { expiresIn: '1hr' });
-
-        res.status(201).json({
-          status: 201,
-          data: {
-            token,
-            id: newUser.id,
-            firstname: newUser.firstname,
-            lastname: newUser.lastname,
-            email: newUser.email,
-          },
-        });
+        hanldeNewUser(res, newUser);
       }
     });
   }
