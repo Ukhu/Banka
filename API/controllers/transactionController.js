@@ -23,6 +23,7 @@ export class TransactionController {
         oldBalance: foundAccount[0].balance,
         newBalance: foundAccount[0].balance + Number(amount),
       };
+      transactionsdb.push(newTransaction);
       return handleNewTransaction(res, newTransaction);
     }
     return res.status(404).json({ status: 404, error: 'Account not found for the given account number' });
@@ -50,6 +51,7 @@ export class TransactionController {
         oldBalance: foundAccount[0].balance,
         newBalance: foundAccount[0].balance - Number(amount),
       };
+      transactionsdb.push(newTransaction);
       return handleNewTransaction(res, newTransaction);
     }
     return res.status(404).json({ status: 404, error: 'Account not found for the given account number' });

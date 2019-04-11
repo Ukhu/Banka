@@ -1,5 +1,4 @@
 import { accountdb } from '../controllers/accountController';
-import { transactionsdb } from '../controllers/transactionController';
 
 const handleNewTransaction = (res, newTransaction) => {
   const {
@@ -8,8 +7,6 @@ const handleNewTransaction = (res, newTransaction) => {
 
   accountdb.filter(acc => acc.accountNumber === Number(accountNumber))[0]
     .balance = newBalance;
-
-  transactionsdb.push(newTransaction);
 
   return res.status(201).json({
     status: 201,
