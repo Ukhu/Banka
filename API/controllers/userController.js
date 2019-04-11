@@ -1,7 +1,8 @@
 // User controller
 
-import { sign, verify } from 'jsonwebtoken';
+import { sign } from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
+import checkLoginStatus from '../helpers/checkLoginStatus';
 
 export const users = [];
 
@@ -58,18 +59,7 @@ export class UserController {
 
   static loginUser(req, res) {
     if (req.body.token || req.query.token || req.headers['x-access-token']) {
-      const token = req.body.token || req.query.token || req.headers['x-access-token'];
-      verify(token, 'examplesecretword', (err, decod) => {
-        if (err) {
-          res.status(403).json({
-            status: 403,
-            error: 'FORBIDDEN REQUEST - Wrong or invalid token',
-          });
-        } else {
-          req.decoded = decod;
-          res.status(428).json({ status: 428, error: 'Logout existing user account before logging in again' });
-        }
-      });
+      checkLoginStatus(req, res);
     } else {
       let owner;
 
