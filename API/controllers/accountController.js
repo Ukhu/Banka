@@ -30,39 +30,23 @@ export class AccountController {
 
   static activateOrDeactivate(req, res) {
     const { accountNumber } = req.params;
-
-    let foundAccount;
-
-    accountdb.forEach((acc) => {
-      if (acc.accountNumber === Number(accountNumber)) {
-        foundAccount = {
-          accNum: acc.accountNumber,
-          status: acc.status,
-        };
-      }
-    });
-
-    if (foundAccount) {
-      if (foundAccount.status === 'active') {
-        foundAccount.status = 'dormant';
+    const foundAccount = accountdb.filter(acc => acc.accountNumber === Number(accountNumber));
+    if (foundAccount.length > 0) {
+      if (foundAccount[0].status === 'active') {
+        foundAccount[0].status = 'dormant';
       } else {
-        foundAccount.status = 'active';
+        foundAccount[0].status = 'active';
       }
-
-      accountdb.forEach((acc) => {
-        if (acc.accountNumber === Number(accountNumber)) {
-          acc.status = foundAccount.status;
-        }
-      });
+      accountdb.filter(acc => acc.accountNumber === Number(accountNumber))[0]
+        .status = foundAccount[0].status;
       return res.status(200).json({
         status: 200,
         data: {
-          accountNumber: foundAccount.accNum,
-          status: foundAccount.status,
+          accountNumber: foundAccount[0].accountNumber,
+          status: foundAccount[0].status,
         },
       });
     }
-
     return res.status(404).json({
       status: 404,
       error: 'No account found for the provided entity',
@@ -71,24 +55,17 @@ export class AccountController {
 
   static deleteAccount(req, res) {
     const { accountNumber } = req.params;
+    const foundAccount = accountdb.filter(acc => acc.accountNumber === Number(accountNumber));
+    const index = accountdb.indexOf(...foundAccount);
 
-    let accountIndex;
-
-    accountdb.forEach((acc) => {
-      if (acc.accountNumber === Number(accountNumber)) {
-        accountIndex = accountdb.indexOf(acc);
-      }
-    });
-
-    if (accountIndex) {
-      accountdb.splice(accountIndex, 1);
+    if (index >= 0) {
+      accountdb.splice(index, 1);
 
       return res.status(200).json({
         status: 200,
         message: 'Account successfully deleted',
       });
     }
-
     return res.status(404).json({
       status: 404,
       error: 'No account found for the provided entity',
