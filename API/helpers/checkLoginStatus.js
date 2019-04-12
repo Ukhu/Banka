@@ -1,8 +1,11 @@
 import { verify } from 'jsonwebtoken';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const checkLoginStatus = (req, res) => {
   const token = req.body.token || req.query.token || req.headers['x-access-token'];
-  const result = verify(token, 'examplesecretword', (err, decod) => {
+  const result = verify(token, process.env.JWT_KEY, (err, decod) => {
     if (err) {
       return res.status(403).json({
         status: 403,

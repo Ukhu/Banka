@@ -7,6 +7,35 @@ chai.should();
 chai.use(chaiHttp);
 // Parent block
 
+describe('GENERAL', () => {
+  describe('GET /', () => {
+    it('should display the available endpoints if the user visits the root route', (done) => {
+      chai.request(app)
+        .get('/')
+        .end((err, res) => {
+          res.body.should.be.a('object');
+          res.body.should.have.keys('message', 'endpoints');
+          res.body.message.should.equal('Welcome to Banka API, check out the available endpoints below');
+          res.body.endpoints.should.have.keys('createUser', 'loginUser', 'createBankAccount', 'activateDeactivate', 'deleteUser', 'debitBankAccount', 'creditBankAccount');
+        });
+      done();
+    });
+  });
+
+  describe('All Routes', () => {
+    it('should return a message if the user enters an unavailable endpoint', (done) => {
+      chai.request(app)
+        .get('/wrongendpoint')
+        .end((err, res) => {
+          res.body.should.be.a('object');
+          res.body.should.have.property('message');
+          res.body.message.should.equal('Endpoint not found, check the root route to know the available routes');
+        });
+      done();
+    });
+  });
+});
+
 describe('AUTHENTICATION', () => {
   describe('POST /auth/signup', () => {
     before((done) => {
