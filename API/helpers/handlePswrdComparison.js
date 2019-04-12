@@ -1,5 +1,8 @@
 import bcrypt from 'bcrypt';
 import { sign } from 'jsonwebtoken';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const handlePswrdComparison = (res, owner, inputPwrd, realPwrd) => {
   const compare = bcrypt.compare(inputPwrd, realPwrd, (err, result) => {
@@ -7,7 +10,7 @@ const handlePswrdComparison = (res, owner, inputPwrd, realPwrd) => {
       return res.status(401).json({ status: 401, error: 'Authentication failed!' });
     }
     if (result) {
-      const token = sign(owner, 'examplesecretword', { expiresIn: '1hr' });
+      const token = sign(owner, process.env.JWT_KEY, { expiresIn: '1hr' });
       return res.status(200).json(
         {
           status: 200,

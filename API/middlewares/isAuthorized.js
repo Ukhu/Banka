@@ -1,5 +1,8 @@
 import { verify } from 'jsonwebtoken';
 import { validationResult } from 'express-validator/check';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const isAuthorized = (req, res, next) => {
   const errorFormatter = ({ location, msg, param }) => `${location}[${param}]: ${msg}`;
@@ -12,7 +15,7 @@ const isAuthorized = (req, res, next) => {
     const token = req.body.token || req.query.token || req.headers['x-access-token'];
 
     if (token) {
-      verify(token, 'examplesecretword', (err, decod) => {
+      verify(token, process.env.JWT_KEY, (err, decod) => {
         if (err) {
           res.status(403).json({
             status: 403,
