@@ -45,6 +45,9 @@
   "dependencies": {
     "@babel/cli": "^7.4.3",
     "@babel/node": "^7.2.2",
+    "@babel/core": "^7.4.3",
+    "@babel/preset-env": "^7.4.3",
+    "@babel/register": "^7.4.0",
     "bcrypt": "^3.0.5",
     "body-parser": "^1.18.3",
     "chai": "^4.2.0",
