@@ -1,148 +1,156 @@
 <!DOCTYPE html5>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="stylesheet" href="./assets/css/style.css" />
-    <title>Banka | Accounts List</title>
-  </head>
-  <body>
-    <header>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link rel="stylesheet" href="./assets/css/style.css" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+  <title>Banka | Accounts List</title>
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <div id="header-title">
+        <a href="accounts_list.html">
+          <h1>Banka</h1>
+        </a>
+      </div>
+      <div id="header-links">
+        <a class="pre-login-link unused-link" href="#">Sign Up</a>
+        <a class="pre-login-link unused-link" href="#">Login</a>
+        <p><i class="far fa-user"></i> Admin</p>
+        <p><a href="cr_admin_staff.html"><i class="fas fa-plus"></i> New Staff</a></p>
+        <a id="logout" href="index.html">Logout</a>
+      </div>
+    </div>
+  </header>
+  <main>
+    <!-- <section id="staff-navbar">
       <div class="container">
-        <div id="header-title">
-          <a href="accounts_list.html"><h1>Banka</h1></a>
-        </div>
-        <div id="header-links">
-          <a class="pre-login-link unused-link" href="#">Sign Up</a>
-          <a class="pre-login-link unused-link" href="#">Login</a>
-          <p>Logged In As Admin</p>
-          <a id="logout" href="index.html">Logout</a>
+        <a href="cr_admin_staff.html"><i class="fas fa-plus"></i> New Staff</a>
+        <div class="bnk-ops">
+          <a href="credit_user.html">Deposit</a>
+          <a href="debit_user.html">Withdrawal</a>
         </div>
       </div>
-    </header>
-    <main>
-      <section id="staff-navbar">
-        <div class="container">
-          <a href="cr_admin_staff.html">New Staff</a>
-          <div class="bnk-ops">
-            <a href="credit_user.html">Deposit</a>
-            <a href="debit_user.html">Withdrawal</a>
-          </div>
-        </div>
-      </section>
-      <section id="accounts-list" class="container">
-        <h3 id="dashboard-main-title" class="dashboard-section-title">
-          Accounts List
-        </h3>
+    </section> -->
+    <section id="accounts-list" class="container">
+      <h3 id="dashboard-main-title" class="dashboard-section-title">
+        Accounts List
+      </h3>
 
-        <div class="accounts-list-div">
-          <div class="display-full-div">
-            <p class="acc-list-title acc-list-val-0">id</p>
-            <p class="acc-list-title acc-list-val-1">a/c num</p>
-            <p class="acc-list-title acc-list-val-2">account name</p>
-            <p class="acc-list-title acc-list-val-0">type</p>
-          </div>
-          <div class="acc-list-details">
-            <ul>
-              <a href="bank_account_record.html"
-                ><li>
-                  <div class="display-full-div">
-                    <p class="acc-list-val-0">0034</p>
-                    <p class="acc-list-val-1">2031279458</p>
-                    <p class="acc-list-val-2">Sundar Pichai</p>
-                    <p class="acc-list-val-0">Savings</p>
-                  </div>
-                </li></a
-              >
-              <a href="bank_account_record.html">
-                <li>
-                  <div class="display-full-div">
-                    <p class="acc-list-val-0">0104</p>
-                    <p class="acc-list-val-1">1087673271</p>
-                    <p class="acc-list-val-2">Jermaine Cole</p>
-                    <p class="acc-list-val-0">Current</p>
-                  </div>
-                </li>
-              </a>
-              <a href="bank_account_record.html">
-                <li>
-                  <div class="display-full-div">
-                    <p class="acc-list-val-0">0649</p>
-                    <p class="acc-list-val-1">1065892356</p>
-                    <p class="acc-list-val-2">Cristiano Ronaldo</p>
-                    <p class="acc-list-val-0">Current</p>
-                  </div>
-                </li>
-              </a>
-              <a href="bank_account_record.html">
-                <li>
-                  <div class="display-full-div">
-                    <p class="acc-list-val-0">0209</p>
-                    <p class="acc-list-val-1">2017984635</p>
-                    <p class="acc-list-val-2">Wiz Khalifa</p>
-                    <p class="acc-list-val-0">Savings</p>
-                  </div>
-                </li>
-              </a>
-
-              <a href="bank_account_record.html">
-                <li>
-                  <div class="display-full-div">
-                    <p class="acc-list-val-0">0034</p>
-                    <p class="acc-list-val-1">20312794587</p>
-                    <p class="acc-list-val-2">Eden Hazard</p>
-                    <p class="acc-list-val-0">Savings</p>
-                  </div>
-                </li>
-              </a>
-              <a href="bank_account_record.html">
-                <li>
-                  <div class="display-full-div">
-                    <p class="acc-list-val-0">0104</p>
-                    <p class="acc-list-val-1">1087673271</p>
-                    <p class="acc-list-val-2">Satya Nadella</p>
-                    <p class="acc-list-val-0">Current</p>
-                  </div>
-                </li>
-              </a>
-              <a href="bank_account_record.html">
-                <li>
-                  <div class="display-full-div">
-                    <p class="acc-list-val-0">0649</p>
-                    <p class="acc-list-val-1">1065892356</p>
-                    <p class="acc-list-val-2">Blake Lively</p>
-                    <p class="acc-list-val-0">Current</p>
-                  </div>
-                </li>
-              </a>
-              <a href="bank_account_record.html">
-                <li>
-                  <div class="display-full-div">
-                    <p class="acc-list-val-0">0649</p>
-                    <p class="acc-list-val-1">1065892356</p>
-                    <p class="acc-list-val-2">Mohini Ufeli</p>
-                    <p class="acc-list-val-0">Current</p>
-                  </div>
-                </li>
-              </a>
-              <a href="bank_account_record.html">
-                <li>
-                  <div class="display-full-div">
-                    <p class="acc-list-val-0">0649</p>
-                    <p class="acc-list-val-1">1065892356</p>
-                    <p class="acc-list-val-2">Jeff Bezos</p>
-                    <p class="acc-list-val-0">Current</p>
-                  </div>
-                </li>
-              </a>
-            </ul>
-          </div>
+      <div class="accounts-list-div">
+        <div class="display-full-div">
+          <p class="acc-list-title acc-list-val-0">id</p>
+          <p class="acc-list-title acc-list-val-1">a/c num</p>
+          <p class="acc-list-title acc-list-val-2">account name</p>
+          <p class="acc-list-title acc-list-val-0">type</p>
         </div>
-      </section>
-    </main>
-    <footer>
-      <p>Banka, Copyright &copy; 2019</p>
-    </footer>
-  </body>
+        <div class="acc-list-details">
+          <ul>
+            <a href="bank_account_record.html">
+              <li>
+                <div class="indiv-acc display-full-div">
+                  <p class="acc-list-val-0">0034</p>
+                  <p class="acc-list-val-1">2031279458</p>
+                  <p class="acc-list-val-2">Sundar Pichai</p>
+                  <p class="acc-list-val-0">Savings</p>
+                </div>
+              </li>
+            </a>
+            <a href="bank_account_record.html">
+              <li>
+                <div class="indiv-acc display-full-div">
+                  <p class="acc-list-val-0">0104</p>
+                  <p class="acc-list-val-1">1087673271</p>
+                  <p class="acc-list-val-2">Jermaine Cole</p>
+                  <p class="acc-list-val-0">Current</p>
+                </div>
+              </li>
+            </a>
+            <a href="bank_account_record.html">
+              <li>
+                <div class="indiv-acc display-full-div">
+                  <p class="acc-list-val-0">0649</p>
+                  <p class="acc-list-val-1">1065892356</p>
+                  <p class="acc-list-val-2">Cristiano Ronaldo</p>
+                  <p class="acc-list-val-0">Current</p>
+                </div>
+              </li>
+            </a>
+            <a href="bank_account_record.html">
+              <li>
+                <div class="indiv-acc display-full-div">
+                  <p class="acc-list-val-0">0209</p>
+                  <p class="acc-list-val-1">2017984635</p>
+                  <p class="acc-list-val-2">Wiz Khalifa</p>
+                  <p class="acc-list-val-0">Savings</p>
+                </div>
+              </li>
+            </a>
+
+            <a href="bank_account_record.html">
+              <li>
+                <div class="indiv-acc display-full-div">
+                  <p class="acc-list-val-0">0034</p>
+                  <p class="acc-list-val-1">20312794587</p>
+                  <p class="acc-list-val-2">Eden Hazard</p>
+                  <p class="acc-list-val-0">Savings</p>
+                </div>
+              </li>
+            </a>
+            <a href="bank_account_record.html">
+              <li>
+                <div class="indiv-acc display-full-div">
+                  <p class="acc-list-val-0">0104</p>
+                  <p class="acc-list-val-1">1087673271</p>
+                  <p class="acc-list-val-2">Satya Nadella</p>
+                  <p class="acc-list-val-0">Current</p>
+                </div>
+              </li>
+            </a>
+            <a href="bank_account_record.html">
+              <li>
+                <div class="indiv-acc display-full-div">
+                  <p class="acc-list-val-0">0649</p>
+                  <p class="acc-list-val-1">1065892356</p>
+                  <p class="acc-list-val-2">Blake Lively</p>
+                  <p class="acc-list-val-0">Current</p>
+                </div>
+              </li>
+            </a>
+            <a href="bank_account_record.html">
+              <li>
+                <div class="indiv-acc display-full-div">
+                  <p class="acc-list-val-0">0649</p>
+                  <p class="acc-list-val-1">1065892356</p>
+                  <p class="acc-list-val-2">Mohini Ufeli</p>
+                  <p class="acc-list-val-0">Current</p>
+                </div>
+              </li>
+            </a>
+            <a href="bank_account_record.html">
+              <li>
+                <div class="indiv-acc display-full-div">
+                  <p class="acc-list-val-0">0649</p>
+                  <p class="acc-list-val-1">1065892356</p>
+                  <p class="acc-list-val-2">Jeff Bezos</p>
+                  <p class="acc-list-val-0">Current</p>
+                </div>
+              </li>
+            </a>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <p>Banka, Copyright &copy; 2019</p>
+  </footer>
+</body>
+
 </html>
