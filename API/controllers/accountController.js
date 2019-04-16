@@ -3,13 +3,26 @@ import handleNewAccount from '../helpers/handleNewAccount';
 
 export const accountdb = [];
 
+/**
+ * @class AccountController
+ * @classdesc Performs operations on the bank account
+ */
+
 export class AccountController {
-  static createAccount(req, res) {
-    const { userId, type } = req.body;
+  /**
+   * Creates a bank account for a user
+   * @param {object} request
+   * @param {object} response
+   * @returns {object} A response status and the created account or an error message
+   * @memberof AccountController
+   */
 
-    const owner = users.filter(user => user.id === Number(userId));
+  static createAccount(request, response) {
+    const { userId, type } = request.body;
 
-    if (owner.length > 0) {
+    const owner = users.find(user => user.id === Number(userId));
+
+    if (owner) {
       const newAccount = {
         id: accountdb.length + 100,
         accountNumber: Math.floor(Math.random() * (10000000 - 1000000) + 1000000),
@@ -22,53 +35,72 @@ export class AccountController {
 
       accountdb.push(newAccount);
 
-      handleNewAccount(res, newAccount, owner[0]);
+      handleNewAccount(response, newAccount, owner);
     } else {
-      res.status(404).json({ status: 404, error: 'Account owner not found' });
+      response.status(404).json({ status: 404, error: 'Account owner not found' });
     }
   }
 
-  static activateOrDeactivate(req, res) {
-    const { accountNumber } = req.params;
-    const foundAccount = accountdb.filter(acc => acc.accountNumber === Number(accountNumber));
-    if (foundAccount.length > 0) {
-      if (foundAccount[0].status === 'active') {
-        foundAccount[0].status = 'dormant';
+  /**
+   * Activates or deactivates a user account
+   * @param {object} request
+   * @param {object} response
+   * @returns {object} the user's new account status on success or an error message
+   * @memberof AccountController
+   */
+
+  static activateOrDeactivate(request, response) {
+    const { accountNumber } = request.params;
+    const foundAccount = accountdb.find(account => account.accountNumber === Number(accountNumber));
+    if (foundAccount) {
+      if (foundAccount.status === 'active') {
+        foundAccount.status = 'dormant';
       } else {
-        foundAccount[0].status = 'active';
+        foundAccount.status = 'active';
       }
-      accountdb.filter(acc => acc.accountNumber === Number(accountNumber))[0]
-        .status = foundAccount[0].status;
-      return res.status(200).json({
+      accountdb.find(account => account.accountNumber === Number(accountNumber))
+        .status = foundAccount.status;
+      return response.status(200).json({
         status: 200,
         data: {
-          accountNumber: foundAccount[0].accountNumber,
-          status: foundAccount[0].status,
+          accountNumber: foundAccount.accountNumber,
+          status: foundAccount.status,
         },
       });
     }
-    return res.status(404).json({
+    return response.status(404).json({
       status: 404,
       error: 'No account found for the provided entity',
     });
   }
 
-  static deleteAccount(req, res) {
-    const { accountNumber } = req.params;
-    const foundAccount = accountdb.filter(acc => acc.accountNumber === Number(accountNumber));
-    const index = accountdb.indexOf(...foundAccount);
+  /**
+   * Deletes a user bank account
+   * @param {object} request
+   * @param {object} response
+   * @returns {object} A message signifying a successful deletion or an error
+   * @memberof AccountController
+   */
+
+  static deleteAccount(request, response) {
+    const { accountNumber } = request.params;
+    const foundAccount = accountdb.find(account => account.accountNumber === Number(accountNumber));
+    const index = accountdb.indexOf(foundAccount);
 
     if (index >= 0) {
       accountdb.splice(index, 1);
 
-      return res.status(200).json({
+      return response.status(200).json({
         status: 200,
         message: 'Account successfully deleted',
       });
     }
-    return res.status(404).json({
+    return response.status(404).json({
       status: 404,
       error: 'No account found for the provided entity',
     });
   }
 }
+
+// const users = [...accountdb];
+// export default users;

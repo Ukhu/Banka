@@ -1,37 +1,37 @@
 import { verify } from 'jsonwebtoken';
-import { validationResult } from 'express-validator/check';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
-const isAuthorized = (req, res, next) => {
-  const errorFormatter = ({ location, msg, param }) => `${location}[${param}]: ${msg}`;
+/**
+ * Checks if a user is authenticated before accessing protected middlewares
+ * @param {object} request
+ * @param {object} response
+ * @param {object} next
+ * @returns {object} an error message for authentication errors
+ * @memberof Authentication
+ */
 
-  const result = validationResult(req).formatWith(errorFormatter);
+const isAuthorized = (request, response, next) => {
+  const token = request.body.token || request.query.token || request.headers['x-access-token'];
 
-  if (!result.isEmpty()) {
-    res.status(400).json({ status: 400, error: result.array({ onlyFirstError: true }) });
+  if (token) {
+    verify(token, process.env.JWT_KEY, (error, decoded) => {
+      if (error) {
+        response.status(403).json({
+          status: 403,
+          error: 'Unauthorized Access',
+        });
+      } else {
+        request.decoded = decoded;
+        next();
+      }
+    });
   } else {
-    const token = req.body.token || req.query.token || req.headers['x-access-token'];
-
-    if (token) {
-      verify(token, process.env.JWT_KEY, (err, decod) => {
-        if (err) {
-          res.status(403).json({
-            status: 403,
-            error: 'FORBIDDEN REQUEST - Wrong Token',
-          });
-        } else {
-          req.decoded = decod;
-          next();
-        }
-      });
-    } else {
-      res.status(403).json({
-        status: 403,
-        error: 'FORBIDDEN REQUEST - No Token Provided',
-      });
-    }
+    response.status(403).json({
+      status: 403,
+      error: 'FORBIDDEN REQUEST - No Token Provided',
+    });
   }
 };
 

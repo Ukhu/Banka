@@ -1,5 +1,4 @@
 import express from 'express';
-import { json, urlencoded } from 'body-parser';
 import { debug } from 'debug';
 import validator from 'express-validator';
 import dotenv from 'dotenv';
@@ -11,13 +10,13 @@ dotenv.config();
 const app = express();
 
 // express middlewares
-app.use(json());
-app.use(urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(validator());
 
 // API routes
-app.get('/', (req, res) => {
-  res.status(200).json({
+app.get('/', (request, response) => {
+  response.status(200).json({
     message: 'Welcome to Banka API, check out the available endpoints below',
     endpoints: {
       createUser: 'POST /api/v1/auth/signup',
@@ -36,14 +35,14 @@ app.use('/api/v1/accounts', accountRoutes);
 app.use('/api/v1/transactions', transactionRoutes);
 
 // Catch all unavailable endpoints
-app.all('*', (req, res) => {
-  res.status(404).json({ message: 'Endpoint not found, check the root route to know the available routes' });
+app.all('*', (request, response) => {
+  response.status(404).json({ message: 'Endpoint not found, check the root route to know the available routes' });
 });
 
 // Error handling middleware
-app.use((err, req, res) => {
-  debug('errorHandlingMidware')(err.stack);
-  res.status(500).json({ message: 'Something went wrong. Its our fault not yours!' });
+app.use((error, request, response) => {
+  debug('errorHandlingMidware')(error.stack);
+  response.status(500).json({ message: 'Something went wrong. Its our fault not yours!' });
 });
 
 app.listen(process.env.PORT, () => debug('server-start')('Server Has Started!!!'));

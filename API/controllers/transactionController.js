@@ -3,57 +3,72 @@ import handleNewTransaction from '../helpers/handleNewTransaction';
 
 export const transactionsdb = [];
 
+/**
+ * @class TransactionController
+ * @classdesc Performs account transactions
+ */
+
 export class TransactionController {
-  static credit(req, res) {
-    const { type, accountNumber, amount } = req.body;
-    if (req.params.accountNumber !== accountNumber) {
-      return res.status(400).json({ status: 400, error: 'Account number in params must match account number given' });
-    }
-    const foundAccount = accountdb.filter(
-      account => account.accountNumber === Number(accountNumber),
+  /**
+   * Credits the user's bank account
+   * @param {object} request
+   * @param {object} response
+   * @returns {object} A success message with the new transaction details or an error message
+   * @memberof TransactionController
+   */
+
+  static credit(request, response) {
+    const { amount } = request.body;
+    const foundAccount = accountdb.find(
+      account => account.accountNumber === Number(request.params.accountNumber),
     );
-    if (foundAccount.length > 0) {
+    if (foundAccount) {
       const newTransaction = {
         id: transactionsdb.length + 1,
         createdOn: new Date().toLocaleString(),
-        type,
-        accountNumber: Number(accountNumber),
-        cashier: req.decoded.id,
+        type: 'credit',
+        accountNumber: Number(request.params.accountNumber),
+        cashier: request.decoded.id,
         amount: Number(amount),
-        oldBalance: foundAccount[0].balance,
-        newBalance: foundAccount[0].balance + Number(amount),
+        oldBalance: foundAccount.balance,
+        newBalance: foundAccount.balance + Number(amount),
       };
       transactionsdb.push(newTransaction);
-      return handleNewTransaction(res, newTransaction);
+      return handleNewTransaction(response, newTransaction);
     }
-    return res.status(404).json({ status: 404, error: 'Account not found for the given account number' });
+    return response.status(404).json({ status: 404, error: 'Account not found for the given account number' });
   }
 
-  static debit(req, res) {
-    const { type, accountNumber, amount } = req.body;
-    if (req.params.accountNumber !== accountNumber) {
-      return res.status(400).json({ status: 400, error: 'Account number in params must match account number given' });
-    }
-    const foundAccount = accountdb.filter(
-      account => account.accountNumber === Number(accountNumber),
+  /**
+   * Debits a user's account
+   * @param {object} request
+   * @param {object} response
+   * @returns {object} A success message with the new transaction details or an error message
+   * @memberof TransactionController
+   */
+
+  static debit(request, response) {
+    const { amount } = request.body;
+    const foundAccount = accountdb.find(
+      account => account.accountNumber === Number(request.params.accountNumber),
     );
-    if (foundAccount.length > 0) {
-      if (foundAccount[0].balance < Number(amount)) {
-        return res.status(400).json({ status: 400, error: 'Insufficient Funds' });
+    if (foundAccount) {
+      if (foundAccount.balance < Number(amount)) {
+        return response.status(400).json({ status: 400, error: 'Insufficient Funds' });
       }
       const newTransaction = {
         id: transactionsdb.length + 1,
         createdOn: new Date().toLocaleString(),
-        type,
-        accountNumber: Number(accountNumber),
-        cashier: req.decoded.id,
+        type: 'debit',
+        accountNumber: Number(request.params.accountNumber),
+        cashier: request.decoded.id,
         amount: Number(amount),
-        oldBalance: foundAccount[0].balance,
-        newBalance: foundAccount[0].balance - Number(amount),
+        oldBalance: foundAccount.balance,
+        newBalance: foundAccount.balance - Number(amount),
       };
       transactionsdb.push(newTransaction);
-      return handleNewTransaction(res, newTransaction);
+      return handleNewTransaction(response, newTransaction);
     }
-    return res.status(404).json({ status: 404, error: 'Account not found for the given account number' });
+    return response.status(404).json({ status: 404, error: 'Account not found for the given account number' });
   }
 }

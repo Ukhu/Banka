@@ -1,10 +1,23 @@
-const isStaff = (req, res, next) => {
-  const user = req.decoded;
+import { users } from '../controllers/userController';
 
-  if (user.type === 'staff') {
+/**
+ * Checks if the user is a staff or not
+ * @param {object} request
+ * @param {object} response
+ * @param {object} next
+ * @returns {object} an error message to the user
+ * @memberof Authorization
+ */
+
+const isStaff = (request, response, next) => {
+  const decodedUser = request.decoded;
+
+  const owner = users.find(user => user.id === decodedUser.id);
+
+  if (owner.type === 'staff') {
     next();
   } else {
-    res.status(403).json({ status: 403, error: 'FORBIDDEN - Only Staff can access make this transaction!' });
+    response.status(403).json({ status: 403, error: 'FORBIDDEN - Only Staff can access make this transaction!' });
   }
 };
 

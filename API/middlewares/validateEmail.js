@@ -1,25 +1,19 @@
-import { validationResult } from 'express-validator/check';
 import { users } from '../controllers/userController';
 
-const validateEmail = (req, res, next) => {
-  const errorFormatter = ({ location, msg, param }) => `${location}[${param}]: ${msg}`;
+/**
+ * Checks if the email provided is already existing in the database
+ * @param {object} request
+ * @param {object} response
+ * @param {object} next
+ * @returns {object} an error response to the user
+ * @memberof Validation
+ */
 
-  const result = validationResult(req).formatWith(errorFormatter);
+const validateEmail = (request, response, next) => {
+  const owner = users.find(user => user.email === request.body.email);
 
-  if (!result.isEmpty()) {
-    return res.status(400).json({ errors: result.array({ onlyFirstError: true }) });
-  }
-
-  let msg;
-
-  users.forEach((user) => {
-    if (user.email === req.body.email) {
-      msg = 'body[email]: Email already exists';
-    }
-  });
-
-  if (msg) {
-    return res.status(400).json({ status: 400, error: msg });
+  if (owner) {
+    return response.status(400).json({ status: 400, error: 'body[email]: Email already exists' });
   }
 
   return next();

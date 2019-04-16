@@ -1,26 +1,38 @@
-// User controller
 import bcrypt from 'bcrypt';
 import checkLoginStatus from '../helpers/checkLoginStatus';
-import handlePswrdComparison from '../helpers/handlePswrdComparison';
+import handlePasswordComparison from '../helpers/handlePasswordComparison';
 import hanldeNewUser from '../helpers/handleNewUser';
 
 export const users = [];
 
-export class UserController {
-  static createUser(req, res) {
-    const {
-      email, firstname, lastname, password, type, isAdmin,
-    } = req.body;
+/**
+ * @class UserController
+ * @classdesc Performs operations on user entity
+ */
 
-    bcrypt.hash(password, 10, (err, hash) => {
-      if (err) {
-        res.status(500).json({ status: 500, error: err });
+export class UserController {
+  /**
+   * Adds a new user to the database
+   * @param {object} request
+   * @param {object} response
+   * @returns {object} A response status and the created user or an error message
+   * @memberof UserController
+   */
+
+  static createUser(request, response) {
+    const {
+      email, firstName, lastName, password, type, isAdmin,
+    } = request.body;
+
+    bcrypt.hash(password, 10, (error, hash) => {
+      if (error) {
+        response.status(500).json({ status: 500, error });
       } else {
         const newUser = {
           id: users.length + 1,
           email,
-          firstname,
-          lastname,
+          firstName,
+          lastName,
           password: hash,
           type,
           isAdmin,
@@ -28,21 +40,29 @@ export class UserController {
 
         users.push(newUser);
 
-        hanldeNewUser(res, newUser);
+        hanldeNewUser(response, newUser);
       }
     });
   }
 
-  static loginUser(req, res) {
-    if (req.body.token || req.query.token || req.headers['x-access-token']) {
-      checkLoginStatus(req, res);
-    } else {
-      const owner = users.filter(user => user.email === req.body.email);
+  /**
+   * Signs in an existing user
+   * @param {object} request
+   * @param {object} response
+   * @returns {object} A response status and the user's details or an error message
+   * @memberof UserController
+   */
 
-      if (owner.length === 0) {
-        res.status(401).json({ status: 401, error: 'No User found for the provided email!' });
+  static loginUser(request, response) {
+    if (request.body.token || request.query.token || request.headers['x-access-token']) {
+      checkLoginStatus(request, response);
+    } else {
+      const accountOwner = users.find(user => user.email === request.body.email);
+
+      if (!accountOwner) {
+        response.status(401).json({ status: 401, error: 'Email or password is wrong' });
       } else {
-        handlePswrdComparison(res, owner[0], req.body.password, owner[0].password);
+        handlePasswordComparison(response, accountOwner, request.body.password, accountOwner.password);
       }
     }
   }

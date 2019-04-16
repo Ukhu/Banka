@@ -1,14 +1,22 @@
 import { accountdb } from '../controllers/accountController';
 
-const handleNewTransaction = (res, newTransaction) => {
+/**
+ * Handles sending back a response for the newly created transation
+ * @param {object} response
+ * @param {object} newTransaction
+ * @returns {object} the newly created transation details
+ * @memberof ControllerHelpers
+ */
+
+const handleNewTransaction = (response, newTransaction) => {
   const {
     id, newBalance, cashier, accountNumber, amount, type,
   } = newTransaction;
 
-  accountdb.filter(acc => acc.accountNumber === Number(accountNumber))[0]
+  accountdb.find(account => account.accountNumber === Number(accountNumber))
     .balance = newBalance;
 
-  return res.status(201).json({
+  return response.status(201).json({
     status: 201,
     data: {
       transactionId: id,
