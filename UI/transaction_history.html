@@ -1,0 +1,158 @@
+<!DOCTYPE html5>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <title>Banka | Accounts List</title>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div id="header-title">
+                <a href="dashboard.html">
+                    <h1>Banka</h1>
+                </a>
+            </div>
+            <div id="header-links">
+                <a class="pre-login-link unused-link" href="signup.html">Sign Up</a>
+                <a class="pre-login-link unused-link" href="sign_in.html">Login</a>
+                <p><i class="far fa-user"></i> Osaukhumwen</p>
+                <a id="logout" href="index.html">Logout</a>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div id="transaction-history-overlay">
+            <div id="transaction-history-overlay-content">
+                <h3 class="modal-title">Transaction Details <i id="close-modal" class="fas fa-times"></i></h3>
+                <div>
+                    <p><span>Created On:</span> 24th March 2019</p>
+                </div>
+                <div>
+                    <p><span>ID:</span> 012457</p>
+                </div>
+                <div>
+                    <p><span>Account Number:</span> 2058946251</p>
+                </div>
+                <div>
+                    <p><span>Type:</span> Credit</p>
+                </div>
+                <div>
+                    <p><span>Cashier:</span> Mary</p>
+                </div>
+                <div>
+                    <p><span>Amount:</span> N12,000.00</p>
+                </div>
+                <div>
+                    <p><span>Old Balance:</span> N13,560,000.00
+                    </p>
+                </div>
+                <div>
+                    <p><span>New Balance:</span> N13,572,000.00</p>
+                </div>
+            </div>
+        </div>
+        <section id="accounts-list" class="container">
+            <h3 id="dashboard-main-title" class="dashboard-section-title">
+                Transaction History
+            </h3>
+
+            <div class="accounts-list-div">
+                <div class="display-full-div indiv-trans">
+                    <p class="acc-list-title">date</p>
+                    <p class="acc-list-title">type</p>
+                    <p class="acc-list-title">amount</p>
+                    <p class="acc-list-title">balance</p>
+                </div>
+                <div class="acc-list-details">
+                    <ul>
+                        <li>
+                            <div class="indiv-trans display-full-div">
+                                <p>01-01-2019</p>
+                                <p>Credit</p>
+                                <p>20,000</p>
+                                <p>1,650,000</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="indiv-trans display-full-div">
+                                <p>01-01-2019</p>
+                                <p>Credit</p>
+                                <p>20,000</p>
+                                <p>1,650,000</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="indiv-trans display-full-div">
+                                <p>01-01-2019</p>
+                                <p>Credit</p>
+                                <p>20,000</p>
+                                <p>1,650,000</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="indiv-trans display-full-div">
+                                <p>01-01-2019</p>
+                                <p>Credit</p>
+                                <p>20,000</p>
+                                <p>1,650,000</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="indiv-trans display-full-div">
+                                <p>01-01-2019</p>
+                                <p>Credit</p>
+                                <p>20,000</p>
+                                <p>1,650,000</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="indiv-trans display-full-div">
+                                <p>01-01-2019</p>
+                                <p>Credit</p>
+                                <p>20,000</p>
+                                <p>1,650,000</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="indiv-trans display-full-div">
+                                <p>01-01-2019</p>
+                                <p>Credit</p>
+                                <p>20,000</p>
+                                <p>1,650,000</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="indiv-trans display-full-div">
+                                <p>01-01-2019</p>
+                                <p>Credit</p>
+                                <p>20,000</p>
+                                <p>1,650,000</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="indiv-trans display-full-div">
+                                <p>01-01-2019</p>
+                                <p>Credit</p>
+                                <p>20,000</p>
+                                <p>1,650,000</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>Banka, Copyright &copy; 2019</p>
+    </footer>
+    <script src="./assets/js/transactionHistory.js"></script>
+</body>
+
+</html>

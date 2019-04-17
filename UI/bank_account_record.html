@@ -30,6 +30,7 @@
   <main>
     <div id="perform-transaction-overlay">
       <div id="trans-overlay-content">
+        <h3 class="modal-title">Credit or Debit Account <i id="close-modal" class="fas fa-times"></i></h3>
         <form>
           <div>
             <input type="text" placeholder="Account Number" name="accountNumber" pattern="[0-9]{10}"
@@ -64,7 +65,9 @@
       <h3 class="dashboard-section-title">
         Account Details
 
-        <i class="far fa-credit-card" id="credit-card-icon"></i>
+        <a href="./transaction_history.html"><i id="list-icon" title="View User's transaction history"
+            class="far fa-list-alt"></i></a>
+        <i class="far fa-credit-card" id="credit-card-icon" title="Perform banking operations on user's account"></i>
         <!-- <a href="accounts_list.html"><button class="acc-rec-bck-btn">Back</button></a> -->
       </h3>
       <div class="details-div" id="overlay_show">
@@ -151,83 +154,6 @@
           <div class="display-half-div right-side">
             <p><span>State:</span> Edo</p>
           </div>
-        </div>
-      </div>
-    </section>
-    <section id="trnsc-hstr" class="container account-details">
-      <h3 class="dashboard-section-title">Transaction History</h3>
-      <div id="transaction-history-div" class="details-div">
-        <div class="display-full-div">
-          <p class="trans-hist-title trns-details-side">date</p>
-          <p class="trans-hist-title trns-details-mid">amount</p>
-          <p class="trans-hist-title trns-details-side">type</p>
-        </div>
-        <div class="trns-hist-details">
-          <ul>
-            <li>
-              <div class="display-full-div">
-                <p class="trns-details-side">23 MAR 2019</p>
-                <p class="trns-details-mid">N720,000</p>
-                <p class="trns-details-side">CREDIT</p>
-              </div>
-            </li>
-            <li>
-              <div class="display-full-div">
-                <p class="trns-details-side">16 FEB 2019</p>
-                <p class="trns-details-mid">N380,000</p>
-                <p class="trns-details-side">CREDIT</p>
-              </div>
-            </li>
-            <li>
-              <div class="display-full-div">
-                <p class="trns-details-side">26 JAN 2019</p>
-                <p class="trns-details-mid">N31,000</p>
-                <p class="trns-details-side">DEBIT</p>
-              </div>
-            </li>
-            <li>
-              <div class="display-full-div">
-                <p class="trns-details-side">7 DEC 2018</p>
-                <p class="trns-details-mid">N160,000</p>
-                <p class="trns-details-side">DEBIT</p>
-              </div>
-            </li>
-            <li>
-              <div class="display-full-div">
-                <p class="trns-details-side">1 DEC 2018</p>
-                <p class="trns-details-mid">N1,650,000</p>
-                <p class="trns-details-side">CREDIT</p>
-              </div>
-            </li>
-            <li>
-              <div class="display-full-div">
-                <p class="trns-details-side">20 NOV 2018</p>
-                <p class="trns-details-mid">N50,000</p>
-                <p class="trns-details-side">CREDIT</p>
-              </div>
-            </li>
-            <li>
-              <div class="display-full-div">
-                <p class="trns-details-side">16 FEB 2019</p>
-                <p class="trns-details-mid">N380,000</p>
-                <p class="trns-details-side">CREDIT</p>
-              </div>
-            </li>
-            <li>
-              <div class="display-full-div">
-                <p class="trns-details-side">26 JAN 2019</p>
-                <p class="trns-details-mid">N31,000</p>
-                <p class="trns-details-side">DEBIT</p>
-              </div>
-            </li>
-            <li>
-              <div class="display-full-div">
-                <p class="trns-details-side">7 DEC 2018</p>
-                <p class="trns-details-mid">N160,000</p>
-                <p class="trns-details-side">DEBIT</p>
-              </div>
-            </li>
-          </ul>
         </div>
       </div>
     </section>

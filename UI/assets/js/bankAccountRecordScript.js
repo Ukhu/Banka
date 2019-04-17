@@ -1,4 +1,5 @@
 const icon = document.querySelector('#credit-card-icon');
+const exitButton = document.getElementById('close-modal');
 const transactionOverlay = document.getElementById('perform-transaction-overlay');
 const overlayContent = document.getElementById('trans-overlay-content');
 const deleteButton = document.querySelector('.delete-acc-btn');
@@ -10,12 +11,8 @@ icon.onclick = () => {
   deleteConfirmationModal.style.display = 'none';
 };
 
-transactionOverlay.onclick = () => {
+exitButton.onclick = () => {
   transactionOverlay.style.display = 'none';
-};
-
-overlayContent.onclick = (e) => {
-  e.stopPropagation();
 };
 
 deleteButton.onclick = () => {

@@ -30,6 +30,7 @@
   <main>
     <div id="update-account-overlay">
       <div id="update-overlay-content">
+        <h3 class="modal-title">Update User Profile <i id="close-modal" class="fas fa-times"></i></h3>
         <form>
           <div>
             <input type="text" placeholder="First Name" pattern="[a-zA-Z]{2,15}"
@@ -70,7 +71,8 @@
     </div>
     <section class="container account-details dashboard">
       <h3 id="dashboard-main-title" class="dashboard-section-title">
-        Dashboard
+        Dashboard <a href="./transaction_history.html"><i id="list-icon" title="View your transaction history"
+            class="far fa-list-alt"></i></a>
       </h3>
       <div class="details-div">
         <div class="acc-details-div">
@@ -84,7 +86,8 @@
       </div>
     </section>
     <section id="profile" class="container account-details">
-      <h3 class="dashboard-section-title">Personal Information <i class="fas fa-pen" id="pen-icon"></i></h3>
+      <h3 class="dashboard-section-title">Personal Information <i class="fas fa-pen" title="Update details"
+          id="pen-icon"></i></h3>
       <div class="details-div">
         <div class="display-full-div">
           <div class="display-half-div left-side">
@@ -123,7 +126,7 @@
         </div>
       </div>
     </section>
-    <section id="trnsc-hstr" class="container account-details">
+    <!-- <section id="trnsc-hstr" class="container account-details">
       <h3 class="dashboard-section-title">Transaction History</h3>
       <div id="transaction-history-div" class="details-div">
         <div class="display-full-div">
@@ -218,7 +221,7 @@
         </div>
       </div>
 
-    </section>
+    </section> -->
   </main>
   <footer>
     <p>Banka, Copyright &copy; 2019</p>
