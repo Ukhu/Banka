@@ -1,85 +1,64 @@
 <!DOCTYPE html5>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="stylesheet" href="./assets/css/style.css" />
-    <title>Banka | Create Admin/Staff Account</title>
-  </head>
-  <body>
-    <header>
-      <div class="container">
-        <div id="header-title">
-          <a href="accounts_list.html"><h1>Banka</h1></a>
-        </div>
-        <div id="header-links">
-          <a class="pre-login-link unused-link" href="#">Sign Up</a>
-          <a class="pre-login-link unused-link" href="#">Login</a>
-          <p>Logged In As Admin</p>
-          <a id="logout" href="index.html">Logout</a>
-        </div>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link rel="stylesheet" href="./assets/css/style.css" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+  <title>Banka | Create Admin/Staff Account</title>
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <div id="header-title">
+        <a href="accounts_list.html">
+          <h1>Banka</h1>
+        </a>
       </div>
-    </header>
-    <main>
-      <section id="cr-staff-account" class="container">
-        <div class="all-form">
-          <h2>Create A Staff Account</h2>
-          <form>
-            <div>
-              <input
-                type="text"
-                placeholder="First Name"
-                name="firstname"
-                pattern="[a-zA-Z]{2,15}"
-                title="Alphabets only. Max 15 characters"
-                required
-              />
-            </div>
-            <div>
-              <input
-                type="text"
-                placeholder="Last Name"
-                name="lastname"
-                pattern="[a-zA-Z]{2,15}"
-                title="Alphabets only. Max 15 characters"
-                required
-              />
-            </div>
-            <div>
-              <input
-                type="email"
-                placeholder="Email"
-                name="email"
-                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-                title="Must follow standard email format"
-                required
-              />
-            </div>
-            <div>
-              <input
-                type="password"
-                placeholder="Password"
-                name="password"
-                pattern=".{6,10}"
-                title="Must be between Six(6) to Ten(10) characters"
-                required
-              />
-            </div>
-            <div>
-              <select name="typeOfStaff" required>
-                <option disabled selected value="">Type</option>
-                <option value="cashier">Cashier</option>
-                <option value="admin">Admin</option>
-              </select>
-            </div>
-            <button class="form-button" type="submit">Create Account</button>
-          </form>
-        </div>
-      </section>
-    </main>
-    <footer>
-      <p>Banka, Copyright &copy; 2019</p>
-    </footer>
-  </body>
+      <div id="header-links">
+        <a class="pre-login-link unused-link" href="#">Sign Up</a>
+        <a class="pre-login-link unused-link" href="#">Login</a>
+        <p><i class="far fa-user"></i> Admin</p>
+        <a id="logout" href="index.html">Logout</a>
+      </div>
+    </div>
+  </header>
+  <main>
+    <section id="cr-staff-account" class="container">
+      <div class="all-form">
+        <h2>Create A Staff Account</h2>
+        <form>
+          <div>
+            <input type="text" placeholder="First Name" name="firstname" pattern="[a-zA-Z]{2,15}"
+              title="Alphabets only. Max 15 characters" required />
+          </div>
+          <div>
+            <input type="text" placeholder="Last Name" name="lastname" pattern="[a-zA-Z]{2,15}"
+              title="Alphabets only. Max 15 characters" required />
+          </div>
+          <div>
+            <input type="email" placeholder="Email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+              title="Must follow standard email format" required />
+          </div>
+          <div>
+            <select name="typeOfStaff" required>
+              <option disabled selected value="">Type</option>
+              <option value="cashier">Cashier</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
+          <button class="form-button" type="submit">Create Account</button>
+        </form>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <p>Banka, Copyright &copy; 2019</p>
+  </footer>
+</body>
+
 </html>

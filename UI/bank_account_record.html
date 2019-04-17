@@ -1,137 +1,168 @@
 <!DOCTYPE html5>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="stylesheet" href="./assets/css/style.css" />
-    <title>Banka | Bank Account Record</title>
-  </head>
-  <body>
-    <header>
-      <div class="container">
-        <div id="header-title">
-          <a href="accounts_list.html"><h1>Banka</h1></a>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link rel="stylesheet" href="./assets/css/style.css" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+  <title>Banka | Bank Account Record</title>
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <div id="header-title">
+        <a href="accounts_list.html">
+          <h1>Banka</h1>
+        </a>
+      </div>
+      <div id="header-links">
+        <a class="pre-login-link unused-link" href="#">Sign Up</a>
+        <a class="pre-login-link unused-link" href="#">Login</a>
+        <p><i class="far fa-user"></i> Admin</p>
+        <a id="logout" href="index.html">Logout</a>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div id="perform-transaction-overlay">
+      <div id="trans-overlay-content">
+        <form>
+          <div>
+            <input type="text" placeholder="Account Number" name="accountNumber" pattern="[0-9]{10}"
+              title="User's ten(10) digit account number" required />
+          </div>
+          <div>
+            <select name="transactionType" required>
+              <option disabled selected value="">Transaction Type</option>
+              <option value="credit">Credit</option>
+              <option value="debit">Debit</option>
+            </select>
+          </div>
+          <div>
+            <input type="text" placeholder="Amount" name="amount" pattern="[0-9]{1,10}" title="Max Ten(10) digits"
+              required />
+          </div>
+          <button class="form-button" type="submit">Make Transaction</button>
+        </form>
+      </div>
+      <div id="delete-account-modal">
+        <p>Are you sure you want to delete this account?</p>
+        <form><button id="yes">Yes</button></form>
+        <form><button id="no">No</button></form>
+      </div>
+    </div>
+    <div id="delete-account-modal">
+      <p>Are you sure you want to delete this account?</p>
+      <form><button id="yes">Yes</button></form>
+      <form><button id="no">No</button></form>
+    </div>
+    <section id="account-record" class="container account-details">
+      <h3 class="dashboard-section-title">
+        Account Details
+
+        <i class="far fa-credit-card" id="credit-card-icon"></i>
+        <!-- <a href="accounts_list.html"><button class="acc-rec-bck-btn">Back</button></a> -->
+      </h3>
+      <div class="details-div" id="overlay_show">
+        <div class="display-full-div">
+          <div class="display-half-div left-side">
+            <p><span>Account ID:</span> 010395</p>
+          </div>
+          <div class="display-half-div right-side">
+            <p><span>Account Number:</span> 2057483546</p>
+          </div>
         </div>
-        <div id="header-links">
-          <a class="pre-login-link unused-link" href="#">Sign Up</a>
-          <a class="pre-login-link unused-link" href="#">Login</a>
-          <p>Logged In As Admin</p>
-          <a id="logout" href="index.html">Logout</a>
+
+        <div class="display-full-div">
+          <div class="display-half-div left-side">
+            <p><span>Owner:</span> 2167895</p>
+          </div>
+          <div class="display-half-div right-side">
+            <p><span>Created On:</span> 24th March 2019</p>
+          </div>
+        </div>
+
+        <div class="display-full-div">
+          <div class="display-half-div left-side">
+            <p><span>Type:</span> Savings</p>
+          </div>
+          <div class="display-half-div right-side">
+            <p><span>Status:</span> Active</p>
+          </div>
+        </div>
+
+        <div class="display-full-div">
+          <div class="display-half-div left-side">
+            <p>
+              <span>Total Balance:</span> N2,600,000.00
+            </p>
+          </div>
+          <div class="display-half-div left-side">
+            <button class="acc-rec-btn delete-acc-btn" type="submit">
+              Delete Account
+            </button>
+            <form>
+              <button class="acc-rec-btn acc-rec-activate-btn" type="submit">
+                Deactivate
+              </button>
+            </form>
+          </div>
         </div>
       </div>
-    </header>
-    <main>
-      <section id="account-record" class="container account-details">
-        <h3 class="dashboard-section-title">
-          Account Details
-          <a href="accounts_list.html"
-            ><button class="acc-rec-bck-btn">Back</button></a
-          >
-        </h3>
-        <div class="details-div">
-          <div class="display-full-div">
-            <div class="display-half-div left-side">
-              <p>Account ID: 010395</p>
-            </div>
-            <div class="display-half-div right-side">
-              <p>Account Number: 2057483546</p>
-            </div>
+    </section>
+    <section id="profile" class="container account-details">
+      <h3 class="dashboard-section-title">Personal Information</h3>
+      <div class="details-div">
+        <div class="display-full-div">
+          <div class="display-half-div left-side">
+            <p><span>First Name:</span> Osaukhumwen</p>
           </div>
-
-          <div class="display-full-div">
-            <div class="display-half-div left-side">
-              <p>Owner: 2167895</p>
-            </div>
-            <div class="display-half-div right-side">
-              <p>Created On: 24th March 2019</p>
-            </div>
-          </div>
-
-          <div class="display-full-div">
-            <div class="display-half-div left-side">
-              <p>Type: Savings</p>
-            </div>
-            <div class="display-half-div right-side">
-              <p>Status: Active</p>
-            </div>
-          </div>
-
-          <div class="display-full-div">
-            <div class="display-half-div left-side">
-              <p>
-                Total Balance: N2,600,000.00
-              </p>
-            </div>
-            <div class="display-half-div left-side">
-              <form>
-                <button class="acc-rec-btn delete-acc-btn" type="submit">
-                  Delete Account
-                </button>
-              </form>
-              <form>
-                <button class="acc-rec-btn acc-rec-activate-btn" type="submit">
-                  Deactivate
-                </button>
-              </form>
-            </div>
+          <div class="display-half-div right-side">
+            <p><span>Last Name:</span> Iyamuosa</p>
           </div>
         </div>
-      </section>
-      <section id="profile" class="container account-details">
-        <h3 class="dashboard-section-title">Personal Information</h3>
-        <div class="details-div">
-          <div class="display-full-div">
-            <div class="display-half-div left-side">
-              <p>Name: Osaukhumwen Iyamuosa</p>
-            </div>
-            <div class="display-half-div right-side">
-              <p>Nationality: Nigerian</p>
-            </div>
-          </div>
 
-          <div class="display-full-div">
-            <div class="display-half-div left-side">
-              <p>Gender: Male</p>
-            </div>
-            <div class="display-half-div right-side">
-              <p>Age: 22</p>
-            </div>
+        <div class="display-full-div">
+          <div class="display-half-div left-side">
+            <p><span>Gender:</span> Male</p>
           </div>
-
-          <div class="display-full-div">
-            <div class="display-half-div left-side">
-              <p>Occupation: Software Engineer</p>
-            </div>
-            <div class="display-half-div right-side">
-              <p>Phone Number: 07068412039</p>
-            </div>
-          </div>
-
-          <div class="display-full-div">
-            <div class="display-half-div left-side">
-              <p>
-                Address Line 1: 26, Christopher Adodo Street
-              </p>
-            </div>
-            <div class="display-half-div right-side">
-              <p>Address Line 2: Evboumore Quarters</p>
-            </div>
-          </div>
-
-          <div class="display-full-div">
-            <div class="display-half-div left-side">
-              <p>City: Benin</p>
-            </div>
-            <div class="display-half-div right-side">
-              <p>State: Edo</p>
-            </div>
+          <div class="display-half-div right-side">
+            <p><span>Age:</span> 22</p>
           </div>
         </div>
-      </section>
-      <section id="trnsc-hstr" class="container account-details">
-        <h3 class="dashboard-section-title">Transaction History</h3>
-        <div class="trns-hist-details details-div">
+
+        <div class="display-full-div">
+          <div class="display-half-div left-side">
+            <p><span>Email:</span> osaukhu.bi@gmail.com</p>
+          </div>
+          <div class="display-half-div right-side">
+            <p><span>Phone Number:</span> 07068412039</p>
+          </div>
+        </div>
+
+        <div class="display-full-div">
+          <div class="display-half-div left-side">
+            <p><span>City:</span> Benin</p>
+          </div>
+          <div class="display-half-div right-side">
+            <p><span>State:</span> Edo</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="trnsc-hstr" class="container account-details">
+      <h3 class="dashboard-section-title">Transaction History</h3>
+      <div id="transaction-history-div" class="details-div">
+        <div class="display-full-div">
+          <p class="trans-hist-title trns-details-side">date</p>
+          <p class="trans-hist-title trns-details-mid">amount</p>
+          <p class="trans-hist-title trns-details-side">type</p>
+        </div>
+        <div class="trns-hist-details">
           <ul>
             <li>
               <div class="display-full-div">
@@ -198,10 +229,13 @@
             </li>
           </ul>
         </div>
-      </section>
-    </main>
-    <footer>
-      <p>Banka, Copyright &copy; 2019</p>
-    </footer>
-  </body>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <p>Banka, Copyright &copy; 2019</p>
+  </footer>
+  <script src="./assets/js/bankAccountRecordScript.js"></script>
+</body>
+
 </html>

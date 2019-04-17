@@ -1,72 +1,78 @@
 <!DOCTYPE html5>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="stylesheet" href="./assets/css/style.css" />
-    <title>Banka | Account Transaction</title>
-  </head>
-  <body>
-    <header>
-      <div class="container">
-        <div id="header-title">
-          <a href="dashboard.html"><h1>Banka</h1></a>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link rel="stylesheet" href="./assets/css/style.css" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+  <title>Banka | Account Transaction</title>
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <div id="header-title">
+        <a href="dashboard.html">
+          <h1>Banka</h1>
+        </a>
+      </div>
+      <div id="header-links">
+        <a class="pre-login-link unused-link" href="#">Sign Up</a>
+        <a class="pre-login-link unused-link" href="#">Login</a>
+        <p><i class="far fa-user"></i> Osaukhumwen</p>
+        <a id="logout" href="index.html">Logout</a>
+      </div>
+    </div>
+  </header>
+  <main>
+    <section id="transaction" class="container account-details">
+      <h3 class="trans-section-title">
+        Transaction Details
+        <a href="dashboard.html"><button id="trans-bck-btn">Back</button></a>
+      </h3>
+      <div class="details-div">
+        <div class="display-full-div">
+          <div class="display-half-div left-side">
+            <p><span>ID:</span> 012457</p>
+          </div>
+          <div class="display-half-div right-side">
+            <p><span>Account Number:</span> 2058946251</p>
+          </div>
         </div>
-        <div id="header-links">
-          <a class="pre-login-link unused-link" href="#">Sign Up</a>
-          <a class="pre-login-link unused-link" href="#">Login</a>
-          <p>Logged In As Osaukhumwen</p>
-          <a id="logout" href="index.html">Logout</a>
+        <div class="display-full-div">
+          <div class="display-half-div left-side">
+            <p><span>Created On:</span> 24th March 2019</p>
+          </div>
+          <div class="display-half-div right-side">
+            <p><span>Type:</span> Credit</p>
+          </div>
+        </div>
+        <div class="display-full-div">
+          <div class="display-half-div left-side">
+            <p><span>Cashier:</span> Mary</p>
+          </div>
+          <div class="display-half-div right-side">
+            <p><span>Amount:</span> N12,000.00</p>
+          </div>
+        </div>
+        <div class="display-full-div">
+          <div class="display-half-div left-side">
+            <p><span>Old Balance:</span> N13,560,000.00
+            </p>
+          </div>
+          <div class="display-half-div right-side">
+            <p><span>New Balance:</span> N13,572,000.00</p>
+          </div>
         </div>
       </div>
-    </header>
-    <main>
-      <section id="transaction" class="container account-details">
-        <h3 class="trans-section-title">
-          Transaction Details
-          <a href="dashboard.html"><button id="trans-bck-btn">Back</button></a>
-        </h3>
-        <div class="details-div">
-          <div class="display-full-div">
-            <div class="display-half-div left-side">
-              <p>ID: 012457</p>
-            </div>
-            <div class="display-half-div right-side">
-              <p>Account Number: 2058946251</p>
-            </div>
-          </div>
-          <div class="display-full-div">
-            <div class="display-half-div left-side">
-              <p>Created On: 24th March 2019</p>
-            </div>
-            <div class="display-half-div right-side">
-              <p>Type: Credit</p>
-            </div>
-          </div>
-          <div class="display-full-div">
-            <div class="display-half-div left-side">
-              <p>Cashier: Mary</p>
-            </div>
-            <div class="display-half-div right-side">
-              <p>Amount: N12,000.00</p>
-            </div>
-          </div>
-          <div class="display-full-div">
-            <div class="display-half-div left-side">
-              <p>
-                Old Balance: N13,560,000.00
-              </p>
-            </div>
-            <div class="display-half-div right-side">
-              <p>New Balance: N13,572,000.00</p>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
-    <footer>
-      <p>Banka, Copyright &copy; 2019</p>
-    </footer>
-  </body>
+    </section>
+  </main>
+  <footer>
+    <p>Banka, Copyright &copy; 2019</p>
+  </footer>
+</body>
+
 </html>
