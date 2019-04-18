@@ -36,6 +36,8 @@ select {
   border: 1px solid #9ec7e0;
   display: block;
   margin: 0 auto;
+  cursor: pointer;
+  outline: none;
 }
 
 main {
@@ -45,7 +47,7 @@ main {
 /******** HEADER *******/
 
 header {
-  background: #9ec7e0;
+  background: #013144;
   height: 100px;
 }
 
@@ -60,12 +62,12 @@ header {
 
 #header-title h1 {
   margin-bottom: 0;
-  line-height: 150%;
+  line-height: 100px;
   text-decoration: none;
   text-transform: uppercase;
   color: #e8ebec;
-  font-size: 50px;
-  margin-top: 15px;
+  font-size: 40px;
+  margin-top: 0;
 }
 
 #header-links {
@@ -77,9 +79,9 @@ header {
   display: none;
 }
 
-.pre-login-link {
+/* .pre-login-link {
   padding-left: 10px;
-}
+} */
 
 .pre-login-link:hover {
   font-weight: bold;
@@ -89,6 +91,11 @@ header {
   text-decoration: none;
   color: #e8ebec;
   font-size: 16px;
+  width: 50px;
+}
+
+#header-links p.login-signup {
+  width: 70px;
 }
 
 #header-links p {
@@ -98,6 +105,7 @@ header {
   font-size: 16px;
   margin: 0;
   float: left;
+  width: 130px;
 }
 
 #logout {
@@ -126,6 +134,12 @@ header {
   color: #ffffff;
 }
 
+#overlay {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
 #homepage h1 {
   margin: 0;
   padding-top: 100px;
@@ -151,8 +165,10 @@ header {
   margin: 5px;
   font-size: 18px;
   text-align: center;
-  box-shadow: 1px 1px 8px #ffffff;
+  box-shadow: 2px 2px 8px #8c8f93;
   border-radius: 5px;
+  cursor: pointer;
+  outline: none;
 }
 
 .signup-btn {
@@ -180,18 +196,18 @@ header {
   color: #616263;
 }
 
-#signup-form {
+/* #signup-form {
   max-width: 700px;
-}
+} */
 
 #signup-form form {
-  margin-bottom: 20px;
-  margin-top: 25px;
+  /* margin-bottom: 20px; */
+  margin-top: 15px;
 }
 
-#signup-form button {
+/* #signup-form button {
   width: 350px;
-}
+} */
 
 #signup-form h3 {
   margin: 0 0 5px 0;
@@ -216,6 +232,11 @@ header {
 }
 
 /****** ALL PAGES WITH FORMS *****/
+
+#login-form {
+  min-height: calc(100vh - 320px);
+  padding-top: 100px;
+}
 
 .all-form {
   max-width: 450px;
@@ -248,9 +269,67 @@ header {
 #admin-link {
   color: #616262;
   text-align: center;
+  text-decoration: underline;
 }
 
 /****************** DASHBOARD PAGE **********************/
+#update-account-overlay {
+  position: fixed; 
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0; 
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 2;
+  cursor: pointer;
+}
+
+#update-overlay-content{
+  position: absolute;
+  display: block;
+  min-width: 350px;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 5%;
+  bottom: 35%;
+  height: 560px;
+  padding: 20px;
+  background-color: #e8ebec;
+}
+
+#pen-icon {
+  cursor: pointer;
+}
+
+.modal-title {
+  max-width: 100%;
+  text-align: left;
+  margin: 0 auto 10px auto;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: #616263;
+}
+
+#close-modal {
+  float: right;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.dashboard #list-icon {
+  line-height: 45px;
+}
+
+#list-icon {
+  float: right;
+    /* line-height: 45px; */
+    font-size: 25px;
+    margin-left: 20;
+    color: #616263;
+}
 
 /******* ACCOUNT DETAILS SECTION *******/
 
@@ -281,7 +360,7 @@ header {
   margin: 0 auto;
   overflow: auto;
   padding: 20px;
-  border: 2px solid #ffffff;
+  border: 2px solid #616263;
   background-color: #ffffff;
 }
 
@@ -314,6 +393,17 @@ header {
   color: #616263;
 }
 
+.dashboard-section-title i {
+  float: right;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+#profile .details-div p span {
+  color: #71a9d6;
+  font-weight: bold;
+}
+
 #profile .details-div p {
   width: 100%;
   height: 50px;
@@ -324,6 +414,57 @@ header {
 }
 
 /****** TRANSACTION HISTORY ********/
+
+#transaction-history-div {
+  padding-top: 0;
+}
+
+#transaction-history-overlay {
+  position: fixed; 
+  display: block;
+  width: 100%;
+  height: 100%;
+  top: 0; 
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 2;
+  cursor: pointer;
+}
+
+#transaction-history-overlay-content{
+  position: absolute;
+  display: block;
+  min-width: 280px;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 20%;
+  bottom: 35%;
+  height: 350px;
+  padding: 20px;
+  background-color: #e8ebec;
+}
+
+#transaction-history-overlay-content div span {
+  color: #71a9d6;
+  font-weight: bold;
+}
+
+#transaction-history-overlay-content div p {
+  width: 100%;
+  height: 30px;
+  color: #013144;
+  font-size: 16px;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+
+.acc-list-details .indiv-trans:hover p {
+  background-color: #e8ebec;
+  cursor: pointer;
+ }
 
 #trnsc-hstr .details-div p {
   /* width: 100%; */
@@ -336,8 +477,25 @@ header {
   margin-bottom: 0px;
 }
 
+#transaction-history-div p.trans-hist-title {
+  height: 50px;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 50px;
+  border-bottom: 1px solid #616263;
+  color: #f84e4e;
+  text-transform: uppercase;
+}
+
 #trnsc-hstr .trns-hist-details {
   height: 270px;
+  overflow: auto;
+}
+
+.indiv-trans p {
+  width: 25%;
+  float: left;
+  text-align: center;
 }
 
 .details-div ul {
@@ -385,6 +543,10 @@ header {
   font-size: 18px;
   margin-top: 0;
   margin-bottom: 10px;
+}
+
+#transaction .details-div p span {
+  color: #f84e4e;
 }
 
 #trans-bck-btn {
@@ -444,14 +606,20 @@ header {
 }
 
 #accounts-list .accounts-list-div .acc-list-title {
-  font-size: 13px;
-  line-height: 30px;
+  height: 50px;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 50px;
   border-bottom: 1px solid #616263;
-  color: #616263;
+  color: #71a9d6;
   text-transform: uppercase;
 }
 
-#accounts-list .accounts-list-div p {
+.indiv-acc:hover p {
+  background-color: #e8ebec;
+ }
+
+.accounts-list-div p {
   line-height: 50px;
   color: #013144;
   border-bottom: 1px solid #013144;
@@ -464,6 +632,8 @@ header {
   height: 500px;
   overflow: auto;
 }
+
+
 
 .accounts-list-div ul {
   padding: 0;
@@ -494,6 +664,85 @@ header {
 }
 
 /****** ACCOUNT RECORD PAGE *******/
+#perform-transaction-overlay {
+  position: fixed; 
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0; 
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 2;
+}
+
+#trans-overlay-content {
+  position: absolute;
+  display: none;
+  min-width: 350px;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 35%;
+  bottom: 35%;
+  height: 255px;
+  padding: 20px;
+  background-color: #e8ebec;
+}
+
+#delete-account-modal {
+  position: absolute;
+  display: none;
+  z-index: 2;
+  width: 250px;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 35%;
+  bottom: 35%;
+  height: 150px;
+  padding: 20px;
+  background-color: #e8ebec;
+  border: 1px solid #616262;
+}
+
+#delete-account-modal p {
+  color: #111;
+  text-align: center;
+  font-size: 20px;
+
+}
+
+#no {
+  background-color: #9ec7e0;
+  border: 1px solid #9ec7e0;
+}
+
+#yes {
+  background-color: #f84e4e;
+  border: 1px solid #f84e4e;
+  margin-left: 20px;
+}
+
+#delete-account-modal button {
+  height: 40px;
+  font-size: 16px;
+  color: #e8ebec;
+  width: 40%;
+  float: left;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  text-transform: uppercase;
+  margin-right: 10px;
+  outline: none;
+  cursor: pointer;
+}
+
+#account-record .details-div p span {
+  color: #71a9d6;
+  font-weight: bold;
+}
+
 #account-record .details-div p {
   width: 100%;
   height: 50px;
@@ -504,12 +753,16 @@ header {
 }
 
 .acc-rec-btn {
-  height: 50px;
-  font-size: 18px;
+  height: 40px;
+  font-size: 12px;
   color: #e8ebec;
-  width: 45%;
+  width: 35%;
   float: left;
+  font-weight: bold;
+  border-radius: 5px;
   text-transform: uppercase;
+  outline: none;
+  cursor: pointer;
 }
 
 .delete-acc-btn {
@@ -709,7 +962,7 @@ footer p {
   /****/
 
   #accounts-list .accounts-list-div p {
-    font-size: 12px;
+    font-size: 16px;
   }
 
   /***** Account Record ****/
