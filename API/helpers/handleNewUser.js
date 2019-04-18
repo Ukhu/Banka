@@ -3,17 +3,29 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const handleNewUser = (res, newUser) => {
-  // create token
-  const token = sign(newUser, process.env.JWT_KEY, { expiresIn: '1hr' });
+/**
+ * Hanldes sending back a response for the newly created user
+ * @param {object} response
+ * @param {object} newUser
+ * @returns {object} the newly created user details
+ * @memberof ControllerHelpers
+ */
 
-  return res.status(201).json({
+const handleNewUser = (response, newUser) => {
+  const uniqueDetails = {
+    id: newUser.id,
+    email: newUser.email,
+  };
+  // create token
+  const token = sign(uniqueDetails, process.env.JWT_KEY, { expiresIn: '1hr' });
+
+  return response.status(201).json({
     status: 201,
     data: {
       token,
       id: newUser.id,
-      firstname: newUser.firstname,
-      lastname: newUser.lastname,
+      firstName: newUser.firstName,
+      lastName: newUser.lastName,
       email: newUser.email,
     },
   });

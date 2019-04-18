@@ -1,5 +1,11 @@
 import { check } from 'express-validator/check';
 
+/**
+* Adds validations to the accounts routes
+* @returns {array} an array containing the Check API validations
+* @memberof Validation
+*/
+
 const accountValidations = () => [
   check('userId')
     .exists().withMessage('User ID not supplied')
@@ -16,7 +22,8 @@ const accountValidations = () => [
     .isString()
     .withMessage('Account type must be string')
     .trim()
-    .isIn(['current', 'savings']),
+    .isIn(['current', 'savings'])
+    .withMessage('must be either savings or current'),
 ];
 
 export default accountValidations;

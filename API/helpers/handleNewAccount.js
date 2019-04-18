@@ -1,13 +1,22 @@
-const handleNewAccount = (res, newAccount, owner) => {
-  const { firstname, lastname, email } = owner;
+/**
+ * Handles sending back a response to the user for newly created account
+ * @param {object} response
+ * @param {object} newAccount
+ * @param {object} owner
+ * @returns {object} the newly created account details
+ * @memberof ControllerHelpers
+ */
+
+const handleNewAccount = (response, newAccount, owner) => {
+  const { firstName, lastName, email } = owner;
   const { accountNumber, type, balance } = newAccount;
 
-  return res.status(201).json({
+  return response.status(201).json({
     status: 201,
     data: {
       accountNumber,
-      firstname,
-      lastname,
+      firstName,
+      lastName,
       email,
       type,
       openingBalance: balance,
