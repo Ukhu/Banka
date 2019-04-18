@@ -13,21 +13,25 @@ export class AccountController {
    * Creates a bank account for a user
    * @param {object} request
    * @param {object} response
-   * @returns {object} A response status and the created account or an error message
+   * @returns {object}
+   * A response status and the created account or an error message
    * @memberof AccountController
    */
 
   static createAccount(request, response) {
-    const { userId, type } = request.body;
+    const { type } = request.body;
+    const { id } = request.decoded;
 
-    const owner = users.find(user => user.id === Number(userId));
+    const accountOwner = users.find(user => user.id === id);
 
-    if (owner) {
+    if (accountOwner) {
       const newAccount = {
         id: accountdb.length + 100,
-        accountNumber: Math.floor(Math.random() * (10000000 - 1000000) + 1000000),
+        accountNumber: Math.floor(
+          Math.random() * (10000000 - 1000000) + 1000000,
+        ),
         createdOn: new Date().toLocaleString(),
-        owner: Number(userId),
+        owner: id,
         type,
         status: 'active',
         balance: 0.00,
@@ -35,9 +39,12 @@ export class AccountController {
 
       accountdb.push(newAccount);
 
-      handleNewAccount(response, newAccount, owner);
+      handleNewAccount(response, newAccount, accountOwner);
     } else {
-      response.status(404).json({ status: 404, error: 'Account owner not found' });
+      response.status(404).json({
+        status: 404,
+        error: 'Account owner not found',
+      });
     }
   }
 
@@ -45,32 +52,32 @@ export class AccountController {
    * Activates or deactivates a user account
    * @param {object} request
    * @param {object} response
-   * @returns {object} the user's new account status on success or an error message
+   * @returns {object}
+   * the user's new account status on success or an error message
    * @memberof AccountController
    */
 
   static activateOrDeactivate(request, response) {
     const { accountNumber } = request.params;
-    const foundAccount = accountdb.find(account => account.accountNumber === Number(accountNumber));
+    const { status } = request.body;
+
+    const foundAccount = accountdb.find(
+      account => account.accountNumber === Number(accountNumber),
+    );
     if (foundAccount) {
-      if (foundAccount.status === 'active') {
-        foundAccount.status = 'dormant';
-      } else {
-        foundAccount.status = 'active';
-      }
       accountdb.find(account => account.accountNumber === Number(accountNumber))
-        .status = foundAccount.status;
+        .status = status;
       return response.status(200).json({
         status: 200,
         data: {
           accountNumber: foundAccount.accountNumber,
-          status: foundAccount.status,
+          status,
         },
       });
     }
     return response.status(404).json({
       status: 404,
-      error: 'No account found for the provided entity',
+      error: 'No account found for the given account number',
     });
   }
 
@@ -84,7 +91,9 @@ export class AccountController {
 
   static deleteAccount(request, response) {
     const { accountNumber } = request.params;
-    const foundAccount = accountdb.find(account => account.accountNumber === Number(accountNumber));
+    const foundAccount = accountdb.find(
+      account => account.accountNumber === Number(accountNumber),
+    );
     const index = accountdb.indexOf(foundAccount);
 
     if (index >= 0) {
@@ -97,7 +106,7 @@ export class AccountController {
     }
     return response.status(404).json({
       status: 404,
-      error: 'No account found for the provided entity',
+      error: 'No account found for the given account number',
     });
   }
 }

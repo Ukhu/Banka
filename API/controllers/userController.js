@@ -15,7 +15,8 @@ export class UserController {
    * Adds a new user to the database
    * @param {object} request
    * @param {object} response
-   * @returns {object} A response status and the created user or an error message
+   * @returns {object}
+   * A response status and the created user or an error message
    * @memberof UserController
    */
 

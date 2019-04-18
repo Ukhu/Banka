@@ -140,7 +140,7 @@ describe('TRANSACTIONS', () => {
           response.body.should.be.a('object');
           response.body.should.have.property('error');
           response.body.error.should.be.a('string');
-          response.body.error.should.equal('FORBIDDEN - Only Cashier can access make this transaction!');
+          response.body.error.should.equal('FORBIDDEN - Only Cashier can make this transaction!');
         });
       done();
     });
@@ -320,7 +320,7 @@ describe('TRANSACTIONS', () => {
           response.body.should.be.a('object');
           response.body.should.have.property('error');
           response.body.error.should.be.a('string');
-          response.body.error.should.equal('FORBIDDEN - Only Cashier can access make this transaction!');
+          response.body.error.should.equal('FORBIDDEN - Only Cashier can make this transaction!');
         });
       done();
     });

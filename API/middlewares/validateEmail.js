@@ -10,10 +10,13 @@ import { users } from '../controllers/userController';
  */
 
 const validateEmail = (request, response, next) => {
-  const owner = users.find(user => user.email === request.body.email);
+  const accountOwner = users.find(user => user.email === request.body.email);
 
-  if (owner) {
-    return response.status(400).json({ status: 400, error: 'body[email]: Email already exists' });
+  if (accountOwner) {
+    return response.status(409).json({
+      status: 409,
+      error: 'Email already exists',
+    });
   }
 
   return next();

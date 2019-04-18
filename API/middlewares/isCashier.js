@@ -17,7 +17,7 @@ const isCashier = (request, response, next) => {
   if (owner.type === 'staff' && owner.isAdmin === 'false') {
     next();
   } else {
-    response.status(403).json({ status: 403, error: 'FORBIDDEN - Only Cashier can access make this transaction!' });
+    response.status(403).json({ status: 403, error: 'FORBIDDEN - Only Cashier can make this transaction!' });
   }
 };
 

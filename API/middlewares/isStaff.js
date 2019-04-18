@@ -17,7 +17,10 @@ const isStaff = (request, response, next) => {
   if (owner.type === 'staff') {
     next();
   } else {
-    response.status(403).json({ status: 403, error: 'FORBIDDEN - Only Staff can access make this transaction!' });
+    response.status(403).json({
+      status: 403,
+      error: 'FORBIDDEN - Only Staff can make this transaction!',
+    });
   }
 };
 
