@@ -4,6 +4,7 @@ import isAuthorized from '../middlewares/isAuthorized';
 import isStaff from '../middlewares/isStaff';
 import accountValidations from '../validations/accountValidations';
 import accountStatusValidations from '../validations/accountStatusValidations';
+import deleteAccountValidation from '../validations/deleteAccountValidation';
 import errorHandler from '../middlewares/errorHandler';
 
 const router = express.Router();
@@ -17,7 +18,7 @@ router.patch('/:accountNumber',
   errorHandler, AccountController.activateOrDeactivate);
 
 router.delete('/:accountNumber',
-  isAuthorized, isStaff,
-  AccountController.deleteAccount);
+  isAuthorized, isStaff, deleteAccountValidation(),
+  errorHandler, AccountController.deleteAccount);
 
 export default router;
