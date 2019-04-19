@@ -6,7 +6,8 @@ import errorHandler from '../middlewares/errorHandler';
 
 const router = express.Router();
 
-router.post('/signup', userValidation(), errorHandler, validateEmail, UserController.createUser);
+router.post('/signup', userValidation(),
+  errorHandler, validateEmail, UserController.createUser);
 router.post('/signin', UserController.loginUser);
 
 export default router;

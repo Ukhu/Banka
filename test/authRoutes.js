@@ -60,7 +60,7 @@ describe('AUTHENTICATION', () => {
         .post('/api/v1/auth/signup')
         .send(userDetails3)
         .end((error, response) => {
-          response.should.have.status(400);
+          response.should.have.status(409);
           response.body.should.be.a('object');
           response.body.should.have.property('error');
           response.body.error.should.be.a('string');

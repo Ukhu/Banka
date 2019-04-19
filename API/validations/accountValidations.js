@@ -7,13 +7,6 @@ import { check } from 'express-validator/check';
 */
 
 const accountValidations = () => [
-  check('userId')
-    .exists().withMessage('User ID not supplied')
-    .not()
-    .isEmpty({ ignore_whitespace: true })
-    .withMessage('User ID cannot be empty')
-    .isNumeric()
-    .withMessage('User ID must be an integer'),
   check('type')
     .exists().withMessage('Account type not supplied')
     .not()

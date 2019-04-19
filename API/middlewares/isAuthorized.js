@@ -13,7 +13,8 @@ dotenv.config();
  */
 
 const isAuthorized = (request, response, next) => {
-  const token = request.body.token || request.query.token || request.headers['x-access-token'];
+  const token = request.body.token
+    || request.query.token || request.headers['x-access-token'];
 
   if (token) {
     verify(token, process.env.JWT_KEY, (error, decoded) => {
@@ -30,7 +31,7 @@ const isAuthorized = (request, response, next) => {
   } else {
     response.status(403).json({
       status: 403,
-      error: 'FORBIDDEN REQUEST - No Token Provided',
+      error: 'Unauthorized Access',
     });
   }
 };

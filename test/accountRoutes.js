@@ -54,24 +54,6 @@ describe('ACCOUNTS', () => {
         });
     });
 
-    it('should return a 404 Not Found error if there is no user in the DB with the given userID', (done) => {
-      const accountOpeningDetails = {
-        userId: 0,
-        type: 'current',
-        token: resToken,
-      };
-      chai.request(app)
-        .post('/api/v1/accounts')
-        .send(accountOpeningDetails)
-        .end((error, response) => {
-          response.should.have.status(404);
-          response.body.should.be.a('object');
-          response.body.should.have.property('error');
-          response.body.error.should.be.a('string');
-          done();
-        });
-    });
-
     it('should return a 403 Forbidden Error if no token is provided', (done) => {
       const accountOpeningDetails = {
         userId: userid,
@@ -214,6 +196,7 @@ describe('ACCOUNTS', () => {
 
     it('should successfully update the user status to active or dormant', (done) => {
       const token = {
+        status: 'active',
         token: staffToken,
       };
 
@@ -231,6 +214,7 @@ describe('ACCOUNTS', () => {
 
     it('should return a 404 Not Found Error if the account number specified in the params is not in the database', (done) => {
       const token = {
+        status: 'dormant',
         token: staffToken,
       };
 
@@ -242,7 +226,7 @@ describe('ACCOUNTS', () => {
           response.body.should.be.a('object');
           response.body.should.have.property('error');
           response.body.error.should.be.a('string');
-          response.body.error.should.equal('No account found for the provided entity');
+          response.body.error.should.equal('No account found for the given account number');
         });
       done();
     });
@@ -255,7 +239,7 @@ describe('ACCOUNTS', () => {
           response.body.should.be.a('object');
           response.body.should.have.property('error');
           response.body.error.should.be.a('string');
-          response.body.error.should.equal('FORBIDDEN REQUEST - No Token Provided');
+          response.body.error.should.equal('Unauthorized Access');
         });
       done();
     });
@@ -273,7 +257,7 @@ describe('ACCOUNTS', () => {
           response.body.should.be.a('object');
           response.body.should.have.property('error');
           response.body.error.should.be.a('string');
-          response.body.error.should.equal('FORBIDDEN - Only Staff can access make this transaction!');
+          response.body.error.should.equal('FORBIDDEN - Only Staff can make this transaction!');
         });
       done();
     });
@@ -383,7 +367,7 @@ describe('ACCOUNTS', () => {
           response.body.should.be.a('object');
           response.body.should.have.property('error');
           response.body.error.should.be.a('string');
-          response.body.error.should.equal('No account found for the provided entity');
+          response.body.error.should.equal('No account found for the given account number');
         });
       done();
     });
@@ -396,7 +380,7 @@ describe('ACCOUNTS', () => {
           response.body.should.be.a('object');
           response.body.should.have.property('error');
           response.body.error.should.be.a('string');
-          response.body.error.should.equal('FORBIDDEN REQUEST - No Token Provided');
+          response.body.error.should.equal('Unauthorized Access');
         });
       done();
     });
@@ -414,7 +398,7 @@ describe('ACCOUNTS', () => {
           response.body.should.be.a('object');
           response.body.should.have.property('error');
           response.body.error.should.be.a('string');
-          response.body.error.should.equal('FORBIDDEN - Only Staff can access make this transaction!');
+          response.body.error.should.equal('FORBIDDEN - Only Staff can make this transaction!');
         });
       done();
     });
