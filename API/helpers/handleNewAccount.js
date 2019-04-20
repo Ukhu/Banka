@@ -8,16 +8,15 @@
  */
 
 const handleNewAccount = (response, newAccount, owner) => {
-  const { firstName, lastName, email } = owner;
-  const { accountNumber, type, balance } = newAccount;
+  const { type, balance } = newAccount;
 
   return response.status(201).json({
     status: 201,
     data: {
-      accountNumber,
-      firstName,
-      lastName,
-      email,
+      accountNumber: newAccount.account_number,
+      firstName: owner.first_name,
+      lastName: owner.last_name,
+      email: owner.email,
       type,
       openingBalance: balance,
     },

@@ -2,15 +2,16 @@ import bcrypt from 'bcrypt';
 import checkLoginStatus from '../helpers/checkLoginStatus';
 import handlePasswordComparison from '../helpers/handlePasswordComparison';
 import hanldeNewUser from '../helpers/handleNewUser';
+import users from '../models/user';
 
-export const users = [];
+// export const users = [];
 
 /**
  * @class UserController
  * @classdesc Performs operations on user entity
  */
 
-export class UserController {
+export default class UserController {
   /**
    * Adds a new user to the database
    * @param {object} request
@@ -22,26 +23,30 @@ export class UserController {
 
   static createUser(request, response) {
     const {
-      email, firstName, lastName, password, type, isAdmin,
+      email, firstName, lastName, type, isAdmin,
     } = request.body;
 
-    bcrypt.hash(password, 10, (error, hash) => {
+    bcrypt.hash(request.body.password, 10, (error, hash) => {
       if (error) {
         response.status(500).json({ status: 500, error });
       } else {
-        const newUser = {
-          id: users.length + 1,
-          email,
-          firstName,
-          lastName,
-          password: hash,
-          type,
-          isAdmin,
-        };
+        const password = hash;
 
-        users.push(newUser);
+        const queryString = `
+          INSERT INTO
+          users(email, first_name, last_name, password, type, isAdmin)
+          VALUES($1, $2, $3, $4, $5, $6)
+          returning *;
+        `;
 
-        hanldeNewUser(response, newUser);
+        users.query(queryString,
+          [email, firstName, lastName, password, type, isAdmin])
+          .then((queryResponse) => {
+            hanldeNewUser(response, queryResponse.rows[0]);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       }
     });
   }
@@ -50,7 +55,8 @@ export class UserController {
    * Signs in an existing user
    * @param {object} request
    * @param {object} response
-   * @returns {object} A response status and the user's details or an error message
+   * @returns {object}
+   * A response status and the user's details or an error message
    * @memberof UserController
    */
 
@@ -58,13 +64,25 @@ export class UserController {
     if (request.body.token || request.query.token || request.headers['x-access-token']) {
       checkLoginStatus(request, response);
     } else {
-      const accountOwner = users.find(user => user.email === request.body.email);
+      const queryString = `
+        SELECT * FROM users
+        WHERE email=$1
+      `;
 
-      if (!accountOwner) {
-        response.status(401).json({ status: 401, error: 'Email or password is wrong' });
-      } else {
-        handlePasswordComparison(response, accountOwner, request.body.password, accountOwner.password);
-      }
+      users.query(queryString, [request.body.email])
+        .then((queryResponse) => {
+          if (queryResponse.rows.length < 1) {
+            response.status(401).json({ status: 401, error: 'Email or password is wrong' });
+          } else {
+            const [accountOwner] = queryResponse.rows;
+            handlePasswordComparison(response, accountOwner, request.body.password, accountOwner.password);
+          }
+        }).catch((error) => {
+          response.status(500).json({
+            status: 500,
+            error: 'Error occured!',
+          });
+        });
     }
   }
 }

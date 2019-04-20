@@ -24,8 +24,8 @@ const handleNewUser = (response, newUser) => {
     data: {
       token,
       id: newUser.id,
-      firstName: newUser.firstName,
-      lastName: newUser.lastName,
+      firstName: newUser.first_name,
+      lastName: newUser.last_name,
       email: newUser.email,
     },
   });
