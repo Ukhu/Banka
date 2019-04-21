@@ -160,4 +160,47 @@ export default class AccountController {
         });
       });
   }
+
+  static transactionHistory(request, response) {
+    const { accountNumber } = request.params;
+
+    const accountQuery = `
+      SELECT account_number FROM accounts
+      WHERE account_number=$1;
+    `;
+
+
+    accounts.query(accountQuery, [accountNumber])
+      .then((accountResponse) => {
+        if (accountResponse.rows.length > 0) {
+          const [account] = accountResponse.rows;
+
+          const transactionQuery = `
+            SELECT id, created_on, type, account_number,
+            amount, old_balance, new_balance
+            FROM transactions
+            WHERE account_number=$1
+          `;
+
+          accounts.query(transactionQuery, [account.account_number])
+            .then((transactionResponse) => {
+              response.status(200).json({
+                status: 200,
+                data: transactionResponse.rows,
+              });
+            });
+        } else {
+          response.status(404).json({
+            status: 404,
+            error: 'No account found for the given account number',
+          });
+        }
+      })
+      .catch((error) => {
+        response.status(500).json({
+          status: 500,
+          error: 'Error occured!',
+        });
+      });
+  }
 }
