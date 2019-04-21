@@ -59,6 +59,45 @@ export default class AccountController {
   }
 
   /**
+   * Creates a bank account for a user
+   * @param {object} request
+   * @param {object} response
+   * @returns {object}
+   * A response status and the created account or an error message
+   * @memberof AccountController
+   */
+
+  static getAccountDetails(request, response) {
+    const { accountNumber } = request.params;
+
+    const accountQuery = `
+      SELECT * FROM accounts
+      WHERE account_number=$1
+    `;
+
+    accounts.query(accountQuery, [accountNumber])
+      .then((accountResponse) => {
+        if (accountResponse.rows.length > 0) {
+          response.status(200).json({
+            status: 200,
+            data: accountResponse.rows,
+          });
+        } else {
+          response.status(404).json({
+            status: 404,
+            error: 'No account found for the given account number',
+          });
+        }
+      })
+      .catch(() => {
+        response.status(500).json({
+          status: 500,
+          error: 'Error occured!',
+        });
+      });
+  }
+
+  /**
    * Activates or deactivates a user account
    * @param {object} request
    * @param {object} response
@@ -105,7 +144,7 @@ export default class AccountController {
           });
         }
       })
-      .catch((error) => {
+      .catch(() => {
         response.status(500).json({
           status: 500,
           error: 'Error occured!',
@@ -140,7 +179,7 @@ export default class AccountController {
           `;
 
           accounts.query(deleteQuery, [`{${account.id}}`])
-            .then((deleteResponse) => {
+            .then(() => {
               response.status(200).json({
                 status: 200,
                 message: 'Account successfully deleted',

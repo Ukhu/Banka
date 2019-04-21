@@ -13,6 +13,10 @@ router.post('/',
   isAuthorized, accountValidations(), errorHandler,
   AccountController.createAccount);
 
+router.get('/:accountNumber',
+  isAuthorized, accountNumberValidation(),
+  errorHandler, AccountController.getAccountDetails);
+
 router.get('/:accountNumber/transactions',
   isAuthorized, accountNumberValidation(),
   errorHandler, AccountController.transactionHistory);
