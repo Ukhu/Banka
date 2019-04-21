@@ -82,7 +82,8 @@ describe('TRANSACTIONS', () => {
         });
     });
 
-    it('should successfully credit the user bank account if the correct details are provided', (done) => {
+    it(`should successfully credit the user bank account if the
+    correct details are provided`, (done) => {
       const creditTransDetails = {
         type: 'credit',
         accountNumber: String(userAccountNum),
@@ -98,13 +99,15 @@ describe('TRANSACTIONS', () => {
           response.body.should.be.a('object');
           response.body.should.have.keys('status', 'data');
           response.body.data.should.be.a('object');
-          response.body.data.should.have.keys('transactionId', 'accountNumber', 'amount', 'cashier',
-            'transactionType', 'accountBalance');
+          response.body.data.should.have
+            .keys('transactionId', 'accountNumber', 'amount', 'cashier',
+              'transactionType', 'accountBalance');
         });
       done();
     });
 
-    it('should return a 404 Not Found Error if there is no bank account for the specified account number', (done) => {
+    it(`should return a 404 Not Found Error if there is no bank account 
+    for the specified account number`, (done) => {
       const creditTransDetails = {
         type: 'credit',
         accountNumber: '1234567',
@@ -120,12 +123,14 @@ describe('TRANSACTIONS', () => {
           response.body.should.be.a('object');
           response.body.should.have.property('error');
           response.body.error.should.be.a('string');
-          response.body.error.should.equal('Account not found for the given account number');
+          response.body.error.should
+            .equal('Account not found for the given account number');
         });
       done();
     });
 
-    it('should return a 403 Forbidden Error if a user who is not a cashier tries to access the endpoint', (done) => {
+    it(`should return a 403 Forbidden Error if a user who is not a
+    cashier tries to access the endpoint`, (done) => {
       const creditTransDetails = {
         type: 'credit',
         accountNumber: String(userAccountNum),
@@ -141,7 +146,8 @@ describe('TRANSACTIONS', () => {
           response.body.should.be.a('object');
           response.body.should.have.property('error');
           response.body.error.should.be.a('string');
-          response.body.error.should.equal('FORBIDDEN - Only Cashier can make this transaction!');
+          response.body.error.should
+            .equal('FORBIDDEN - Only Cashier can make this transaction!');
         });
       done();
     });
@@ -247,7 +253,7 @@ describe('TRANSACTIONS', () => {
       `;
 
       users.query(resetQuery)
-        .then((resetResponse) => {
+        .then(() => {
           Promise.resolve(done());
         })
         .catch((error) => {
@@ -255,7 +261,8 @@ describe('TRANSACTIONS', () => {
         });
     });
 
-    it('should successfully debit the user bank account if the correct details are provided', (done) => {
+    it(`should successfully debit the user bank account if the
+    correct details are provided`, (done) => {
       const debitTransDetails = {
         type: 'debit',
         accountNumber: String(userAccountNum),
@@ -271,13 +278,15 @@ describe('TRANSACTIONS', () => {
           response.body.should.be.a('object');
           response.body.should.have.keys('status', 'data');
           response.body.data.should.be.a('object');
-          response.body.data.should.have.keys('transactionId', 'accountNumber', 'amount', 'cashier',
-            'transactionType', 'accountBalance');
+          response.body.data.should.have
+            .keys('transactionId', 'accountNumber', 'amount', 'cashier',
+              'transactionType', 'accountBalance');
         });
       done();
     });
 
-    it('should return a 400 Bad Request Error if the user tries to withdraw above his account balance', (done) => {
+    it(`should return a 400 Bad Request Error if the user tries
+    to withdraw above his account balance`, (done) => {
       const debitTransDetails = {
         type: 'debit',
         accountNumber: String(userAccountNum),
@@ -298,7 +307,8 @@ describe('TRANSACTIONS', () => {
       done();
     });
 
-    it('should return a 404 Not Found Error if there is no bank account for the specified account number', (done) => {
+    it(`should return a 404 Not Found Error if there is no bank 
+    account for the specified account number`, (done) => {
       const debitTransDetails = {
         type: 'debit',
         accountNumber: '1234567',
@@ -314,12 +324,14 @@ describe('TRANSACTIONS', () => {
           response.body.should.be.a('object');
           response.body.should.have.property('error');
           response.body.error.should.be.a('string');
-          response.body.error.should.equal('Account not found for the given account number');
+          response.body.error.should
+            .equal('Account not found for the given account number');
         });
       done();
     });
 
-    it('should return a 403 Forbidden Error if a user who is not a cashier tries to access the endpoint', (done) => {
+    it(`should return a 403 Forbidden Error if a user who is
+    not a cashier tries to access the endpoint`, (done) => {
       const debitTransDetails = {
         type: 'debit',
         accountNumber: String(userAccountNum),
@@ -335,7 +347,131 @@ describe('TRANSACTIONS', () => {
           response.body.should.be.a('object');
           response.body.should.have.property('error');
           response.body.error.should.be.a('string');
-          response.body.error.should.equal('FORBIDDEN - Only Cashier can make this transaction!');
+          response.body.error.should
+            .equal('FORBIDDEN - Only Cashier can make this transaction!');
+        });
+      done();
+    });
+  });
+
+  describe('GET /transactions/<transaction-id>', () => {
+    let userToken;
+    let cashierToken;
+    let userAccountNum;
+    let id;
+
+    before((done) => {
+      const userDetails = {
+        email: 'withdrawer@gmail.com',
+        firstName: 'Money',
+        lastName: 'Withdrawer',
+        password: 'debit1',
+        type: 'client',
+        isAdmin: 'false',
+      };
+
+      chai.request(app)
+        .post('/api/v1/auth/signup')
+        .send(userDetails)
+        .end((error, response) => {
+          userToken = response.body.data.token;
+          if (response) {
+            Promise.resolve(done());
+          } else {
+            Promise.resolve(done(error));
+          }
+        });
+    });
+
+    before((done) => {
+      const cashierDetails = {
+        email: 'cashier@gmail.com',
+        firstName: 'Staff',
+        lastName: 'Cashier',
+        password: 'c@SHIer_',
+        type: 'staff',
+        isAdmin: 'false',
+      };
+
+      chai.request(app)
+        .post('/api/v1/auth/signup')
+        .send(cashierDetails)
+        .end((error, response) => {
+          cashierToken = response.body.data.token;
+          if (response) {
+            Promise.resolve(done());
+          } else {
+            Promise.reject(done(error));
+          }
+        });
+    });
+
+    before((done) => {
+      const userCreateAccDetails = {
+        type: 'savings',
+        token: userToken,
+      };
+
+      chai.request(app)
+        .post('/api/v1/accounts')
+        .send(userCreateAccDetails)
+        .end((error, response) => {
+          userAccountNum = response.body.data.accountNumber;
+          if (response) {
+            Promise.resolve(done());
+          } else {
+            Promise.reject(done(error));
+          }
+        });
+    });
+
+    before((done) => {
+      const creditTransDetails = {
+        amount: 5000,
+        token: cashierToken,
+      };
+
+      chai.request(app)
+        .post(`/api/v1/transactions/${userAccountNum}/credit`)
+        .send(creditTransDetails)
+        .end((error, response) => {
+          if (response) {
+            id = response.body.data.transactionId;
+            Promise.resolve(done());
+          } else {
+            Promise.reject(done(error));
+          }
+        });
+    });
+
+    it('should successfully get the details of a particular transaction',
+      (done) => {
+        chai.request(app)
+          .get(`/api/v1/transactions/${id}`)
+          .send({ token: userToken })
+          .end((error, response) => {
+            response.should.have.status(200);
+            response.body.should.be.a('object');
+            response.body.should.have.property('data');
+            response.body.data.should.be.a('array');
+            response.body.data.length.should.equal(1);
+          });
+        done();
+      });
+
+    it(`it should return a 404 error if the transaction Id specified is
+    not in the DB`,
+    (done) => {
+      chai.request(app)
+        .get('/api/v1/transactions/40e6215d-b5c6-4896-987c-f30f3678f608')
+        .send({ token: userToken })
+        .end((error, response) => {
+          response.should.have.status(404);
+          response.body.should.be.a('object');
+          response.body.should.have.property('error');
+          response.body.error.should.be.a('string');
+          response.body.error
+            .should.equal('No account found for the given account number');
         });
       done();
     });
