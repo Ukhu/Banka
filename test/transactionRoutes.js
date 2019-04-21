@@ -471,7 +471,7 @@ describe('TRANSACTIONS', () => {
           response.body.should.have.property('error');
           response.body.error.should.be.a('string');
           response.body.error
-            .should.equal('No account found for the given account number');
+            .should.equal('Account not found for the given ID');
         });
       done();
     });

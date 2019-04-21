@@ -28,7 +28,7 @@ describe('GENERAL', () => {
         .end((error, response) => {
           response.body.should.be.a('object');
           response.body.should.have.property('message');
-          response.body.message.should.equal('Endpoint not found, check the root route to know the available routes');
+          response.body.message.should.equal('Endpoint not found, check the root route\n    to know the available routes');
         });
       done();
     });

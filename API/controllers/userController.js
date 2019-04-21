@@ -3,6 +3,7 @@ import checkLoginStatus from '../helpers/checkLoginStatus';
 import handlePasswordComparison from '../helpers/handlePasswordComparison';
 import hanldeNewUser from '../helpers/handleNewUser';
 import users from '../models/user';
+import accounts from '../models/account';
 
 // export const users = [];
 
@@ -44,8 +45,11 @@ export default class UserController {
           .then((queryResponse) => {
             hanldeNewUser(response, queryResponse.rows[0]);
           })
-          .catch((err) => {
-            console.log(err);
+          .catch(() => {
+            response.status(500).json({
+              status: 500,
+              error: 'Error occured!',
+            });
           });
       }
     });
@@ -61,7 +65,8 @@ export default class UserController {
    */
 
   static loginUser(request, response) {
-    if (request.body.token || request.query.token || request.headers['x-access-token']) {
+    if (request.body.token || request.query.token
+      || request.headers['x-access-token']) {
       checkLoginStatus(request, response);
     } else {
       const queryString = `
@@ -72,17 +77,71 @@ export default class UserController {
       users.query(queryString, [request.body.email])
         .then((queryResponse) => {
           if (queryResponse.rows.length < 1) {
-            response.status(401).json({ status: 401, error: 'Email or password is wrong' });
+            response.status(401).json({
+              status: 401,
+              error: 'Email or password is wrong',
+            });
           } else {
             const [accountOwner] = queryResponse.rows;
-            handlePasswordComparison(response, accountOwner, request.body.password, accountOwner.password);
+            handlePasswordComparison(response, accountOwner,
+              request.body.password, accountOwner.password);
           }
-        }).catch((error) => {
+        }).catch(() => {
           response.status(500).json({
             status: 500,
             error: 'Error occured!',
           });
         });
     }
+  }
+
+  /**
+   * Gets all the accounts belong to a user
+   * @param {object} request
+   * @param {object} response
+   * @returns {object}
+   * A response status and the user's accounts or an error message
+   * @memberof UserController
+   */
+
+  static getUserAccounts(request, response) {
+    const { userEmail } = request.params;
+
+    const userQuery = `
+      SELECT id FROM users
+      WHERE email=$1;
+    `;
+
+
+    users.query(userQuery, [userEmail])
+      .then((userResponse) => {
+        if (userResponse.rows.length > 0) {
+          const { id } = userResponse.rows[0];
+
+          const accountsQuery = `
+            SELECT * FROM accounts
+            WHERE owner=$1;
+          `;
+
+          accounts.query(accountsQuery, [`{${id}}`])
+            .then((accountResponse) => {
+              response.status(200).json({
+                status: 200,
+                data: accountResponse.rows,
+              });
+            });
+        } else {
+          response.status(404).json({
+            status: 404,
+            error: 'No User found with the given email',
+          });
+        }
+      })
+      .catch(() => {
+        response.status(500).json({
+          status: 500,
+          error: 'Error occured!',
+        });
+      });
   }
 }
