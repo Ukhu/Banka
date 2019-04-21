@@ -1,6 +1,7 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../API/app';
+import users from '../API/models/user';
 
 chai.should();
 
@@ -10,9 +11,23 @@ const signUpURL = '/api/v1/auth/signup';
 
 describe('AUTHENTICATION', () => {
   describe('POST /auth/signup', () => {
-    before((done) => {
+    after((done) => {
+      const resetQuery = `
+        DELETE FROM users;
+      `;
+
+      users.query(resetQuery)
+        .then((resetResponse) => {
+          Promise.resolve(done());
+        })
+        .catch((error) => {
+          Promise.reject(done(error));
+        });
+    });
+
+    it('should create user account if all fields are filled correctly', (done) => {
       const userDetails1 = {
-        email: 'osaukhu1.bi@gmail.com',
+        email: 'osaukhu.bi@gmail.com',
         firstName: 'Osaukhu',
         lastName: 'Iyamuosa',
         password: 'ukhu7',
@@ -22,22 +37,6 @@ describe('AUTHENTICATION', () => {
       chai.request(app)
         .post(signUpURL)
         .send(userDetails1)
-        .end();
-      done();
-    });
-
-    it('should create user account if all fields are filled correctly', (done) => {
-      const userDetails2 = {
-        email: 'osaukhu2.bi@gmail.com',
-        firstName: 'Osaukhu',
-        lastName: 'Iyamuosa',
-        password: 'ukhu7',
-        type: 'client',
-        isAdmin: 'false',
-      };
-      chai.request(app)
-        .post(signUpURL)
-        .send(userDetails2)
         .end((error, response) => {
           response.should.have.status(201);
           response.body.should.be.a('object');
@@ -48,8 +47,8 @@ describe('AUTHENTICATION', () => {
     });
 
     it('should respond with a 400 Bad Request Error if user tries to signup with an already existent email', (done) => {
-      const userDetails3 = {
-        email: 'osaukhu1.bi@gmail.com',
+      const userDetails2 = {
+        email: 'osaukhu.bi@gmail.com',
         firstName: 'Osaukhu',
         lastName: 'Iyamuosa',
         password: 'ukhu7',
@@ -58,7 +57,7 @@ describe('AUTHENTICATION', () => {
       };
       chai.request(app)
         .post('/api/v1/auth/signup')
-        .send(userDetails3)
+        .send(userDetails2)
         .end((error, response) => {
           response.should.have.status(409);
           response.body.should.be.a('object');
@@ -132,6 +131,20 @@ describe('AUTHENTICATION', () => {
           } else {
             Promise.resolve(done(error));
           }
+        });
+    });
+
+    after((done) => {
+      const resetQuery = `
+        DELETE FROM users;
+      `;
+
+      users.query(resetQuery)
+        .then((resetResponse) => {
+          Promise.resolve(done());
+        })
+        .catch((error) => {
+          Promise.reject(done(error));
         });
     });
 

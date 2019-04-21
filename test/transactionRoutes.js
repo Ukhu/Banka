@@ -1,6 +1,7 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../API/app';
+import users from '../API/models/user';
 
 chai.should();
 
@@ -237,6 +238,20 @@ describe('TRANSACTIONS', () => {
           } else {
             Promise.reject(done(error));
           }
+        });
+    });
+
+    after((done) => {
+      const resetQuery = `
+        DELETE FROM users;
+      `;
+
+      users.query(resetQuery)
+        .then((resetResponse) => {
+          Promise.resolve(done());
+        })
+        .catch((error) => {
+          Promise.reject(done(error));
         });
     });
 
