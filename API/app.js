@@ -2,6 +2,7 @@ import express from 'express';
 import { debug } from 'debug';
 import validator from 'express-validator';
 import dotenv from 'dotenv';
+import authRoutes from './routes/auth';
 import userRoutes from './routes/user';
 import accountRoutes from './routes/account';
 import transactionRoutes from './routes/transaction';
@@ -30,13 +31,17 @@ app.get('/', (request, response) => {
   });
 });
 
-app.use('/api/v1/auth', userRoutes);
+app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/accounts', accountRoutes);
 app.use('/api/v1/transactions', transactionRoutes);
 
 // Catch all unavailable endpoints
 app.all('*', (request, response) => {
-  response.status(404).json({ message: 'Endpoint not found, check the root route to know the available routes' });
+  response.status(404).json({
+    message: `Endpoint not found, check the root route
+    to know the available routes`,
+  });
 });
 
 // Error handling middleware
