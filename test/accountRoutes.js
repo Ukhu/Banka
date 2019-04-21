@@ -551,6 +551,20 @@ describe('ACCOUNTS', () => {
         });
     });
 
+    after((done) => {
+      const resetQuery = `
+        DELETE FROM users;
+      `;
+
+      users.query(resetQuery)
+        .then(() => {
+          Promise.resolve(done());
+        })
+        .catch((error) => {
+          Promise.reject(done(error));
+        });
+    });
+
     it(`should successfully get the transaction details of a
     particular account`, (done) => {
       chai.request(app)
@@ -578,6 +592,108 @@ describe('ACCOUNTS', () => {
           response.body.error.should.be.a('string');
           response.body.error
             .should.equal('No account found for the given account number');
+        });
+      done();
+    });
+  });
+
+  describe('GET /accounts/accountNumber>', () => {
+    let userToken;
+    let cashierToken;
+    let userAccountNum;
+
+    before((done) => {
+      const userDetails = {
+        email: 'withdrawer@gmail.com',
+        firstName: 'Money',
+        lastName: 'Withdrawer',
+        password: 'debit1',
+        type: 'client',
+        isAdmin: 'false',
+      };
+
+      chai.request(app)
+        .post('/api/v1/auth/signup')
+        .send(userDetails)
+        .end((error, response) => {
+          userToken = response.body.data.token;
+          if (response) {
+            Promise.resolve(done());
+          } else {
+            Promise.resolve(done(error));
+          }
+        });
+    });
+
+    before((done) => {
+      const cashierDetails = {
+        email: 'cashier@gmail.com',
+        firstName: 'Staff',
+        lastName: 'Cashier',
+        password: 'c@SHIer_',
+        type: 'staff',
+        isAdmin: 'false',
+      };
+
+      chai.request(app)
+        .post('/api/v1/auth/signup')
+        .send(cashierDetails)
+        .end((error, response) => {
+          cashierToken = response.body.data.token;
+          if (response) {
+            Promise.resolve(done());
+          } else {
+            Promise.reject(done(error));
+          }
+        });
+    });
+
+    before((done) => {
+      const userCreateAccDetails = {
+        type: 'savings',
+        token: userToken,
+      };
+
+      chai.request(app)
+        .post('/api/v1/accounts')
+        .send(userCreateAccDetails)
+        .end((error, response) => {
+          userAccountNum = response.body.data.accountNumber;
+          if (response) {
+            Promise.resolve(done());
+          } else {
+            Promise.reject(done(error));
+          }
+        });
+    });
+
+    it(`should successfully return the details of 
+    the given account number`, (done) => {
+      chai.request(app)
+        .get(`/api/v1/accounts/${userAccountNum}`)
+        .send({ token: userToken })
+        .end((error, response) => {
+          response.should.have.status(200);
+          response.body.should.be.a('object');
+          response.body.should.have.property('data');
+          response.body.data.should.be.a('array');
+          response.body.data.length.should.not.equal(0);
+        });
+      done();
+    });
+
+    it(`should return a 404 error if the specified account
+      number is not in the database`, (done) => {
+      chai.request(app)
+        .get('/api/v1/accounts/1098765')
+        .send({ token: userToken })
+        .end((error, response) => {
+          response.should.have.status(404);
+          response.body.should.be.a('object');
+          response.body.should.have.property('error');
+          response.body.error.should.be.a('string');
+          response.body.error.should
+            .equal('No account found for the given account number');
         });
       done();
     });

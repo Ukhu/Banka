@@ -3,7 +3,7 @@ import { config } from 'dotenv';
 
 config();
 
-if (process.env.NODE_ENV === 'developement') {
+if (process.env.NODE_ENV === 'development') {
   process.env.PGDATABASE = 'banka';
 } else {
   process.env.PGDATABASE = 'banka_test';
