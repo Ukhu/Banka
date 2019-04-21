@@ -1,4 +1,4 @@
-import { accountdb } from '../controllers/accountController';
+import accounts from '../models/account';
 
 /**
  * Handles sending back a response for the newly created transation
@@ -10,23 +10,33 @@ import { accountdb } from '../controllers/accountController';
 
 const handleNewTransaction = (response, newTransaction) => {
   const {
-    id, newBalance, cashier, accountNumber, amount, type,
+    id, cashier, amount, type,
   } = newTransaction;
 
-  accountdb.find(account => account.accountNumber === Number(accountNumber))
-    .balance = newBalance;
+  const accountQuery = `
+  UPDATE accounts
+  SET balance=$1
+  WHERE account_number=$2;
+`;
 
-  return response.status(201).json({
-    status: 201,
-    data: {
-      transactionId: id,
-      accountNumber,
-      amount: parseFloat(amount),
-      cashier: Number(cashier),
-      transactionType: type,
-      accountBalance: String(newBalance),
-    },
-  });
+  accounts.query(accountQuery,
+    [newTransaction.new_balance, newTransaction.account_number])
+    .then((accountResponse2) => {
+      response.status(201).json({
+        status: 201,
+        data: {
+          transactionId: id,
+          accountNumber: newTransaction.account_number,
+          amount,
+          cashier,
+          transactionType: type,
+          accountBalance: newTransaction.new_balance,
+        },
+      });
+    });
+
+  // accountdb.find(account => account.accountNumber === Number(accountNumber))
+  //   .balance = newBalance;
 };
 
 export default handleNewTransaction;

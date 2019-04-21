@@ -1,4 +1,4 @@
-import { users } from '../controllers/userController';
+import users from '../models/user';
 
 /**
  * Checks if the email provided is already existing in the database
@@ -10,16 +10,27 @@ import { users } from '../controllers/userController';
  */
 
 const validateEmail = (request, response, next) => {
-  const accountOwner = users.find(user => user.email === request.body.email);
+  const queryString = `
+    SELECT * FROM users
+    WHERE email=$1
+  `;
 
-  if (accountOwner) {
-    return response.status(409).json({
-      status: 409,
-      error: 'Email already exists',
+  users.query(queryString, [request.body.email])
+    .then((queryResponse) => {
+      if (queryResponse.rows.length < 1) {
+        next();
+      } else {
+        response.status(409).json({
+          status: 409,
+          error: 'Email already exists',
+        });
+      }
+    }).catch((error) => {
+      response.status(500).json({
+        status: 500,
+        error: 'Error occured!',
+      });
     });
-  }
-
-  return next();
 };
 
 export default validateEmail;

@@ -1,4 +1,4 @@
-import { users } from '../controllers/userController';
+import users from '../models/user';
 
 /**
  * Checks if the user is a cashier or not
@@ -12,13 +12,29 @@ import { users } from '../controllers/userController';
 const isCashier = (request, response, next) => {
   const decodedUser = request.decoded;
 
-  const owner = users.find(user => user.id === decodedUser.id);
+  const userQuery = `
+    SELECT type, isadmin FROM users
+    WHERE id=$1;
+  `;
 
-  if (owner.type === 'staff' && owner.isAdmin === 'false') {
-    next();
-  } else {
-    response.status(403).json({ status: 403, error: 'FORBIDDEN - Only Cashier can make this transaction!' });
-  }
+  users.query(userQuery, [`{${decodedUser.id}}`])
+    .then((userResponse) => {
+      const [accountOwner] = userResponse.rows;
+
+      if (accountOwner.type === 'staff' && accountOwner.isadmin === false) {
+        next();
+      } else {
+        response.status(403).json({
+          status: 403,
+          error: 'FORBIDDEN - Only Cashier can make this transaction!',
+        });
+      }
+    }).catch((error) => {
+      response.status(500).json({
+        status: 500,
+        error: 'Error occured!',
+      });
+    });
 };
 
 export default isCashier;

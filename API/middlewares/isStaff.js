@@ -1,4 +1,4 @@
-import { users } from '../controllers/userController';
+import users from '../models/user';
 
 /**
  * Checks if the user is a staff or not
@@ -12,16 +12,29 @@ import { users } from '../controllers/userController';
 const isStaff = (request, response, next) => {
   const decodedUser = request.decoded;
 
-  const owner = users.find(user => user.id === decodedUser.id);
+  const userQuery = `
+    SELECT type FROM users
+    WHERE id=$1;
+  `;
 
-  if (owner.type === 'staff') {
-    next();
-  } else {
-    response.status(403).json({
-      status: 403,
-      error: 'FORBIDDEN - Only Staff can make this transaction!',
+  users.query(userQuery, [`{${decodedUser.id}}`])
+    .then((userResponse) => {
+      const [accountOwner] = userResponse.rows;
+
+      if (accountOwner.type === 'staff') {
+        next();
+      } else {
+        response.status(403).json({
+          status: 403,
+          error: 'FORBIDDEN - Only Staff can make this transaction!',
+        });
+      }
+    }).catch((error) => {
+      response.status(500).json({
+        status: 500,
+        error: 'Error occured!',
+      });
     });
-  }
 };
 
 export default isStaff;

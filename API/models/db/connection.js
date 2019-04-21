@@ -20,39 +20,20 @@ class Model {
       database: PGDATABASE,
       password: PGPASSWORD,
       port: PGPORT,
+      idleTimeoutMillis: 1000,
     });
   }
 
-  find(columns = '*', constraint = null) {
-    let queryString;
-
-    if (constraint) {
-      queryString = `SELECT ${columns}
-      FROM ${this.table}
-      WHERE ${Object.keys(constraint)[0]} = ${Object.values(constraint)[0]}`;
-    } else {
-      queryString = `SELECT ${columns} FROM ${this.table}`;
-    }
-
-    this.pool.query(queryString, (err, res) => {
-      if (err) {
-        return err;
-      }
-      return res.rows;
+  query(queryString, values) {
+    return new Promise((resolve, reject) => {
+      this.pool.query(queryString, values,
+        (error, response) => {
+          if (error) {
+            reject(error);
+          }
+          resolve(response);
+        });
     });
-  }
-
-  put(params) {
-    this.pool.query(
-      `INSERT INTO ${this.table}(first_name, last_name, email) VALUES(
-      '${params.first_name}', '${params.last_name}', '${params.email}')`,
-      (err, res) => {
-        if (err) {
-          return err.message;
-        }
-        return res.command;
-      },
-    );
   }
 }
 

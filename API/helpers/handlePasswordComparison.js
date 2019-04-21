@@ -32,8 +32,8 @@ const handlePasswordComparison = (response, accountOwner, inputPassword, realPas
           data: {
             token,
             id: accountOwner.id,
-            firstName: accountOwner.firstName,
-            lastName: accountOwner.lastName,
+            firstName: accountOwner.first_name,
+            lastName: accountOwner.last_name,
             email: accountOwner.email,
           },
         },
