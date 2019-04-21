@@ -13,6 +13,9 @@ router.post('/',
   isAuthorized, accountValidations(), errorHandler,
   AccountController.createAccount);
 
+router.get('/', isAuthorized, isStaff,
+  AccountController.getAllAccounts);
+
 router.get('/:accountNumber',
   isAuthorized, accountNumberValidation(),
   errorHandler, AccountController.getAccountDetails);
