@@ -59,7 +59,36 @@ export default class AccountController {
   }
 
   /**
-   * Creates a bank account for a user
+   * Gets the details of a particular account
+   * @param {object} request
+   * @param {object} response
+   * @returns {object}
+   * A response status and the created account or an error message
+   * @memberof AccountController
+   */
+
+  static getAllAccounts(request, response) {
+    const accountQuery = `
+      SELECT * FROM accounts;
+    `;
+
+    accounts.query(accountQuery)
+      .then((accountResponse) => {
+        response.status(200).json({
+          status: 200,
+          data: accountResponse.rows,
+        });
+      })
+      .catch(() => {
+        response.status(500).json({
+          status: 500,
+          error: 'Error occured!',
+        });
+      });
+  }
+
+  /**
+   * Gets the details of a particular account
    * @param {object} request
    * @param {object} response
    * @returns {object}
@@ -199,6 +228,14 @@ export default class AccountController {
         });
       });
   }
+
+  /**
+   * Gets the transaction history of a particular account
+   * @param {object} request
+   * @param {object} response
+   * @returns {object} A message signifying a successful deletion or an error
+   * @memberof AccountController
+   */
 
   static transactionHistory(request, response) {
     const { accountNumber } = request.params;
