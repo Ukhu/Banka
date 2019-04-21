@@ -58,7 +58,7 @@ export default class TransactionController {
           });
         }
       })
-      .catch((error) => {
+      .catch(() => {
         response.status(500).json({
           status: 500,
           error: 'Error occured!',
@@ -123,7 +123,55 @@ export default class TransactionController {
           });
         }
       })
-      .catch((error) => {
+      .catch(() => {
+        response.status(500).json({
+          status: 500,
+          error: 'Error occured!',
+        });
+      });
+  }
+
+  /**
+   * Get details of a particular transaction
+   * @param {object} request
+   * @param {object} response
+   * @returns {object}
+   * An array containing transaction details or an error message
+   * @memberof TransactionController
+   */
+  static getDetails(request, response) {
+    const { transactionId } = request.params;
+
+    const transactionQuery = `
+      SELECT * FROM transactions
+      WHERE id=$1;
+    `;
+
+    transactions.query(transactionQuery, [`{${transactionId}}`])
+      .then((transactionResponse) => {
+        if (transactionResponse.rows.length > 0) {
+          const { id, type, amount } = transactionResponse.rows[0];
+
+          response.status(200).json({
+            status: 200,
+            data: [{
+              transactionId: id,
+              createdOn: transactionResponse.rows[0].created_on,
+              type,
+              accountNumber: transactionResponse.rows[0].account_number,
+              amount,
+              oldBalance: transactionResponse.rows[0].old_balance,
+              newBalance: transactionResponse.rows[0].new_balance,
+            }],
+          });
+        } else {
+          response.status(404).json({
+            status: 404,
+            error: 'Account not found for the given ID',
+          });
+        }
+      })
+      .catch(() => {
         response.status(500).json({
           status: 500,
           error: 'Error occured!',
