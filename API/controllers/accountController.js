@@ -170,7 +170,6 @@ export default class AccountController {
 
     accounts.query(accountQuery, [Number(accountNumber)])
       .then((accountResponse) => {
-        console.log(accountResponse.rows);
         if (accountResponse.rows.length > 0) {
           const accountQuery2 = `
             UPDATE accounts
