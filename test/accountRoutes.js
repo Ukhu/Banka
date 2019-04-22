@@ -259,6 +259,141 @@ describe('ACCOUNTS', () => {
       });
   });
 
+  describe('GET /accounts?status=active', () => {
+    let userToken;
+    let staffToken;
+
+    before((done) => {
+      const userDetails = {
+        email: 'dummyuser@gmail.com',
+        firstName: 'Dummy',
+        lastName: 'User',
+        password: 'userdummy1',
+        type: 'client',
+        isAdmin: 'false',
+      };
+
+      chai.request(app)
+        .post('/api/v1/auth/signup')
+        .send(userDetails)
+        .end((error, response) => {
+          userToken = response.body.data.token;
+
+          if (response) {
+            Promise.resolve(done());
+          } else {
+            Promise.resolve(done(error));
+          }
+        });
+    });
+
+    before((done) => {
+      const staffDetails = {
+        email: 'staff@gmail.com',
+        firstName: 'Staff',
+        lastName: 'Admin',
+        password: 'admin123',
+        type: 'staff',
+        isAdmin: 'true',
+      };
+
+      chai.request(app)
+        .post('/api/v1/auth/signup')
+        .send(staffDetails)
+        .end((error, response) => {
+          staffToken = response.body.data.token;
+          if (response) {
+            Promise.resolve(done());
+          } else {
+            Promise.reject(done(error));
+          }
+        });
+    });
+
+    before((done) => {
+      const userCreateAccDetails = {
+        type: 'current',
+        token: userToken,
+      };
+
+      chai.request(app)
+        .post('/api/v1/accounts')
+        .send(userCreateAccDetails)
+        .end((error, response) => {
+          if (response) {
+            Promise.resolve(done());
+          } else {
+            Promise.reject(done(error));
+          }
+        });
+    });
+
+    before((done) => {
+      const userCreateAccDetails = {
+        type: 'savings',
+        token: userToken,
+      };
+
+      chai.request(app)
+        .post('/api/v1/accounts')
+        .send(userCreateAccDetails)
+        .end((error, response) => {
+          if (response) {
+            Promise.resolve(done());
+          } else {
+            Promise.reject(done(error));
+          }
+        });
+    });
+
+    before((done) => {
+      const userCreateAccDetails = {
+        type: 'current',
+        token: userToken,
+      };
+
+      chai.request(app)
+        .post('/api/v1/accounts')
+        .send(userCreateAccDetails)
+        .end((error, response) => {
+          if (response) {
+            Promise.resolve(done());
+          } else {
+            Promise.reject(done(error));
+          }
+        });
+    });
+
+    after((done) => {
+      const resetQuery = `
+        DELETE FROM users;
+      `;
+
+      users.query(resetQuery)
+        .then(() => {
+          Promise.resolve(done());
+        })
+        .catch((error) => {
+          Promise.reject(done(error));
+        });
+    });
+
+    it(`should successfully return the accounts in the database
+      based on the query filter`,
+    (done) => {
+      chai.request(app)
+        .get('/api/v1/accounts?status=active')
+        .send({ token: staffToken })
+        .end((error, response) => {
+          response.should.have.status(200);
+          response.body.should.be.a('object');
+          response.body.should.have.property('data');
+          response.body.data.should.be.a('array');
+        });
+      done();
+    });
+  });
+
   describe('PATCH /accounts/<accountNumber>', () => {
     let userToken;
     let userid;

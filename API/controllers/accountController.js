@@ -50,7 +50,7 @@ export default class AccountController {
           .then((accountResponse) => {
             handleNewAccount(response, accountResponse.rows[0], accountOwner);
           });
-      }).catch((err) => {
+      }).catch(() => {
         response.status(500).json({
           status: 500,
           error: 'Error occured!',
@@ -59,33 +59,57 @@ export default class AccountController {
   }
 
   /**
-   * Gets the details of a particular account
+   * Gets all active, dormant or all accounts
    * @param {object} request
    * @param {object} response
    * @returns {object}
-   * A response status and the created account or an error message
+   * A response status and the list of accounts or an error message
    * @memberof AccountController
    */
 
-  static getAllAccounts(request, response) {
-    const accountQuery = `
+  static getAccounts(request, response) {
+    const { status } = request.query;
+
+    if (status) {
+      const accountQuery = `
+      SELECT * FROM accounts
+      WHERE status=$1;
+    `;
+
+      accounts.query(accountQuery, [status])
+        .then((accountResponse) => {
+          response.status(200).json({
+            status: 200,
+            data: accountResponse.rows,
+          });
+        })
+        .catch(() => {
+          response.status(500).json({
+            status: 500,
+            error: 'Error occured!',
+          });
+        });
+    } else {
+      const accountQuery = `
       SELECT * FROM accounts;
     `;
 
-    accounts.query(accountQuery)
-      .then((accountResponse) => {
-        response.status(200).json({
-          status: 200,
-          data: accountResponse.rows,
+      accounts.query(accountQuery)
+        .then((accountResponse) => {
+          response.status(200).json({
+            status: 200,
+            data: accountResponse.rows,
+          });
+        })
+        .catch(() => {
+          response.status(500).json({
+            status: 500,
+            error: 'Error occured!',
+          });
         });
-      })
-      .catch(() => {
-        response.status(500).json({
-          status: 500,
-          error: 'Error occured!',
-        });
-      });
+    }
   }
+
 
   /**
    * Gets the details of a particular account
@@ -146,6 +170,7 @@ export default class AccountController {
 
     accounts.query(accountQuery, [Number(accountNumber)])
       .then((accountResponse) => {
+        console.log(accountResponse.rows);
         if (accountResponse.rows.length > 0) {
           const accountQuery2 = `
             UPDATE accounts
