@@ -2,18 +2,22 @@ import express from 'express';
 import { debug } from 'debug';
 import validator from 'express-validator';
 import dotenv from 'dotenv';
+import swaggerUi from 'swagger-ui-express';
 import authRoutes from './routes/auth';
 import userRoutes from './routes/user';
 import accountRoutes from './routes/account';
 import transactionRoutes from './routes/transaction';
+import swaggerDocument from './swagger.json';
 
 dotenv.config();
 const app = express();
 
-// express middlewares
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(validator());
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // API routes
 app.get('/', (request, response) => {

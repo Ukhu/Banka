@@ -1,0 +1,592 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Banka is a lightweigth core banking application to allows user perform simple transactions.",
+    "version": "1.0.0",
+    "title": "Banka",
+    "contact": {
+      "email": "osaukhu.bi@gmail.com"
+    }
+  },
+  "host": "localhost:3000",
+  "basePath": "/api/v1",
+  "tags": [
+    {
+      "name": "Users",
+      "description": "Signup, Login, and view User's Accounts"
+    },
+    {
+      "name": "Accounts",
+      "description": "Adds, views, updates, and delete Accounts"
+    },
+    {
+      "name": "Transactions",
+      "description": "Adds and views Transactions"
+    }
+  ],
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "paths": {
+    "/auth/signup": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Registers a user",
+        "description": "This endpoint registers a new user through a post request",
+        "operationId": "signup",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string"
+                },
+                "firstName": {
+                  "type": "string"
+                },
+                "lastName": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "string"
+                },
+                "isAdmin": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": "true"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "User successfully registered"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "409": {
+            "description": "Email already exists"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/auth/signin": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Logs user in",
+        "description": "This endpoint signs in a user",
+        "operationId": "signin",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": "true"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully signs in user"
+          },
+          "401": {
+            "description": "Failed authentication"
+          },
+          "428": {
+            "description": "Already signed in"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/users/:userEmail/accounts": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Gets user's bank accounts",
+        "decription": "Gets the list of all bank accounts of a particular user",
+        "operationId": "retrieveUserAccounts",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-access-token",
+            "description": "JWT Token Authentication",
+            "required": "true",
+            "type": "string"
+          },
+          {
+            "name": "userEmail",
+            "in": "path",
+            "description": "email of the particular user ",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Found user's accounts"
+          },
+          "403": {
+            "description": "Unauthorized Access"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/accounts": {
+      "post": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Creates a bank account for a user",
+        "description": "Add new account to database",
+        "operationId": "createAccount",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-access-token",
+            "description": "JWT Token Authentication",
+            "required": "true",
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": "true"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Account successfully created"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "403": {
+            "description": "Unauthorized Access"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Gets all the accounts in the database or based on some query",
+        "decription": "Gets businesses in database",
+        "operationId": "listAccounts",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-access-token",
+            "description": "JWT Token Authentication",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "status",
+            "description": "Filter for accounts to return",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Found the accounts"
+          },
+          "403": {
+            "description": "Unauthorized Access"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/accounts/:accountNumber": {
+      "get": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Gets the details of a particular account",
+        "decription": "Gets account details",
+        "operationId": "retrieveAccount",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-access-token",
+            "description": "JWT Token Authentication",
+            "required": "true",
+            "type": "string"
+          },
+          {
+            "name": "accountNumber",
+            "in": "path",
+            "description": "account number of particular account to return",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Account found"
+          },
+          "403": {
+            "description": "Unauthorized Access"
+          },
+          "404": {
+            "description": "Account not found"
+          },
+          "500": {
+            "decription": "Server error"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Updates account",
+        "description": "Changes the account status to either active or dormant",
+        "operationId": "updateAccount",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-access-token",
+            "description": "JWT Token Authentication",
+            "required": "true",
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/Accounts",
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": "true"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Account status successfully updated"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "403": {
+            "description": "Unauthorized Access"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Deletes account",
+        "description": "Removes a particular account from the database",
+        "operationId": "deleteAccount",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-access-token",
+            "description": "JWT Token Authentication",
+            "required": "true",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Account deleted successfully"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "403": {
+            "description": "Unauthorized Access"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/accounts/:accountNumber/transactions": {
+      "get": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Gets account transaction history",
+        "decription": "Gets the list of all transactions for a particular account",
+        "operationId": "retrieveAccountTransactionHistory",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-access-token",
+            "description": "JWT Token Authentication",
+            "required": "true",
+            "type": "string"
+          },
+          {
+            "name": "accountNumber",
+            "in": "path",
+            "description": "account number of particular account to return",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Found account transaction history"
+          },
+          "403": {
+            "description": "Unauthorized Access"
+          },
+          "404": {
+            "description": "Account not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/transactions/:transactionId": {
+      "get": {
+        "tags": [
+          "Transactions"
+        ],
+        "summary": "Gets transaction details",
+        "decription": "Gets the details of a particular account transaction",
+        "operationId": "retrieveTransactionDetails",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-access-token",
+            "description": "JWT Token Authentication",
+            "required": "true",
+            "type": "string"
+          },
+          {
+            "name": "transactionId",
+            "in": "path",
+            "description": "transactionId of the transaction to return",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Found transaction"
+          },
+          "403": {
+            "description": "Unauthorized Access"
+          },
+          "404": {
+            "description": "Transaction not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/transactions/:accountNumber/credit": {
+      "post": {
+        "tags": [
+          "Transactions"
+        ],
+        "summary": "Credit account",
+        "description": "Creates a new transaction by crediting an account",
+        "operationId": "creditAccount",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-access-token",
+            "description": "JWT Token Authentication",
+            "required": "true",
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "amount": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": "true"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Account successfully credited"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "403": {
+            "description": "Unauthorized Access"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/transactions/:accountNumber/debit": {
+      "post": {
+        "tags": [
+          "Transactions"
+        ],
+        "summary": "Debit account",
+        "description": "Creates a new transaction by debiting an account",
+        "operationId": "debitAccount",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-access-token",
+            "description": "JWT Token Authentication",
+            "required": "true",
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "amount": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": "true"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Account successfully debited"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "403": {
+            "description": "Unauthorized Access"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    }
+  }
+}
