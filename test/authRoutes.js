@@ -17,15 +17,16 @@ describe('AUTHENTICATION', () => {
       `;
 
       users.query(resetQuery)
-        .then((resetResponse) => {
-          Promise.resolve(done());
+        .then(() => {
+          done();
         })
         .catch((error) => {
-          Promise.reject(done(error));
+          done(error);
         });
     });
 
-    it('should create user account if all fields are filled correctly', (done) => {
+    it(`should create user account if all fields are
+    filled correctly`, (done) => {
       const userDetails1 = {
         email: 'osaukhu.bi@gmail.com',
         firstName: 'Osaukhu',
@@ -46,7 +47,8 @@ describe('AUTHENTICATION', () => {
         });
     });
 
-    it('should respond with a 400 Bad Request Error if user tries to signup with an already existent email', (done) => {
+    it(`should respond with a 400 Bad Request Error if user tries
+    to signup with an already existent email`, (done) => {
       const userDetails2 = {
         email: 'osaukhu.bi@gmail.com',
         firstName: 'Osaukhu',
@@ -67,7 +69,8 @@ describe('AUTHENTICATION', () => {
         });
     });
 
-    it('should respond with a 400 Bad Request Error if any of the fields are missing', (done) => {
+    it(`should respond with a 400 Bad Request Error if
+    any of the fields are missing`, (done) => {
       const userDetails4 = {
         email: 'osaukhu4.bi@gmail.com',
         lastName: 'Iyamuosa',
@@ -87,7 +90,8 @@ describe('AUTHENTICATION', () => {
         });
     });
 
-    it('should respond with a 400 Bad Request Error if any of the fields are empty or undefined', (done) => {
+    it(`should respond with a 400 Bad Request Error if any of
+    the fields are empty or undefined`, (done) => {
       const userDetails5 = {
         email: 'osaukhu5.bi@gmail.com',
         firstName: '',
@@ -125,12 +129,8 @@ describe('AUTHENTICATION', () => {
         .post('/api/v1/auth/signup')
         .send(userDetails)
         .end((error, response) => {
-          if (response) {
-            resToken = response.body.data.token;
-            Promise.resolve(done());
-          } else {
-            Promise.resolve(done(error));
-          }
+          resToken = response.body.data.token;
+          done();
         });
     });
 
@@ -140,15 +140,16 @@ describe('AUTHENTICATION', () => {
       `;
 
       users.query(resetQuery)
-        .then((resetResponse) => {
-          Promise.resolve(done());
+        .then(() => {
+          done();
         })
         .catch((error) => {
-          Promise.reject(done(error));
+          done(error);
         });
     });
 
-    it('should sign the user in if the user provides the correct sign in details', (done) => {
+    it(`should sign the user in if the user provides
+    the correct sign in details`, (done) => {
       const loginDetails = {
         email: 'lylsoul@gmail.com',
         password: 'ukhu7',
@@ -160,12 +161,14 @@ describe('AUTHENTICATION', () => {
           response.should.have.status(200);
           response.body.should.be.a('object');
           response.body.should.have.property('data');
-          response.body.data.should.have.keys('token', 'id', 'firstName', 'email', 'lastName');
+          response.body.data.should.have
+            .keys('token', 'id', 'firstName', 'email', 'lastName');
           done();
         });
     });
 
-    it('should return a 428 Precondition Required error stating that an already logged in user should log out first', (done) => {
+    it(`should return a 428 Precondition Required error stating that
+    an already logged in user should log out first`, (done) => {
       const loginDetails = {
         email: 'lylsoul@gmail.com',
         password: 'ukhu7',
@@ -183,7 +186,8 @@ describe('AUTHENTICATION', () => {
         });
     });
 
-    it('should return a 403 Forbiden Error if an already logged in user tries to log in again but with the wrong token', (done) => {
+    it(`should return a 403 Forbiden Error if an already logged in
+    user tries to log in again but with the wrong token`, (done) => {
       const loginDetails = {
         email: 'lylsoul@gmail.com',
         password: 'ukhu7',
@@ -197,12 +201,14 @@ describe('AUTHENTICATION', () => {
           response.body.should.be.a('object');
           response.body.should.have.property('error');
           response.body.error.should.be.a('string');
-          response.body.error.should.equal('FORBIDDEN REQUEST - Wrong or invalid token');
+          response.body.error.should
+            .equal('FORBIDDEN REQUEST - Wrong or invalid token');
           done();
         });
     });
 
-    it('should return a 401 Unauthorized Error if the given email is not in the DB', (done) => {
+    it(`should return a 401 Unauthorized Error if the given
+    email is not in the DB`, (done) => {
       const loginDetails = {
         email: 'seven@gmail.com',
         password: 'ukhu7',
@@ -220,7 +226,8 @@ describe('AUTHENTICATION', () => {
         });
     });
 
-    it('should return a 401 Unauthorized Error if the password entered is incorrect', (done) => {
+    it(`should return a 401 Unauthorized Error if the
+    password entered is incorrect`, (done) => {
       const loginDetails = {
         email: 'lylsoul@gmail.com',
         password: 'ukhu777',

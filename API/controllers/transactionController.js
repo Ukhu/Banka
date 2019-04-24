@@ -25,7 +25,7 @@ export default class TransactionController {
       WHERE account_number=$1
     `;
 
-    accounts.query(accountQuery, [Number(request.params.accountNumber)])
+    accounts.query(accountQuery, [request.params.accountNumber])
       .then((accountResponse) => {
         if (accountResponse.rows.length > 0) {
           const [foundAccount] = accountResponse.rows;
@@ -83,7 +83,7 @@ export default class TransactionController {
       WHERE account_number=$1
     `;
 
-    accounts.query(accountQuery, [Number(request.params.accountNumber)])
+    accounts.query(accountQuery, [request.params.accountNumber])
       .then((accountResponse) => {
         if (accountResponse.rows.length > 0) {
           const [foundAccount] = accountResponse.rows;

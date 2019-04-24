@@ -27,11 +27,7 @@ describe('ACCOUNTS', () => {
         .end((error, response) => {
           userid = response.body.data.id;
           resToken = response.body.data.token;
-          if (response) {
-            Promise.resolve(done());
-          } else {
-            Promise.resolve(done(error));
-          }
+          done();
         });
     });
 
@@ -42,10 +38,10 @@ describe('ACCOUNTS', () => {
 
       users.query(resetQuery)
         .then(() => {
-          Promise.resolve(done());
+          done();
         })
         .catch((error) => {
-          Promise.reject(done(error));
+          done(error);
         });
     });
 
@@ -161,12 +157,7 @@ describe('ACCOUNTS', () => {
         .end((error, response) => {
           userid = response.body.data.id;
           userToken = response.body.data.token;
-
-          if (response) {
-            Promise.resolve(done());
-          } else {
-            Promise.resolve(done(error));
-          }
+          done();
         });
     });
 
@@ -185,11 +176,7 @@ describe('ACCOUNTS', () => {
         .send(staffDetails)
         .end((error, response) => {
           staffToken = response.body.data.token;
-          if (response) {
-            Promise.resolve(done());
-          } else {
-            Promise.reject(done(error));
-          }
+          done();
         });
     });
 
@@ -203,12 +190,8 @@ describe('ACCOUNTS', () => {
       chai.request(app)
         .post('/api/v1/accounts')
         .send(userCreateAccDetails)
-        .end((error, response) => {
-          if (response) {
-            Promise.resolve(done());
-          } else {
-            Promise.reject(done(error));
-          }
+        .end(() => {
+          done();
         });
     });
 
@@ -221,12 +204,8 @@ describe('ACCOUNTS', () => {
       chai.request(app)
         .post('/api/v1/accounts')
         .send(userCreateAccDetails)
-        .end((error, response) => {
-          if (response) {
-            Promise.resolve(done());
-          } else {
-            Promise.reject(done(error));
-          }
+        .end(() => {
+          done();
         });
     });
 
@@ -237,10 +216,10 @@ describe('ACCOUNTS', () => {
 
       users.query(resetQuery)
         .then(() => {
-          Promise.resolve(done());
+          done();
         })
         .catch((error) => {
-          Promise.reject(done(error));
+          done(error);
         });
     });
 
@@ -254,8 +233,8 @@ describe('ACCOUNTS', () => {
             response.body.should.be.a('object');
             response.body.should.have.property('data');
             response.body.data.should.be.a('array');
+            done();
           });
-        done();
       });
   });
 
@@ -278,12 +257,7 @@ describe('ACCOUNTS', () => {
         .send(userDetails)
         .end((error, response) => {
           userToken = response.body.data.token;
-
-          if (response) {
-            Promise.resolve(done());
-          } else {
-            Promise.resolve(done(error));
-          }
+          done();
         });
     });
 
@@ -302,11 +276,7 @@ describe('ACCOUNTS', () => {
         .send(staffDetails)
         .end((error, response) => {
           staffToken = response.body.data.token;
-          if (response) {
-            Promise.resolve(done());
-          } else {
-            Promise.reject(done(error));
-          }
+          done();
         });
     });
 
@@ -320,11 +290,7 @@ describe('ACCOUNTS', () => {
         .post('/api/v1/accounts')
         .send(userCreateAccDetails)
         .end((error, response) => {
-          if (response) {
-            Promise.resolve(done());
-          } else {
-            Promise.reject(done(error));
-          }
+          done();
         });
     });
 
@@ -338,11 +304,7 @@ describe('ACCOUNTS', () => {
         .post('/api/v1/accounts')
         .send(userCreateAccDetails)
         .end((error, response) => {
-          if (response) {
-            Promise.resolve(done());
-          } else {
-            Promise.reject(done(error));
-          }
+          done();
         });
     });
 
@@ -356,11 +318,7 @@ describe('ACCOUNTS', () => {
         .post('/api/v1/accounts')
         .send(userCreateAccDetails)
         .end((error, response) => {
-          if (response) {
-            Promise.resolve(done());
-          } else {
-            Promise.reject(done(error));
-          }
+          done();
         });
     });
 
@@ -371,10 +329,10 @@ describe('ACCOUNTS', () => {
 
       users.query(resetQuery)
         .then(() => {
-          Promise.resolve(done());
+          done();
         })
         .catch((error) => {
-          Promise.reject(done(error));
+          done(error);
         });
     });
 
@@ -389,8 +347,8 @@ describe('ACCOUNTS', () => {
           response.body.should.be.a('object');
           response.body.should.have.property('data');
           response.body.data.should.be.a('array');
+          done();
         });
-      done();
     });
   });
 
@@ -416,12 +374,7 @@ describe('ACCOUNTS', () => {
         .end((error, response) => {
           userid = response.body.data.id;
           userToken = response.body.data.token;
-
-          if (response) {
-            Promise.resolve(done());
-          } else {
-            Promise.resolve(done(error));
-          }
+          done();
         });
     });
 
@@ -440,11 +393,7 @@ describe('ACCOUNTS', () => {
         .send(staffDetails)
         .end((error, response) => {
           staffToken = response.body.data.token;
-          if (response) {
-            Promise.resolve(done());
-          } else {
-            Promise.reject(done(error));
-          }
+          done();
         });
     });
 
@@ -460,11 +409,7 @@ describe('ACCOUNTS', () => {
         .send(userCreateAccDetails)
         .end((error, response) => {
           userAccountNumber = response.body.data.accountNumber;
-          if (response) {
-            Promise.resolve(done());
-          } else {
-            Promise.reject(done(error));
-          }
+          done();
         });
     });
 
@@ -475,10 +420,10 @@ describe('ACCOUNTS', () => {
 
       users.query(resetQuery)
         .then(() => {
-          Promise.resolve(done());
+          done();
         })
         .catch((error) => {
-          Promise.reject(done(error));
+          done(error);
         });
     });
 
@@ -497,8 +442,8 @@ describe('ACCOUNTS', () => {
             response.body.should.be.a('object');
             response.body.should.have.property('data');
             response.body.data.should.have.keys('accountNumber', 'status');
+            done();
           });
-        done();
       });
 
     it(`should return a 404 Not Found Error if the account number specified
@@ -518,8 +463,8 @@ describe('ACCOUNTS', () => {
           response.body.error.should.be.a('string');
           response.body.error.should
             .equal('No account found for the given account number');
+          done();
         });
-      done();
     });
 
     it(`should return a 403 Forbidden Error if an unauthenticated user
@@ -532,8 +477,8 @@ describe('ACCOUNTS', () => {
           response.body.should.have.property('error');
           response.body.error.should.be.a('string');
           response.body.error.should.equal('Unauthorized Access');
+          done();
         });
-      done();
     });
 
     it(`should return a 403 Forbidden Error if a user who is not a 
@@ -552,8 +497,8 @@ describe('ACCOUNTS', () => {
           response.body.error.should.be.a('string');
           response.body.error.should
             .equal('FORBIDDEN - Only Staff can make this transaction!');
+          done();
         });
-      done();
     });
   });
 
@@ -579,12 +524,7 @@ describe('ACCOUNTS', () => {
         .end((error, response) => {
           userid = response.body.data.id;
           userToken = response.body.data.token;
-
-          if (response) {
-            Promise.resolve(done());
-          } else {
-            Promise.resolve(done(error));
-          }
+          done();
         });
     });
 
@@ -603,11 +543,7 @@ describe('ACCOUNTS', () => {
         .send(staffDetails)
         .end((error, response) => {
           staffToken = response.body.data.token;
-          if (response) {
-            Promise.resolve(done());
-          } else {
-            Promise.reject(done(error));
-          }
+          done();
         });
     });
 
@@ -623,11 +559,7 @@ describe('ACCOUNTS', () => {
         .send(userCreateAccDetails)
         .end((error, response) => {
           userAccountNum = response.body.data.accountNumber;
-          if (response) {
-            Promise.resolve(done());
-          } else {
-            Promise.reject(done(error));
-          }
+          done();
         });
     });
 
@@ -638,10 +570,10 @@ describe('ACCOUNTS', () => {
 
       users.query(resetQuery)
         .then(() => {
-          Promise.resolve(done());
+          done();
         })
         .catch((error) => {
-          Promise.reject(done(error));
+          done(error);
         });
     });
 
@@ -658,8 +590,8 @@ describe('ACCOUNTS', () => {
           response.body.should.be.a('object');
           response.body.should.have.property('message');
           response.body.message.should.equal('Account successfully deleted');
+          done();
         });
-      done();
     });
 
     it(`should return a 404 Not Found Error if the account number specified in
@@ -678,8 +610,8 @@ describe('ACCOUNTS', () => {
           response.body.error.should.be.a('string');
           response.body.error.should
             .equal('No account found for the given account number');
+          done();
         });
-      done();
     });
 
     it(`should return a 403 Forbidden Error if an unauthenticated user
@@ -692,8 +624,8 @@ describe('ACCOUNTS', () => {
           response.body.should.have.property('error');
           response.body.error.should.be.a('string');
           response.body.error.should.equal('Unauthorized Access');
+          done();
         });
-      done();
     });
 
     it(`should return a 403 Forbidden Error if a user who is not a staff
@@ -712,8 +644,8 @@ describe('ACCOUNTS', () => {
           response.body.error.should.be.a('string');
           response.body.error.should
             .equal('FORBIDDEN - Only Staff can make this transaction!');
+          done();
         });
-      done();
     });
   });
 
@@ -737,11 +669,7 @@ describe('ACCOUNTS', () => {
         .send(userDetails)
         .end((error, response) => {
           userToken = response.body.data.token;
-          if (response) {
-            Promise.resolve(done());
-          } else {
-            Promise.resolve(done(error));
-          }
+          done();
         });
     });
 
@@ -760,11 +688,7 @@ describe('ACCOUNTS', () => {
         .send(cashierDetails)
         .end((error, response) => {
           cashierToken = response.body.data.token;
-          if (response) {
-            Promise.resolve(done());
-          } else {
-            Promise.reject(done(error));
-          }
+          done();
         });
     });
 
@@ -779,11 +703,7 @@ describe('ACCOUNTS', () => {
         .send(userCreateAccDetails)
         .end((error, response) => {
           userAccountNum = response.body.data.accountNumber;
-          if (response) {
-            Promise.resolve(done());
-          } else {
-            Promise.reject(done(error));
-          }
+          done();
         });
     });
 
@@ -796,12 +716,8 @@ describe('ACCOUNTS', () => {
       chai.request(app)
         .post(`/api/v1/transactions/${userAccountNum}/credit`)
         .send(creditTransDetails)
-        .end((error, response) => {
-          if (response) {
-            Promise.resolve(done());
-          } else {
-            Promise.reject(done(error));
-          }
+        .end(() => {
+          done();
         });
     });
 
@@ -812,10 +728,10 @@ describe('ACCOUNTS', () => {
 
       users.query(resetQuery)
         .then(() => {
-          Promise.resolve(done());
+          done();
         })
         .catch((error) => {
-          Promise.reject(done(error));
+          done(error);
         });
     });
 
@@ -830,8 +746,8 @@ describe('ACCOUNTS', () => {
           response.body.should.have.property('data');
           response.body.data.should.be.a('array');
           response.body.data.length.should.equal(1);
+          done();
         });
-      done();
     });
 
     it(`should return a 404 error if the account number 
@@ -846,8 +762,8 @@ describe('ACCOUNTS', () => {
           response.body.error.should.be.a('string');
           response.body.error
             .should.equal('No account found for the given account number');
+          done();
         });
-      done();
     });
   });
 
@@ -871,11 +787,7 @@ describe('ACCOUNTS', () => {
         .send(userDetails)
         .end((error, response) => {
           userToken = response.body.data.token;
-          if (response) {
-            Promise.resolve(done());
-          } else {
-            Promise.resolve(done(error));
-          }
+          done();
         });
     });
 
@@ -894,11 +806,7 @@ describe('ACCOUNTS', () => {
         .send(cashierDetails)
         .end((error, response) => {
           cashierToken = response.body.data.token;
-          if (response) {
-            Promise.resolve(done());
-          } else {
-            Promise.reject(done(error));
-          }
+          done();
         });
     });
 
@@ -913,11 +821,21 @@ describe('ACCOUNTS', () => {
         .send(userCreateAccDetails)
         .end((error, response) => {
           userAccountNum = response.body.data.accountNumber;
-          if (response) {
-            Promise.resolve(done());
-          } else {
-            Promise.reject(done(error));
-          }
+          done();
+        });
+    });
+
+    after((done) => {
+      const resetQuery = `
+        DELETE FROM users;
+      `;
+
+      users.query(resetQuery)
+        .then(() => {
+          done();
+        })
+        .catch((error) => {
+          done(error);
         });
     });
 
@@ -932,8 +850,8 @@ describe('ACCOUNTS', () => {
           response.body.should.have.property('data');
           response.body.data.should.be.a('array');
           response.body.data.length.should.not.equal(0);
+          done();
         });
-      done();
     });
 
     it(`should return a 404 error if the specified account
@@ -948,8 +866,8 @@ describe('ACCOUNTS', () => {
           response.body.error.should.be.a('string');
           response.body.error.should
             .equal('No account found for the given account number');
+          done();
         });
-      done();
     });
   });
 });
