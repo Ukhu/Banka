@@ -8,7 +8,7 @@
       "email": "osaukhu.bi@gmail.com"
     }
   },
-  "host": "localhost:3000",
+  "host": "osaukhu-banka.herokuapp.com",
   "basePath": "/api/v1",
   "tags": [
     {

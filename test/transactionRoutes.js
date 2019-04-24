@@ -30,12 +30,7 @@ describe('TRANSACTIONS', () => {
         .end((error, response) => {
           userid = response.body.data.id;
           userToken = response.body.data.token;
-
-          if (response) {
-            Promise.resolve(done());
-          } else {
-            Promise.resolve(done(error));
-          }
+          done();
         });
     });
 
@@ -54,11 +49,7 @@ describe('TRANSACTIONS', () => {
         .send(cashierDetails)
         .end((error, response) => {
           cashierToken = response.body.data.token;
-          if (response) {
-            Promise.resolve(done());
-          } else {
-            Promise.reject(done(error));
-          }
+          done();
         });
     });
 
@@ -74,11 +65,21 @@ describe('TRANSACTIONS', () => {
         .send(userCreateAccDetails)
         .end((error, response) => {
           userAccountNum = response.body.data.accountNumber;
-          if (response) {
-            Promise.resolve(done());
-          } else {
-            Promise.reject(done(error));
-          }
+          done();
+        });
+    });
+
+    after((done) => {
+      const resetQuery = `
+        DELETE FROM users;
+      `;
+
+      users.query(resetQuery)
+        .then(() => {
+          done();
+        })
+        .catch((error) => {
+          done(error);
         });
     });
 
@@ -102,8 +103,8 @@ describe('TRANSACTIONS', () => {
           response.body.data.should.have
             .keys('transactionId', 'accountNumber', 'amount', 'cashier',
               'transactionType', 'accountBalance');
+          done();
         });
-      done();
     });
 
     it(`should return a 404 Not Found Error if there is no bank account 
@@ -125,8 +126,8 @@ describe('TRANSACTIONS', () => {
           response.body.error.should.be.a('string');
           response.body.error.should
             .equal('Account not found for the given account number');
+          done();
         });
-      done();
     });
 
     it(`should return a 403 Forbidden Error if a user who is not a
@@ -148,8 +149,8 @@ describe('TRANSACTIONS', () => {
           response.body.error.should.be.a('string');
           response.body.error.should
             .equal('FORBIDDEN - Only Cashier can make this transaction!');
+          done();
         });
-      done();
     });
   });
 
@@ -175,12 +176,7 @@ describe('TRANSACTIONS', () => {
         .end((error, response) => {
           userid = response.body.data.id;
           userToken = response.body.data.token;
-
-          if (response) {
-            Promise.resolve(done());
-          } else {
-            Promise.resolve(done(error));
-          }
+          done();
         });
     });
 
@@ -199,11 +195,7 @@ describe('TRANSACTIONS', () => {
         .send(cashierDetails)
         .end((error, response) => {
           cashierToken = response.body.data.token;
-          if (response) {
-            Promise.resolve(done());
-          } else {
-            Promise.reject(done(error));
-          }
+          done();
         });
     });
 
@@ -219,11 +211,7 @@ describe('TRANSACTIONS', () => {
         .send(userCreateAccDetails)
         .end((error, response) => {
           userAccountNum = response.body.data.accountNumber;
-          if (response) {
-            Promise.resolve(done());
-          } else {
-            Promise.reject(done(error));
-          }
+          done();
         });
     });
 
@@ -238,12 +226,8 @@ describe('TRANSACTIONS', () => {
       chai.request(app)
         .post(`/api/v1/transactions/${userAccountNum}/credit`)
         .send(creditTransDetails)
-        .end((error, response) => {
-          if (response) {
-            Promise.resolve(done());
-          } else {
-            Promise.reject(done(error));
-          }
+        .end(() => {
+          done();
         });
     });
 
@@ -254,10 +238,10 @@ describe('TRANSACTIONS', () => {
 
       users.query(resetQuery)
         .then(() => {
-          Promise.resolve(done());
+          done();
         })
         .catch((error) => {
-          Promise.reject(done(error));
+          done(error);
         });
     });
 
@@ -281,8 +265,8 @@ describe('TRANSACTIONS', () => {
           response.body.data.should.have
             .keys('transactionId', 'accountNumber', 'amount', 'cashier',
               'transactionType', 'accountBalance');
+          done();
         });
-      done();
     });
 
     it(`should return a 400 Bad Request Error if the user tries
@@ -303,8 +287,8 @@ describe('TRANSACTIONS', () => {
           response.body.should.have.keys('status', 'error');
           response.body.error.should.be.a('string');
           response.body.error.should.equal('Insufficient Funds');
+          done();
         });
-      done();
     });
 
     it(`should return a 404 Not Found Error if there is no bank 
@@ -326,8 +310,8 @@ describe('TRANSACTIONS', () => {
           response.body.error.should.be.a('string');
           response.body.error.should
             .equal('Account not found for the given account number');
+          done();
         });
-      done();
     });
 
     it(`should return a 403 Forbidden Error if a user who is
@@ -349,8 +333,8 @@ describe('TRANSACTIONS', () => {
           response.body.error.should.be.a('string');
           response.body.error.should
             .equal('FORBIDDEN - Only Cashier can make this transaction!');
+          done();
         });
-      done();
     });
   });
 
@@ -375,11 +359,7 @@ describe('TRANSACTIONS', () => {
         .send(userDetails)
         .end((error, response) => {
           userToken = response.body.data.token;
-          if (response) {
-            Promise.resolve(done());
-          } else {
-            Promise.resolve(done(error));
-          }
+          done();
         });
     });
 
@@ -398,11 +378,7 @@ describe('TRANSACTIONS', () => {
         .send(cashierDetails)
         .end((error, response) => {
           cashierToken = response.body.data.token;
-          if (response) {
-            Promise.resolve(done());
-          } else {
-            Promise.reject(done(error));
-          }
+          done();
         });
     });
 
@@ -417,11 +393,7 @@ describe('TRANSACTIONS', () => {
         .send(userCreateAccDetails)
         .end((error, response) => {
           userAccountNum = response.body.data.accountNumber;
-          if (response) {
-            Promise.resolve(done());
-          } else {
-            Promise.reject(done(error));
-          }
+          done();
         });
     });
 
@@ -435,12 +407,22 @@ describe('TRANSACTIONS', () => {
         .post(`/api/v1/transactions/${userAccountNum}/credit`)
         .send(creditTransDetails)
         .end((error, response) => {
-          if (response) {
-            id = response.body.data.transactionId;
-            Promise.resolve(done());
-          } else {
-            Promise.reject(done(error));
-          }
+          id = response.body.data.transactionId;
+          done();
+        });
+    });
+
+    after((done) => {
+      const resetQuery = `
+        DELETE FROM users;
+      `;
+
+      users.query(resetQuery)
+        .then(() => {
+          done();
+        })
+        .catch((error) => {
+          done(error);
         });
     });
 
@@ -455,8 +437,8 @@ describe('TRANSACTIONS', () => {
             response.body.should.have.property('data');
             response.body.data.should.be.a('array');
             response.body.data.length.should.equal(1);
+            done();
           });
-        done();
       });
 
     it(`it should return a 404 error if the transaction Id specified is
@@ -472,8 +454,8 @@ describe('TRANSACTIONS', () => {
           response.body.error.should.be.a('string');
           response.body.error
             .should.equal('Account not found for the given ID');
+          done();
         });
-      done();
     });
   });
 });

@@ -3,6 +3,7 @@ import { debug } from 'debug';
 import validator from 'express-validator';
 import dotenv from 'dotenv';
 import swaggerUi from 'swagger-ui-express';
+import cors from 'cors';
 import authRoutes from './routes/auth';
 import userRoutes from './routes/user';
 import accountRoutes from './routes/account';
@@ -18,6 +19,15 @@ app.use(express.urlencoded({ extended: true }));
 app.use(validator());
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+// CORS
+const corsOptions = {
+  origin: '*',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+};
+app.use(cors(corsOptions));
 
 // API routes
 app.get('/', (request, response) => {
@@ -43,8 +53,7 @@ app.use('/api/v1/transactions', transactionRoutes);
 // Catch all unavailable endpoints
 app.all('*', (request, response) => {
   response.status(404).json({
-    message: `Endpoint not found, check the root route
-    to know the available routes`,
+    message: 'Endpoint not found, check the root route to know the available routes',
   });
 });
 

@@ -3,12 +3,6 @@ import { config } from 'dotenv';
 
 config();
 
-if (process.env.NODE_ENV === 'development') {
-  process.env.PGDATABASE = 'banka';
-} else {
-  process.env.PGDATABASE = 'banka_test';
-}
-
 class Model {
   constructor(table) {
     this.table = table;
@@ -16,18 +10,24 @@ class Model {
   }
 
   static databaseConnect() {
-    const {
-      PGUSER, PGHOST, PGDATABASE, PGPASSWORD, PGPORT,
-    } = process.env;
+    let connectObj;
 
-    return new Pool({
-      user: PGUSER,
-      host: PGHOST,
-      database: PGDATABASE,
-      password: PGPASSWORD,
-      port: PGPORT,
-      idleTimeoutMillis: 1000,
-    });
+    if (process.env.NODE_ENV === 'development') {
+      connectObj = {
+        connectionString: process.env.DATABASE_URL,
+      };
+    } else if (process.env.NODE_ENV === 'production') {
+      connectObj = {
+        connectionString: process.env.DATABASE_URL,
+        ssl: true,
+      };
+    } else {
+      connectObj = {
+        connectionString: process.env.PG_CLOUD,
+      };
+    }
+
+    return new Pool(connectObj);
   }
 
   query(queryString, values) {

@@ -27,11 +27,7 @@ describe('USER', () => {
         .send(userDetails)
         .end((error, response) => {
           userToken = response.body.data.token;
-          if (response) {
-            Promise.resolve(done());
-          } else {
-            Promise.resolve(done(error));
-          }
+          done();
         });
     });
 
@@ -50,11 +46,7 @@ describe('USER', () => {
         .send(cashierDetails)
         .end((error, response) => {
           cashierToken = response.body.data.token;
-          if (response) {
-            Promise.resolve(done());
-          } else {
-            Promise.reject(done(error));
-          }
+          done();
         });
     });
 
@@ -68,11 +60,7 @@ describe('USER', () => {
         .post('/api/v1/accounts')
         .send(userCreateAccDetails)
         .end((error, response) => {
-          if (response) {
-            Promise.resolve(done());
-          } else {
-            Promise.reject(done(error));
-          }
+          done();
         });
     });
 
@@ -86,11 +74,7 @@ describe('USER', () => {
         .post('/api/v1/accounts')
         .send(userCreateAccDetails)
         .end((error, response) => {
-          if (response) {
-            Promise.resolve(done());
-          } else {
-            Promise.reject(done(error));
-          }
+          done();
         });
     });
 
@@ -104,11 +88,7 @@ describe('USER', () => {
         .post('/api/v1/accounts')
         .send(userCreateAccDetails)
         .end((error, response) => {
-          if (response) {
-            Promise.resolve(done());
-          } else {
-            Promise.reject(done(error));
-          }
+          done();
         });
     });
 
@@ -119,10 +99,10 @@ describe('USER', () => {
 
       users.query(resetQuery)
         .then(() => {
-          Promise.resolve(done());
+          done();
         })
         .catch((error) => {
-          Promise.reject(done(error));
+          done(error);
         });
     });
 
@@ -137,8 +117,8 @@ describe('USER', () => {
           response.body.should.have.property('data');
           response.body.data.should.be.a('array');
           response.body.data.length.should.not.equal(0);
+          done();
         });
-      done();
     });
 
     it(`should return a 404 error if the there's no user with the given email
@@ -153,8 +133,8 @@ describe('USER', () => {
           response.body.error.should.be.a('string');
           response.body.error
             .should.equal('No User found with the given email');
+          done();
         });
-      done();
     });
   });
 });
