@@ -10,6 +10,7 @@ chai.use(chaiHttp);
 describe('USER', () => {
   describe('GET /users/<user-email>/accounts', () => {
     let userToken;
+    let userToken2;
     let cashierToken;
 
     before((done) => {
@@ -27,6 +28,25 @@ describe('USER', () => {
         .send(userDetails)
         .end((error, response) => {
           userToken = response.body.data.token;
+          done();
+        });
+    });
+
+    before((done) => {
+      const userDetails = {
+        email: 'user2@gmail.com',
+        firstName: 'dummy',
+        lastName: 'user',
+        password: '_useR@',
+        type: 'client',
+        isAdmin: 'false',
+      };
+
+      chai.request(app)
+        .post('/api/v1/auth/signup')
+        .send(userDetails)
+        .end((error, response) => {
+          userToken2 = response.body.data.token;
           done();
         });
     });
@@ -59,7 +79,7 @@ describe('USER', () => {
       chai.request(app)
         .post('/api/v1/accounts')
         .send(userCreateAccDetails)
-        .end((error, response) => {
+        .end(() => {
           done();
         });
     });
@@ -73,7 +93,7 @@ describe('USER', () => {
       chai.request(app)
         .post('/api/v1/accounts')
         .send(userCreateAccDetails)
-        .end((error, response) => {
+        .end(() => {
           done();
         });
     });
@@ -87,7 +107,7 @@ describe('USER', () => {
       chai.request(app)
         .post('/api/v1/accounts')
         .send(userCreateAccDetails)
-        .end((error, response) => {
+        .end(() => {
           done();
         });
     });
@@ -133,6 +153,22 @@ describe('USER', () => {
           response.body.error.should.be.a('string');
           response.body.error
             .should.equal('No User found with the given email');
+          done();
+        });
+    });
+
+    it(`should return an error if the user tries to get the list
+    of accounts that is not theirs`, (done) => {
+      chai.request(app)
+        .get('/api/v1/users/user@gmail.com/accounts')
+        .send({ token: userToken2 })
+        .end((error, response) => {
+          response.should.have.status(403);
+          response.body.should.be.a('object');
+          response.body.should.have.property('error');
+          response.body.error.should.be.a('string');
+          response.body.error
+            .should.equal('You can only view your own transaction history');
           done();
         });
     });

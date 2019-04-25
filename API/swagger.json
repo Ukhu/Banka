@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "description": "Banka is a lightweigth core banking application to allows user perform simple transactions.",
+    "description": "Banka is a lightweight core banking application that allows users perform simple transactions.",
     "version": "1.0.0",
     "title": "Banka",
     "contact": {
@@ -83,6 +83,9 @@
           "409": {
             "description": "Email already exists"
           },
+          "428": {
+            "description": "Already logged in. Log out first"
+          },
           "500": {
             "description": "Server error"
           }
@@ -125,8 +128,11 @@
           "200": {
             "description": "Successfully signs in user"
           },
+          "400": {
+            "description": "Bad request"
+          },
           "401": {
-            "description": "Failed authentication"
+            "description": "Email or password is wrong OR Failed authentication"
           },
           "428": {
             "description": "Already signed in"
@@ -168,8 +174,11 @@
           "200": {
             "description": "Found user's accounts"
           },
-          "403": {
+          "401": {
             "description": "Unauthorized Access"
+          },
+          "403": {
+            "description": "Forbidden Access"
           },
           "404": {
             "description": "User not found"
@@ -185,8 +194,8 @@
         "tags": [
           "Accounts"
         ],
-        "summary": "Creates a bank account for a user",
-        "description": "Add new account to database",
+        "summary": "Creates a bank account",
+        "description": "Add new bank account to database for a user",
         "operationId": "createAccount",
         "consumes": [
           "application/json"
@@ -223,8 +232,11 @@
           "400": {
             "description": "Bad request"
           },
-          "403": {
+          "401": {
             "description": "Unauthorized Access"
+          },
+          "403": {
+            "description": "Forbidden Access"
           },
           "500": {
             "description": "Server error"
@@ -235,8 +247,8 @@
         "tags": [
           "Accounts"
         ],
-        "summary": "Gets all the accounts in the database or based on some query",
-        "decription": "Gets businesses in database",
+        "summary": "Gets businesses in database",
+        "decription": "Gets all the accounts in the database or based on some query",
         "operationId": "listAccounts",
         "produces": [
           "application/json"
@@ -261,8 +273,11 @@
           "200": {
             "description": "Found the accounts"
           },
-          "403": {
+          "401": {
             "description": "Unauthorized Access"
+          },
+          "403": {
+            "description": "Forbidden Access"
           },
           "500": {
             "description": "Server error"
@@ -275,8 +290,8 @@
         "tags": [
           "Accounts"
         ],
-        "summary": "Gets the details of a particular account",
-        "decription": "Gets account details",
+        "summary": "Gets account details",
+        "decription": "Gets the details of a particular account",
         "operationId": "retrieveAccount",
         "produces": [
           "application/json"
@@ -301,14 +316,17 @@
           "200": {
             "description": "Account found"
           },
-          "403": {
+          "401": {
             "description": "Unauthorized Access"
+          },
+          "403": {
+            "description": "Forbidden Access"
           },
           "404": {
             "description": "Account not found"
           },
           "500": {
-            "decription": "Server error"
+            "description": "Server error"
           }
         }
       },
@@ -355,8 +373,11 @@
           "400": {
             "description": "Bad request"
           },
-          "403": {
+          "401": {
             "description": "Unauthorized Access"
+          },
+          "403": {
+            "description": "Forbidden Access"
           },
           "500": {
             "description": "Server error"
@@ -380,17 +401,27 @@
             "description": "JWT Token Authentication",
             "required": "true",
             "type": "string"
+          },
+          {
+            "name": "accountNumber",
+            "in": "path",
+            "description": "account number of particular account to be deleted",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
             "description": "Account deleted successfully"
           },
-          "400": {
-            "description": "Bad request"
+          "401": {
+            "description": "Unauthorized Access"
           },
           "403": {
-            "description": "Unauthorized Access"
+            "description": "Forbidden Access"
+          },
+          "404": {
+            "description": "Account not found"
           },
           "500": {
             "description": "Server error"
@@ -429,8 +460,11 @@
           "200": {
             "description": "Found account transaction history"
           },
-          "403": {
+          "401": {
             "description": "Unauthorized Access"
+          },
+          "403": {
+            "description": "Forbidden Access"
           },
           "404": {
             "description": "Account not found"
@@ -447,7 +481,7 @@
           "Transactions"
         ],
         "summary": "Gets transaction details",
-        "decription": "Gets the details of a particular account transaction",
+        "decription": "Gets the details of a particular transaction",
         "operationId": "retrieveTransactionDetails",
         "produces": [
           "application/json"
@@ -472,8 +506,11 @@
           "200": {
             "description": "Found transaction"
           },
-          "403": {
+          "401": {
             "description": "Unauthorized Access"
+          },
+          "403": {
+            "description": "Forbidden Access"
           },
           "404": {
             "description": "Transaction not found"
@@ -507,6 +544,13 @@
             "type": "string"
           },
           {
+            "in": "path",
+            "name": "accountNumber",
+            "description": "Account number of the account to be credited",
+            "required": "true",
+            "type": "string"
+          },
+          {
             "in": "body",
             "name": "body",
             "schema": {
@@ -527,8 +571,11 @@
           "400": {
             "description": "Bad request"
           },
-          "403": {
+          "401": {
             "description": "Unauthorized Access"
+          },
+          "403": {
+            "description": "Forbidden Access"
           },
           "500": {
             "description": "Server error"
@@ -579,8 +626,11 @@
           "400": {
             "description": "Bad request"
           },
-          "403": {
+          "401": {
             "description": "Unauthorized Access"
+          },
+          "403": {
+            "description": "Forbidden Access"
           },
           "500": {
             "description": "Server error"

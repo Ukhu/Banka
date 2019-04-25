@@ -8,22 +8,22 @@ import { check, param } from 'express-validator/check';
 
 const transactionValidation = () => [
   param('accountNumber')
-    .exists().withMessage('No account number provided in route parameters')
+    .exists().withMessage('Account number is missing')
     .not()
     .isEmpty({ ignore_whitespace: true })
-    .withMessage('Acount number in route parameters cannot be empty')
+    .withMessage('Acount number cannot be blank')
     .isNumeric()
     .withMessage('Account number must be a number')
     .isLength({ min: 7, max: 7 })
     .withMessage('Account number must be 7 digits'),
   check('amount')
-    .exists().withMessage('No amount specified')
+    .exists().withMessage('Amount is missing')
     .not()
     .isEmpty({ ignore_whitespace: true })
     .withMessage('Amount cannot be blank')
     .isFloat()
     .withMessage('Amount must be a Floating point number')
-    .trim(),
+    .blacklist(' '),
 ];
 
 export default transactionValidation;

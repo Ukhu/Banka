@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import checkLoginStatus from '../helpers/checkLoginStatus';
+import isLoggedIn from '../helpers/isLoggedIn';
 import handlePasswordComparison from '../helpers/handlePasswordComparison';
 import hanldeNewUser from '../helpers/handleNewUser';
 import users from '../models/user';
@@ -23,36 +23,52 @@ export default class UserController {
    */
 
   static createUser(request, response) {
+    if (request.body.token || request.query.token
+      || request.headers['x-access-token']) {
+      const token = request.body.token
+      || request.query.token || request.headers['x-access-token'];
+
+      if (isLoggedIn(token)) {
+        response.status(428).json({
+          status: 428,
+          error: 'Logout existing user account before attempting this action',
+        });
+        return;
+      }
+    }
+
     const {
       email, firstName, lastName, type, isAdmin,
     } = request.body;
 
-    bcrypt.hash(request.body.password, 10, (error, hash) => {
-      if (error) {
-        response.status(500).json({ status: 500, error });
-      } else {
+    if (type === 'client' && isAdmin === 'true') {
+      response.status(400).json({
+        status: 400,
+        error: 'Client cannot be an admin',
+      });
+    } else {
+      bcrypt.hash(request.body.password, 10, (error, hash) => {
+        if (error) {
+          response.status(500).json({ status: 500, error });
+        }
         const password = hash;
 
         const queryString = `
-          INSERT INTO
-          users(email, first_name, last_name, password, type, isAdmin)
-          VALUES($1, $2, $3, $4, $5, $6)
-          returning *;
-        `;
+            INSERT INTO
+            users(email, first_name, last_name, password, type, isAdmin)
+            VALUES($1, $2, $3, $4, $5, $6)
+            returning *;
+          `;
 
         users.query(queryString,
           [email, firstName, lastName, password, type, isAdmin])
-          .then((queryResponse) => {
-            hanldeNewUser(response, queryResponse.rows[0]);
-          })
-          .catch(() => {
-            response.status(500).json({
-              status: 500,
-              error: 'Error occured!',
-            });
-          });
-      }
-    });
+          .then(queryResponse => hanldeNewUser(response, queryResponse.rows[0]))
+          .catch(() => response.status(500).json({
+            status: 500,
+            error: 'Error occured!',
+          }));
+      });
+    }
   }
 
   /**
@@ -67,32 +83,36 @@ export default class UserController {
   static loginUser(request, response) {
     if (request.body.token || request.query.token
       || request.headers['x-access-token']) {
-      checkLoginStatus(request, response);
-    } else {
-      const queryString = `
+      const token = request.body.token
+      || request.query.token || request.headers['x-access-token'];
+
+      if (isLoggedIn(token)) {
+        return response.status(428).json({
+          status: 428,
+          error: 'Logout existing user account before logging in again',
+        });
+      }
+    }
+    const queryString = `
         SELECT * FROM users
         WHERE email=$1
       `;
 
-      users.query(queryString, [request.body.email])
-        .then((queryResponse) => {
-          if (queryResponse.rows.length < 1) {
-            response.status(401).json({
-              status: 401,
-              error: 'Email or password is wrong',
-            });
-          } else {
-            const [accountOwner] = queryResponse.rows;
-            handlePasswordComparison(response, accountOwner,
-              request.body.password, accountOwner.password);
-          }
-        }).catch(() => {
-          response.status(500).json({
-            status: 500,
-            error: 'Error occured!',
+    return users.query(queryString, [request.body.email])
+      .then((queryResponse) => {
+        if (queryResponse.rows.length < 1) {
+          return response.status(401).json({
+            status: 401,
+            error: 'Email or password is wrong',
           });
-        });
-    }
+        }
+        const [accountOwner] = queryResponse.rows;
+        return handlePasswordComparison(response, accountOwner,
+          request.body.password, accountOwner.password);
+      }).catch(() => response.status(500).json({
+        status: 500,
+        error: 'Error occured!',
+      }));
   }
 
   /**
@@ -112,23 +132,40 @@ export default class UserController {
       WHERE email=$1;
     `;
 
-
     users.query(userQuery, [userEmail])
       .then((userResponse) => {
         if (userResponse.rows.length > 0) {
           const { id } = userResponse.rows[0];
 
-          const accountsQuery = `
-            SELECT * FROM accounts
-            WHERE owner=$1;
+          const signedInUserQuery = `
+            SELECT type FROM users
+            WHERE email=$1;
           `;
 
-          accounts.query(accountsQuery, [`{${id}}`])
-            .then((accountResponse) => {
-              response.status(200).json({
-                status: 200,
-                data: accountResponse.rows,
-              });
+          users.query(signedInUserQuery, [request.decoded.email])
+            .then((userResponse2) => {
+              const { type } = userResponse2.rows[0];
+
+              if (userEmail !== request.decoded.email && type === 'client') {
+                response.status(403).json({
+                  status: 403,
+                  error: 'You can only view your own transaction history',
+                });
+                return;
+              }
+
+              const accountsQuery = `
+                SELECT * FROM accounts
+                WHERE owner=$1;
+              `;
+
+              accounts.query(accountsQuery, [`{${id}}`])
+                .then((accountResponse) => {
+                  response.status(200).json({
+                    status: 200,
+                    data: accountResponse.rows,
+                  });
+                });
             });
         } else {
           response.status(404).json({

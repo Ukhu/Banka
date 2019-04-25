@@ -24,10 +24,16 @@ export default class AccountController {
     SELECT * FROM users
     WHERE id=$1
   `;
-
     users.query(userQuery, [`{${request.decoded.id}}`])
       .then((userResponse) => {
         const [accountOwner] = userResponse.rows;
+
+        if (accountOwner.type === 'staff') {
+          return response.status(403).json({
+            status: 403,
+            error: 'Staff cannot create a bank account',
+          });
+        }
 
         const accountNumber = Math.floor(
           Math.random() * (10000000 - 1000000) + 1000000,
@@ -46,7 +52,7 @@ export default class AccountController {
             returning *;
           `;
 
-        accounts.query(accountQuery, newAccount)
+        return accounts.query(accountQuery, newAccount)
           .then((accountResponse) => {
             handleNewAccount(response, accountResponse.rows[0], accountOwner);
           });
@@ -131,10 +137,39 @@ export default class AccountController {
     accounts.query(accountQuery, [accountNumber])
       .then((accountResponse) => {
         if (accountResponse.rows.length > 0) {
-          response.status(200).json({
-            status: 200,
-            data: accountResponse.rows,
-          });
+          const userQuery = `
+            SELECT type FROM users
+            WHERE email=$1;
+          `;
+
+          users.query(userQuery, [request.decoded.email])
+            .then((userResponse) => {
+              const user = userResponse.rows[0];
+
+              const accountQuery2 = `
+                SELECT account_number
+                FROM accounts
+                WHERE owner=$1;
+              `;
+
+              accounts.query(accountQuery2, [`{${request.decoded.id}}`])
+                .then((accountResponse2) => {
+                  const accountNumbers = accountResponse2.rows
+                    .map(account => account.account_number);
+
+                  if (accountNumbers.indexOf(Number(accountNumber)) < 0 && user.type === 'client') {
+                    return response.status(403).json({
+                      status: 403,
+                      error: 'You can only view your own account details',
+                    });
+                  }
+
+                  return response.status(200).json({
+                    status: 200,
+                    data: accountResponse.rows,
+                  });
+                });
+            });
         } else {
           response.status(404).json({
             status: 404,
@@ -245,7 +280,7 @@ export default class AccountController {
           });
         }
       })
-      .catch((error) => {
+      .catch(() => {
         response.status(500).json({
           status: 500,
           error: 'Error occured!',
@@ -268,35 +303,82 @@ export default class AccountController {
       SELECT account_number FROM accounts
       WHERE account_number=$1;
     `;
-
-
+    // Query the database to check if account is present
     accounts.query(accountQuery, [accountNumber])
       .then((accountResponse) => {
+        // If present do perform this if block
         if (accountResponse.rows.length > 0) {
-          const [account] = accountResponse.rows;
-
-          const transactionQuery = `
-            SELECT id, created_on, type, account_number,
-            amount, old_balance, new_balance
-            FROM transactions
-            WHERE account_number=$1
+          const userQuery = `
+            SELECT type FROM users
+            WHERE email=$1;
           `;
 
-          accounts.query(transactionQuery, [account.account_number])
-            .then((transactionResponse) => {
-              response.status(200).json({
-                status: 200,
-                data: transactionResponse.rows,
-              });
+          // Query the DB to get the type of the signed in user
+          users.query(userQuery, [request.decoded.email])
+            .then((userResponse) => {
+              const user = userResponse.rows[0];
+
+              const accountQuery2 = `
+                  SELECT account_number
+                  FROM accounts
+                  WHERE owner=$1;
+                `;
+
+              // Query the DB to get the user's accounts
+              accounts.query(accountQuery2, [`{${request.decoded.id}}`])
+                .then((accountResponse2) => {
+                  const accountNumbers = accountResponse2.rows
+                    .map(account => account.account_number);
+
+
+                  // if the account in the route params is not found in
+                  // the user's account list, that means that he doesnt
+                  // own the account, hence he can view it
+                  if (accountNumbers.indexOf(Number(accountNumber)) < 0 && user.type === 'client') {
+                    return response.status(403).json({
+                      status: 403,
+                      error: 'You can only view your own transaction history',
+                    });
+                  }
+
+                  const [account] = accountResponse.rows;
+
+                  const transactionQuery = `
+                    SELECT id, created_on, type, account_number,
+                    amount, old_balance, new_balance
+                    FROM transactions
+                    WHERE account_number=$1;
+                  `;
+
+                  return accounts.query(transactionQuery, [account.account_number])
+                    .then((transactionResponse) => {
+                      const formattedRows = transactionResponse.rows
+                        .map(transactions => ({
+                          transactionId: transactions.id,
+                          createdOn: transactions.created_on,
+                          type: transactions.type,
+                          accountNumber: transactions.account_number,
+                          amount: parseFloat(transactions.amount),
+                          oldBalance: parseFloat(transactions.old_balance),
+                          newBalance: parseFloat(transactions.new_balance),
+                        }));
+
+
+                      response.status(200).json({
+                        status: 200,
+                        data: formattedRows,
+                      });
+                    });
+                });
             });
-        } else {
+        } else { // If account is not present in DB, do this
           response.status(404).json({
             status: 404,
             error: 'No account found for the given account number',
           });
         }
       })
-      .catch((error) => {
+      .catch(() => {
         response.status(500).json({
           status: 500,
           error: 'Error occured!',

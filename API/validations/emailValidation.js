@@ -8,10 +8,16 @@ import { param } from 'express-validator/check';
 
 const emailValidation = () => [
   param('userEmail')
-    .exists().withMessage('Email not provided')
+    .exists().withMessage('Email is missing')
+    .not()
+    .isEmpty({ ignore_whitespace: true })
+    .withMessage(
+      'Email cannot be blank',
+    )
     .isEmail()
-    .withMessage('Email provided is not a valid email')
-    .trim(),
+    .withMessage('Not a valid email address')
+    .normalizeEmail()
+    .blacklist(' '),
 ];
 
 export default emailValidation;

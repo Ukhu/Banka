@@ -19,8 +19,8 @@ const isAuthorized = (request, response, next) => {
   if (token) {
     verify(token, process.env.JWT_KEY, (error, decoded) => {
       if (error) {
-        response.status(403).json({
-          status: 403,
+        response.status(401).json({
+          status: 401,
           error: 'Unauthorized Access',
         });
       } else {
@@ -29,8 +29,8 @@ const isAuthorized = (request, response, next) => {
       }
     });
   } else {
-    response.status(403).json({
-      status: 403,
+    response.status(401).json({
+      status: 401,
       error: 'Unauthorized Access',
     });
   }

@@ -1,4 +1,5 @@
 import { check, param } from 'express-validator/check';
+import { makeLowerCase } from './customValidation';
 
 /**
 * Adds validations to the activate/deactivate routes
@@ -8,24 +9,25 @@ import { check, param } from 'express-validator/check';
 
 const accountStatusValidations = () => [
   param('accountNumber')
-    .exists().withMessage('No account number provided in route parameters')
+    .exists().withMessage('Account number missing')
     .not()
     .isEmpty({ ignore_whitespace: true })
-    .withMessage('Acount number in route parameters cannot be empty')
+    .withMessage('Acount number cannot be blank')
     .isNumeric()
     .withMessage('Account number must be a number')
     .isLength({ min: 7, max: 7 })
     .withMessage('Account number must be 7 digits'),
   check('status')
-    .exists().withMessage('Account status not supplied')
+    .exists().withMessage('Account status missing')
     .not()
     .isEmpty({ ignore_whitespace: true })
-    .withMessage('Account status cannot be empty')
+    .withMessage('Account status cannot be blank')
     .isString()
     .withMessage('Account status must be string')
-    .trim()
+    .blacklist(' ')
+    .customSanitizer(value => makeLowerCase(value))
     .isIn(['active', 'dormant'])
-    .withMessage('must be either active or dormant'),
+    .withMessage('Status must be either active or dormant'),
 ];
 
 export default accountStatusValidations;

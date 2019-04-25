@@ -17,7 +17,7 @@ describe('ACCOUNTS', () => {
         email: 'osaukhu.bi@gmail.com',
         firstName: 'Osaukhu',
         lastName: 'Iyamuosa',
-        password: 'ukhu7',
+        password: 'ukhu123',
         type: 'client',
         isAdmin: 'false',
       };
@@ -76,9 +76,10 @@ describe('ACCOUNTS', () => {
           .post('/api/v1/accounts')
           .send(accountOpeningDetails)
           .end((error, response) => {
-            response.should.have.status(403);
+            response.should.have.status(401);
             response.body.should.be.a('object');
             response.body.should.have.property('error');
+            response.body.error.should.equal('Unauthorized Access');
             done();
           });
       });
@@ -94,9 +95,10 @@ describe('ACCOUNTS', () => {
           .post('/api/v1/accounts')
           .send(accountOpeningDetails)
           .end((error, response) => {
-            response.should.have.status(403);
+            response.should.have.status(401);
             response.body.should.be.a('object');
             response.body.should.have.property('error');
+            response.body.error.should.equal('Unauthorized Access');
             done();
           });
       });
@@ -467,20 +469,6 @@ describe('ACCOUNTS', () => {
         });
     });
 
-    it(`should return a 403 Forbidden Error if an unauthenticated user
-    tries to access the endpoint`, (done) => {
-      chai.request(app)
-        .patch(`/api/v1/accounts/${userAccountNumber}`)
-        .end((error, response) => {
-          response.should.have.status(403);
-          response.body.should.be.a('object');
-          response.body.should.have.property('error');
-          response.body.error.should.be.a('string');
-          response.body.error.should.equal('Unauthorized Access');
-          done();
-        });
-    });
-
     it(`should return a 403 Forbidden Error if a user who is not a 
     staff tries to access the endpoint`, (done) => {
       const token = {
@@ -496,7 +484,7 @@ describe('ACCOUNTS', () => {
           response.body.should.have.property('error');
           response.body.error.should.be.a('string');
           response.body.error.should
-            .equal('FORBIDDEN - Only Staff can make this transaction!');
+            .equal('Forbidden Access! Only a staff can carry out this operation');
           done();
         });
     });
@@ -613,44 +601,11 @@ describe('ACCOUNTS', () => {
           done();
         });
     });
-
-    it(`should return a 403 Forbidden Error if an unauthenticated user
-    tries to access the endpoint`, (done) => {
-      chai.request(app)
-        .delete(`/api/v1/accounts/${userAccountNum}`)
-        .end((error, response) => {
-          response.should.have.status(403);
-          response.body.should.be.a('object');
-          response.body.should.have.property('error');
-          response.body.error.should.be.a('string');
-          response.body.error.should.equal('Unauthorized Access');
-          done();
-        });
-    });
-
-    it(`should return a 403 Forbidden Error if a user who is not a staff
-    tries to access the endpoint`, (done) => {
-      const token = {
-        token: userToken,
-      };
-
-      chai.request(app)
-        .delete(`/api/v1/accounts/${userAccountNum}`)
-        .send(token)
-        .end((error, response) => {
-          response.should.have.status(403);
-          response.body.should.be.a('object');
-          response.body.should.have.property('error');
-          response.body.error.should.be.a('string');
-          response.body.error.should
-            .equal('FORBIDDEN - Only Staff can make this transaction!');
-          done();
-        });
-    });
   });
 
   describe('GET /accounts/<accountNumber>/transactions', () => {
     let userToken;
+    let userToken2;
     let cashierToken;
     let userAccountNum;
 
@@ -669,6 +624,25 @@ describe('ACCOUNTS', () => {
         .send(userDetails)
         .end((error, response) => {
           userToken = response.body.data.token;
+          done();
+        });
+    });
+
+    before((done) => {
+      const userDetails = {
+        email: 'account2@gmail.com',
+        firstName: 'Dummy',
+        lastName: 'Owner',
+        password: 'dmmyOwn12',
+        type: 'client',
+        isAdmin: 'false',
+      };
+
+      chai.request(app)
+        .post('/api/v1/auth/signup')
+        .send(userDetails)
+        .end((error, response) => {
+          userToken2 = response.body.data.token;
           done();
         });
     });
@@ -750,6 +724,22 @@ describe('ACCOUNTS', () => {
         });
     });
 
+    it(`should return a 403 error if a user tries to get the
+    transaction history of an account that is not theirs`, (done) => {
+      chai.request(app)
+        .get(`/api/v1/accounts/${userAccountNum}/transactions`)
+        .send({ token: userToken2 })
+        .end((error, response) => {
+          response.should.have.status(403);
+          response.body.should.be.a('object');
+          response.body.should.have.property('error');
+          response.body.error.should.be.a('string');
+          response.body.error
+            .should.equal('You can only view your own transaction history');
+          done();
+        });
+    });
+
     it(`should return a 404 error if the account number 
     specified is not in the DB`, (done) => {
       chai.request(app)
@@ -769,6 +759,7 @@ describe('ACCOUNTS', () => {
 
   describe('GET /accounts/accountNumber>', () => {
     let userToken;
+    let userToken2;
     let cashierToken;
     let userAccountNum;
 
@@ -787,6 +778,25 @@ describe('ACCOUNTS', () => {
         .send(userDetails)
         .end((error, response) => {
           userToken = response.body.data.token;
+          done();
+        });
+    });
+
+    before((done) => {
+      const userDetails = {
+        email: 'withdrawer2@gmail.com',
+        firstName: 'Money',
+        lastName: 'Withdrawer',
+        password: 'debit1',
+        type: 'client',
+        isAdmin: 'false',
+      };
+
+      chai.request(app)
+        .post('/api/v1/auth/signup')
+        .send(userDetails)
+        .end((error, response) => {
+          userToken2 = response.body.data.token;
           done();
         });
     });
@@ -866,6 +876,22 @@ describe('ACCOUNTS', () => {
           response.body.error.should.be.a('string');
           response.body.error.should
             .equal('No account found for the given account number');
+          done();
+        });
+    });
+
+    it(`should return an error if a user tries to view the
+      details an account that isn't theirs`, (done) => {
+      chai.request(app)
+        .get(`/api/v1/accounts/${userAccountNum}`)
+        .send({ token: userToken2 })
+        .end((error, response) => {
+          response.should.have.status(403);
+          response.body.should.be.a('object');
+          response.body.should.have.property('error');
+          response.body.error.should.be.a('string');
+          response.body.error.should
+            .equal('You can only view your own account details');
           done();
         });
     });
