@@ -21,7 +21,8 @@ const errorHandler = (request, response, next) => {
     return errors;
   };
 
-  const validationResults = validationResult(request).array({ onlyFirstError: true });
+  const validationResults = validationResult(request)
+    .array({ onlyFirstError: true });
 
   validationResults.forEach(resultObject => errorFormatter(resultObject));
 

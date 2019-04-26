@@ -8,10 +8,10 @@ import { param } from 'express-validator/check';
 
 const transactionValidation = () => [
   param('transactionId')
-    .exists().withMessage('No transaction ID provided in route parameters')
+    .exists().withMessage('Transaction ID missing')
     .not()
     .isEmpty({ ignore_whitespace: true })
-    .withMessage('Transaction ID in route parameters cannot be empty')
+    .withMessage('Transaction ID cannot be blank')
     .isUUID()
     .withMessage('Transaction ID must be a valid UUID'),
 ];

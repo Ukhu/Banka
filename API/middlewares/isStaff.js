@@ -26,10 +26,10 @@ const isStaff = (request, response, next) => {
       } else {
         response.status(403).json({
           status: 403,
-          error: 'FORBIDDEN - Only Staff can make this transaction!',
+          error: 'Forbidden Access! Only a staff can carry out this operation',
         });
       }
-    }).catch((error) => {
+    }).catch(() => {
       response.status(500).json({
         status: 500,
         error: 'Error occured!',

@@ -1,3 +1,4 @@
+import users from '../models/user';
 import accounts from '../models/account';
 import handleNewTransaction from '../helpers/handleNewTransaction';
 import transactions from '../models/transaction';
@@ -123,7 +124,8 @@ export default class TransactionController {
           });
         }
       })
-      .catch(() => {
+      .catch((error) => {
+        console.log(error);
         response.status(500).json({
           status: 500,
           error: 'Error occured!',
@@ -150,24 +152,58 @@ export default class TransactionController {
     transactions.query(transactionQuery, [`{${transactionId}}`])
       .then((transactionResponse) => {
         if (transactionResponse.rows.length > 0) {
-          const { id, type, amount } = transactionResponse.rows[0];
+          const userQuery = `
+            SELECT type FROM users
+            WHERE email=$1;
+          `;
 
-          response.status(200).json({
-            status: 200,
-            data: [{
-              transactionId: id,
-              createdOn: transactionResponse.rows[0].created_on,
-              type,
-              accountNumber: transactionResponse.rows[0].account_number,
-              amount,
-              oldBalance: transactionResponse.rows[0].old_balance,
-              newBalance: transactionResponse.rows[0].new_balance,
-            }],
-          });
+          users.query(userQuery, [request.decoded.email])
+            .then((userResponse) => {
+              const user = userResponse.rows[0];
+
+              const accountQuery2 = `
+                SELECT account_number
+                FROM accounts
+                WHERE owner=$1;
+              `;
+
+              // Query the DB to get the user's accounts
+              accounts.query(accountQuery2, [`{${request.decoded.id}}`])
+                .then((accountResponse2) => {
+                  const accountNumbers = accountResponse2.rows
+                    .map(account => account.account_number);
+
+
+                  // if the account gotten from the transactionId is not found in
+                  // the user's account list, that means that he doesnt
+                  // own the account, hence he can view it
+                  if (accountNumbers.indexOf(Number(transactionResponse.rows[0].account_number)) < 0 && user.type === 'client') {
+                    return response.status(403).json({
+                      status: 403,
+                      error: 'You can only view your own transaction',
+                    });
+                  }
+
+                  const { id, type, amount } = transactionResponse.rows[0];
+
+                  return response.status(200).json({
+                    status: 200,
+                    data: [{
+                      transactionId: id,
+                      createdOn: transactionResponse.rows[0].created_on,
+                      type,
+                      accountNumber: transactionResponse.rows[0].account_number,
+                      amount,
+                      oldBalance: transactionResponse.rows[0].old_balance,
+                      newBalance: transactionResponse.rows[0].new_balance,
+                    }],
+                  });
+                });
+            });
         } else {
           response.status(404).json({
             status: 404,
-            error: 'Account not found for the given ID',
+            error: 'Transaction not found for the given ID',
           });
         }
       })

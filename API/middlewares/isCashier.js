@@ -21,15 +21,21 @@ const isCashier = (request, response, next) => {
     .then((userResponse) => {
       const [accountOwner] = userResponse.rows;
 
-      if (accountOwner.type === 'staff' && accountOwner.isadmin === false) {
+      if (userResponse.rows.length === 0) {
+        response.status(404).json({
+          status: 404,
+          error: 'This user is not in the database',
+        });
+      } else if (accountOwner.type === 'staff'
+      && accountOwner.isadmin === false) {
         next();
       } else {
         response.status(403).json({
           status: 403,
-          error: 'FORBIDDEN - Only Cashier can make this transaction!',
+          error: 'Forbidden Access! Only a cashier can make this transaction',
         });
       }
-    }).catch((error) => {
+    }).catch(() => {
       response.status(500).json({
         status: 500,
         error: 'Error occured!',

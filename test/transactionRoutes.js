@@ -129,29 +129,6 @@ describe('TRANSACTIONS', () => {
           done();
         });
     });
-
-    it(`should return a 403 Forbidden Error if a user who is not a
-    cashier tries to access the endpoint`, (done) => {
-      const creditTransDetails = {
-        type: 'credit',
-        accountNumber: String(userAccountNum),
-        amount: '400.50',
-        token: userToken,
-      };
-
-      chai.request(app)
-        .post(`/api/v1/transactions/${userAccountNum}/credit`)
-        .send(creditTransDetails)
-        .end((error, response) => {
-          response.should.have.status(403);
-          response.body.should.be.a('object');
-          response.body.should.have.property('error');
-          response.body.error.should.be.a('string');
-          response.body.error.should
-            .equal('FORBIDDEN - Only Cashier can make this transaction!');
-          done();
-        });
-    });
   });
 
   describe('POST /transactions/<accountNumber>/debit', () => {
@@ -332,7 +309,7 @@ describe('TRANSACTIONS', () => {
           response.body.should.have.property('error');
           response.body.error.should.be.a('string');
           response.body.error.should
-            .equal('FORBIDDEN - Only Cashier can make this transaction!');
+            .equal('Forbidden Access! Only a cashier can make this transaction');
           done();
         });
     });
@@ -340,6 +317,7 @@ describe('TRANSACTIONS', () => {
 
   describe('GET /transactions/<transaction-id>', () => {
     let userToken;
+    let userToken2;
     let cashierToken;
     let userAccountNum;
     let id;
@@ -359,6 +337,25 @@ describe('TRANSACTIONS', () => {
         .send(userDetails)
         .end((error, response) => {
           userToken = response.body.data.token;
+          done();
+        });
+    });
+
+    before((done) => {
+      const userDetails = {
+        email: 'withdrawer2@gmail.com',
+        firstName: 'Money',
+        lastName: 'Withdrawer',
+        password: 'debit1',
+        type: 'client',
+        isAdmin: 'false',
+      };
+
+      chai.request(app)
+        .post('/api/v1/auth/signup')
+        .send(userDetails)
+        .end((error, response) => {
+          userToken2 = response.body.data.token;
           done();
         });
     });
@@ -453,7 +450,24 @@ describe('TRANSACTIONS', () => {
           response.body.should.have.property('error');
           response.body.error.should.be.a('string');
           response.body.error
-            .should.equal('Account not found for the given ID');
+            .should.equal('Transaction not found for the given ID');
+          done();
+        });
+    });
+
+    it(`it should return an error if a user tries to view a transaction
+    that is not theirs`,
+    (done) => {
+      chai.request(app)
+        .get(`/api/v1/transactions/${id}`)
+        .send({ token: userToken2 })
+        .end((error, response) => {
+          response.should.have.status(403);
+          response.body.should.be.a('object');
+          response.body.should.have.property('error');
+          response.body.error.should.be.a('string');
+          response.body.error
+            .should.equal('You can only view your own transaction');
           done();
         });
     });

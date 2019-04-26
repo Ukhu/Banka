@@ -31,7 +31,7 @@ describe('AUTHENTICATION', () => {
         email: 'osaukhu.bi@gmail.com',
         firstName: 'Osaukhu',
         lastName: 'Iyamuosa',
-        password: 'ukhu7',
+        password: 'ukhu123',
         type: 'client',
         isAdmin: 'false',
       };
@@ -53,7 +53,7 @@ describe('AUTHENTICATION', () => {
         email: 'osaukhu.bi@gmail.com',
         firstName: 'Osaukhu',
         lastName: 'Iyamuosa',
-        password: 'ukhu7',
+        password: 'ukhu123',
         type: 'client',
         isAdmin: 'false',
       };
@@ -121,7 +121,7 @@ describe('AUTHENTICATION', () => {
         email: 'lylsoul@gmail.com',
         firstName: 'Osaukhu',
         lastName: 'Iyamuosa',
-        password: 'ukhu7',
+        password: 'ukhu123',
         type: 'client',
         isAdmin: 'false',
       };
@@ -152,7 +152,7 @@ describe('AUTHENTICATION', () => {
     the correct sign in details`, (done) => {
       const loginDetails = {
         email: 'lylsoul@gmail.com',
-        password: 'ukhu7',
+        password: 'ukhu123',
       };
       chai.request(app)
         .post('/api/v1/auth/signin')
@@ -171,7 +171,7 @@ describe('AUTHENTICATION', () => {
     an already logged in user should log out first`, (done) => {
       const loginDetails = {
         email: 'lylsoul@gmail.com',
-        password: 'ukhu7',
+        password: 'ukhu123',
         token: resToken,
       };
       chai.request(app)
@@ -186,32 +186,11 @@ describe('AUTHENTICATION', () => {
         });
     });
 
-    it(`should return a 403 Forbiden Error if an already logged in
-    user tries to log in again but with the wrong token`, (done) => {
-      const loginDetails = {
-        email: 'lylsoul@gmail.com',
-        password: 'ukhu7',
-        token: 'bvhshjwe6778bvw67324r',
-      };
-      chai.request(app)
-        .post('/api/v1/auth/signin')
-        .send(loginDetails)
-        .end((error, response) => {
-          response.should.have.status(403);
-          response.body.should.be.a('object');
-          response.body.should.have.property('error');
-          response.body.error.should.be.a('string');
-          response.body.error.should
-            .equal('FORBIDDEN REQUEST - Wrong or invalid token');
-          done();
-        });
-    });
-
     it(`should return a 401 Unauthorized Error if the given
     email is not in the DB`, (done) => {
       const loginDetails = {
         email: 'seven@gmail.com',
-        password: 'ukhu7',
+        password: 'ukhu123',
       };
       chai.request(app)
         .post('/api/v1/auth/signin')

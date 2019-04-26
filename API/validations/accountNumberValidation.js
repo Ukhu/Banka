@@ -8,10 +8,10 @@ import { param } from 'express-validator/check';
 
 const deleteAccountValidation = () => [
   param('accountNumber')
-    .exists().withMessage('No account number provided in route parameters')
+    .exists().withMessage('Account number missing')
     .not()
     .isEmpty({ ignore_whitespace: true })
-    .withMessage('Acount number in route parameters cannot be empty')
+    .withMessage('Acount number cannot be blank')
     .isNumeric()
     .withMessage('Account number must be a number')
     .isLength({ min: 7, max: 7 })
