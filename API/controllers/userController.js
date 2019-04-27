@@ -73,7 +73,7 @@ export default class UserController {
 
   static createStaff(request, response) {
     const {
-      email, firstName, lastName, type, isAdmin,
+      email, firstName, lastName, isAdmin,
     } = request.body;
 
     bcrypt.hash(request.body.password, 10, (error, hash) => {
@@ -90,7 +90,7 @@ export default class UserController {
           `;
 
       users.query(queryString,
-        [email, firstName, lastName, password, type, isAdmin])
+        [email, firstName, lastName, password, 'staff', isAdmin])
         .then(queryResponse => handleNewUser(response, queryResponse.rows[0]))
         .catch(() => response.status(500).json({
           status: 500,

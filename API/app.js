@@ -50,12 +50,19 @@ app.get('/', (request, response) => {
     message: 'Welcome to Banka API, check out the available endpoints below',
     endpoints: {
       createUser: 'POST /api/v1/auth/signup',
+      createStaff: 'POST /api/v1/auth/create-staff',
       loginUser: 'POST /api/v1/auth/signin',
       createBankAccount: 'POST /api/v1/accounts',
       activateDeactivate: 'PATCH /api/v1/accounts/<accountNumber>',
       deleteUser: 'DELETE /api/v1/accounts/<accountNumber>',
-      debitBankAccount: 'POST /api/v1/transactions/<accountNumber/debit',
-      creditBankAccount: 'POST /api/v1/transactions/<accountNumber/credit',
+      debitBankAccount: 'POST /api/v1/transactions/<accountNumber>/debit',
+      creditBankAccount: 'POST /api/v1/transactions/<accountNumber>/credit',
+      viewTransactionHistory: '/api/v1/accounts/<accountNumber>/transactions',
+      viewSpecificTransaction: '/api/v1/transactions/<transactionId>',
+      viewUsersAccounts: '/api/v1/user/<userEmail>/accounts',
+      viewAccountDetails: '/api/v1/accounts/<accountNumber>',
+      viewActiveAccounts: '/api/v1/accounts?status=active',
+      viewDormantAccounts: '/api/v1/accounts?status=dormant',
     },
   });
 });

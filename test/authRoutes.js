@@ -109,6 +109,66 @@ describe('AUTHENTICATION', () => {
     });
   });
 
+  describe('POST /auth/create-staff', () => {
+    let adminToken;
+
+    before((done) => {
+      const adminDetails = {
+        email: 'osaukhu.bi@gmail.com',
+        password: 'chelsea7',
+      };
+
+      chai.request(app)
+        .post('/api/v1/auth/signin')
+        .send(adminDetails)
+        .end((error, response) => {
+          adminToken = response.body.data[0].token;
+          done();
+        });
+    });
+
+    after((done) => {
+      const resetQuery = `
+        DELETE FROM users;
+        INSERT INTO users(email, first_name, last_name, password, type, isAdmin)
+        VALUES('osaukhu.bi@gmail.com', 'Osaukhumwen', 'Iyamuosa',
+        '$2b$10$1LKVJijqyFJyPDFxECov2OJId6pIPlFHYCETV2LgLK0LqO0U2cwKW',
+        'staff', true);
+      `;
+
+      users.query(resetQuery)
+        .then(() => {
+          done();
+        })
+        .catch((error) => {
+          done(error);
+        });
+    });
+
+    it(`should create user account if all fields are
+    filled correctly`, (done) => {
+      const userDetails1 = {
+        email: 'ukhu.bi1@gmail.com',
+        firstName: 'Ukhu',
+        lastName: 'Seven',
+        password: 'ukhu123',
+        type: 'staff',
+        isAdmin: 'false',
+      };
+      chai.request(app)
+        .post('/api/v1/auth/create-staff')
+        .set('x-access-token', adminToken)
+        .send(userDetails1)
+        .end((error, response) => {
+          response.should.have.status(201);
+          response.body.should.be.a('object');
+          response.body.should.have.property('data');
+          response.body.data[0].should.have.property('id');
+          done();
+        });
+    });
+  });
+
   describe('POST /auth/signin', () => {
     let resToken;
 
