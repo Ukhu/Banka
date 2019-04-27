@@ -3,6 +3,7 @@ import { debug } from 'debug';
 import validator from 'express-validator';
 import dotenv from 'dotenv';
 import swaggerUi from 'swagger-ui-express';
+import nodemailer from 'nodemailer';
 import cors from 'cors';
 import authRoutes from './routes/auth';
 import userRoutes from './routes/user';
@@ -28,6 +29,20 @@ const corsOptions = {
   optionsSuccessStatus: 204,
 };
 app.use(cors(corsOptions));
+
+// Nodemailer Transporter
+const transporter = nodemailer.createTransport({
+  service: process.env.NODE_MAILER_SERVICE,
+  auth: {
+    user: process.env.NODE_MAILER_EMAIL,
+    pass: process.env.NODE_MAILER_PASSWORD,
+  },
+});
+
+app.use((request, response, next) => {
+  request.transporter = transporter;
+  next();
+});
 
 // API routes
 app.get('/', (request, response) => {
