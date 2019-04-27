@@ -1,6 +1,7 @@
 import users from '../models/user';
 import accounts from '../models/account';
 import { handleNewTransaction } from '../helpers/handleNewEntity';
+import sendNotification from '../helpers/sendNotification';
 import transactions from '../models/transaction';
 
 /**
@@ -50,7 +51,24 @@ export default class TransactionController {
 
           transactions.query(transactionQuery, newTransaction)
             .then((transactionResponse) => {
-              handleNewTransaction(response, transactionResponse.rows[0]);
+              const { transporter } = request;
+
+              const userQuery = `
+                SELECT users.email
+                FROM users
+                JOIN accounts
+                ON users.id = accounts.owner
+                WHERE accounts.account_number=$1;
+              `;
+
+              users.query(userQuery, [request.params.accountNumber])
+                .then((userResponse) => {
+                  const { email } = userResponse.rows[0];
+
+                  sendNotification(transporter, transactionResponse.rows[0],
+                    email, 'credit');
+                  handleNewTransaction(response, transactionResponse.rows[0]);
+                });
             });
         } else {
           response.status(404).json({
@@ -114,7 +132,24 @@ export default class TransactionController {
 
             transactions.query(transactionQuery, newTransaction)
               .then((transactionResponse) => {
-                handleNewTransaction(response, transactionResponse.rows[0]);
+                const { transporter } = request;
+
+                const userQuery = `
+                SELECT users.email
+                FROM users
+                JOIN accounts
+                ON users.id = accounts.owner
+                WHERE accounts.account_number=$1;
+              `;
+
+                users.query(userQuery, [request.params.accountNumber])
+                  .then((userResponse) => {
+                    const { email } = userResponse.rows[0];
+
+                    sendNotification(transporter, transactionResponse.rows[0],
+                      email, 'debit');
+                    handleNewTransaction(response, transactionResponse.rows[0]);
+                  });
               });
           }
         } else {
