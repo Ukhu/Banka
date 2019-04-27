@@ -47,11 +47,10 @@ Create a .env file in the root directory of the repo
 Add the following environmental variables:
 NODE_ENV= Your default Node environment
 JWT_KEY= Your JSON web token secret key 
-PGUSER= Your local database username
-PGHOST= Your server host
-PGDATABASE= Name of the database you want to use for development
-PGPASSWORD= Your database password
-PGPORT= The port number your database is using
+PORT= The port your server will run on
+DATABASE_URL= Your local database URL
+DATABASE_URL_TEST= Your local test database URL
+PG_CLOUD= Your cloud-based test database URL
 
 ## Create the followig tables in your local database
 Use the Postgres CLI to create tables in your database
@@ -126,7 +125,7 @@ Download Postman to interact with the endpoints below
   </tr>
   <tr>
       <td>GET</td>
-      <td>/api/v1/accounts/:accountDetails</td>
+      <td>/api/v1/accounts/:accountNumber</td>
       <td>View a specific account's details</td>
   </tr>
   <tr>

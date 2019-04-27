@@ -8,12 +8,12 @@ import { param } from 'express-validator/check';
 
 const deleteAccountValidation = () => [
   param('accountNumber')
-    .exists().withMessage('Account number missing')
+    .exists().withMessage('Account number is missing')
     .not()
     .isEmpty({ ignore_whitespace: true })
     .withMessage('Acount number cannot be blank')
-    .isNumeric()
-    .withMessage('Account number must be a number')
+    .isNumeric({ no_symbols: true })
+    .withMessage('Account number must be a valid number')
     .isLength({ min: 7, max: 7 })
     .withMessage('Account number must be 7 digits'),
 ];

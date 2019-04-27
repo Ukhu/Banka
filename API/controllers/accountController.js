@@ -1,6 +1,6 @@
 import users from '../models/user';
 import accounts from '../models/account';
-import handleNewAccount from '../helpers/handleNewAccount';
+import { handleNewAccount } from '../helpers/handleNewEntity';
 
 /**
  * @class AccountController
@@ -84,9 +84,19 @@ export default class AccountController {
 
       accounts.query(accountQuery, [status])
         .then((accountResponse) => {
+          const formattedRows = accountResponse.rows
+            .map(account => ({
+              createdOn: account.created_on,
+              accountNumber: account.account_number,
+              owner: account.owner,
+              type: account.type,
+              status: account.status,
+              balance: parseFloat(account.balance),
+            }));
+
           response.status(200).json({
             status: 200,
-            data: accountResponse.rows,
+            data: formattedRows,
           });
         })
         .catch(() => {
@@ -102,9 +112,19 @@ export default class AccountController {
 
       accounts.query(accountQuery)
         .then((accountResponse) => {
+          const formattedRows = accountResponse.rows
+            .map(account => ({
+              createdOn: account.created_on,
+              accountNumber: account.account_number,
+              owner: account.owner,
+              type: account.type,
+              status: account.status,
+              balance: parseFloat(account.balance),
+            }));
+
           response.status(200).json({
             status: 200,
-            data: accountResponse.rows,
+            data: formattedRows,
           });
         })
         .catch(() => {
@@ -157,16 +177,28 @@ export default class AccountController {
                   const accountNumbers = accountResponse2.rows
                     .map(account => account.account_number);
 
-                  if (accountNumbers.indexOf(Number(accountNumber)) < 0 && user.type === 'client') {
+                  if (accountNumbers.indexOf(Number(accountNumber)) < 0
+                  && user.type === 'client') {
                     return response.status(403).json({
                       status: 403,
                       error: 'You can only view your own account details',
                     });
                   }
 
+                  const {
+                    owner, type, status, balance,
+                  } = accountResponse.rows[0];
+
                   return response.status(200).json({
                     status: 200,
-                    data: accountResponse.rows,
+                    data: [{
+                      createdOn: accountResponse.rows[0].created_on,
+                      accountNumber: accountResponse.rows[0].account_number,
+                      owner,
+                      type,
+                      status,
+                      balance: parseFloat(balance),
+                    }],
                   });
                 });
             });
@@ -219,10 +251,10 @@ export default class AccountController {
 
               response.status(200).json({
                 status: 200,
-                data: {
+                data: [{
                   accountNumber: updatedAccount.account_number,
                   status,
-                },
+                }],
               });
             });
         } else {
@@ -303,17 +335,15 @@ export default class AccountController {
       SELECT account_number FROM accounts
       WHERE account_number=$1;
     `;
-    // Query the database to check if account is present
+
     accounts.query(accountQuery, [accountNumber])
       .then((accountResponse) => {
-        // If present do perform this if block
         if (accountResponse.rows.length > 0) {
           const userQuery = `
             SELECT type FROM users
             WHERE email=$1;
           `;
 
-          // Query the DB to get the type of the signed in user
           users.query(userQuery, [request.decoded.email])
             .then((userResponse) => {
               const user = userResponse.rows[0];
@@ -324,17 +354,13 @@ export default class AccountController {
                   WHERE owner=$1;
                 `;
 
-              // Query the DB to get the user's accounts
               accounts.query(accountQuery2, [`{${request.decoded.id}}`])
                 .then((accountResponse2) => {
                   const accountNumbers = accountResponse2.rows
                     .map(account => account.account_number);
 
-
-                  // if the account in the route params is not found in
-                  // the user's account list, that means that he doesnt
-                  // own the account, hence he can view it
-                  if (accountNumbers.indexOf(Number(accountNumber)) < 0 && user.type === 'client') {
+                  if (accountNumbers.indexOf(Number(accountNumber)) < 0
+                  && user.type === 'client') {
                     return response.status(403).json({
                       status: 403,
                       error: 'You can only view your own transaction history',
@@ -350,7 +376,8 @@ export default class AccountController {
                     WHERE account_number=$1;
                   `;
 
-                  return accounts.query(transactionQuery, [account.account_number])
+                  return accounts.query(transactionQuery,
+                    [account.account_number])
                     .then((transactionResponse) => {
                       const formattedRows = transactionResponse.rows
                         .map(transactions => ({
@@ -371,7 +398,7 @@ export default class AccountController {
                     });
                 });
             });
-        } else { // If account is not present in DB, do this
+        } else {
           response.status(404).json({
             status: 404,
             error: 'No account found for the given account number',

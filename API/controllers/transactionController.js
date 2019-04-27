@@ -1,6 +1,6 @@
 import users from '../models/user';
 import accounts from '../models/account';
-import handleNewTransaction from '../helpers/handleNewTransaction';
+import { handleNewTransaction } from '../helpers/handleNewEntity';
 import transactions from '../models/transaction';
 
 /**
@@ -124,8 +124,7 @@ export default class TransactionController {
           });
         }
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(() => {
         response.status(500).json({
           status: 500,
           error: 'Error occured!',
@@ -167,17 +166,14 @@ export default class TransactionController {
                 WHERE owner=$1;
               `;
 
-              // Query the DB to get the user's accounts
               accounts.query(accountQuery2, [`{${request.decoded.id}}`])
                 .then((accountResponse2) => {
                   const accountNumbers = accountResponse2.rows
                     .map(account => account.account_number);
 
-
-                  // if the account gotten from the transactionId is not found in
-                  // the user's account list, that means that he doesnt
-                  // own the account, hence he can view it
-                  if (accountNumbers.indexOf(Number(transactionResponse.rows[0].account_number)) < 0 && user.type === 'client') {
+                  if (accountNumbers.indexOf(
+                    Number(transactionResponse.rows[0].account_number),
+                  ) < 0 && user.type === 'client') {
                     return response.status(403).json({
                       status: 403,
                       error: 'You can only view your own transaction',

@@ -1,7 +1,7 @@
 import express from 'express';
 import AccountController from '../controllers/accountController';
 import isAuthorized from '../middlewares/isAuthorized';
-import isStaff from '../middlewares/isStaff';
+import { isStaff } from '../middlewares/checkUser';
 import accountValidations from '../validations/accountValidations';
 import accountStatusValidations from '../validations/accountStatusValidations';
 import accountNumberValidation from '../validations/accountNumberValidation';

@@ -10,8 +10,8 @@ chai.use(chaiHttp);
 describe('TRANSACTIONS', () => {
   describe('POST /transactions/<accountNumber>/credit', () => {
     let userToken;
-    let userid;
     let cashierToken;
+    let adminToken;
     let userAccountNum;
 
     before((done) => {
@@ -28,8 +28,41 @@ describe('TRANSACTIONS', () => {
         .post('/api/v1/auth/signup')
         .send(userDetails)
         .end((error, response) => {
-          userid = response.body.data.id;
-          userToken = response.body.data.token;
+          userToken = response.body.data[0].token;
+          done();
+        });
+    });
+
+    before((done) => {
+      const cashierDetails = {
+        email: 'osaukhu.bi@gmail.com',
+        password: 'chelsea7',
+      };
+
+      chai.request(app)
+        .post('/api/v1/auth/signin')
+        .send(cashierDetails)
+        .end((error, response) => {
+          adminToken = response.body.data[0].token;
+          done();
+        });
+    });
+
+    before((done) => {
+      const createCashier = {
+        email: 'cashier@gmail.com',
+        firstName: 'Dummy',
+        lastName: 'Cashier',
+        password: '000000',
+        type: 'staff',
+        isAdmin: 'false',
+        token: adminToken,
+      };
+
+      chai.request(app)
+        .post('/api/v1/auth/create-staff')
+        .send(createCashier)
+        .end(() => {
           done();
         });
     });
@@ -37,25 +70,20 @@ describe('TRANSACTIONS', () => {
     before((done) => {
       const cashierDetails = {
         email: 'cashier@gmail.com',
-        firstName: 'Staff',
-        lastName: 'Cashier',
-        password: 'cashier1',
-        type: 'staff',
-        isAdmin: 'false',
+        password: '000000',
       };
 
       chai.request(app)
-        .post('/api/v1/auth/signup')
+        .post('/api/v1/auth/signin')
         .send(cashierDetails)
         .end((error, response) => {
-          cashierToken = response.body.data.token;
+          cashierToken = response.body.data[0].token;
           done();
         });
     });
 
     before((done) => {
       const userCreateAccDetails = {
-        userId: userid,
         type: 'current',
         token: userToken,
       };
@@ -64,7 +92,7 @@ describe('TRANSACTIONS', () => {
         .post('/api/v1/accounts')
         .send(userCreateAccDetails)
         .end((error, response) => {
-          userAccountNum = response.body.data.accountNumber;
+          userAccountNum = response.body.data[0].accountNumber;
           done();
         });
     });
@@ -72,6 +100,10 @@ describe('TRANSACTIONS', () => {
     after((done) => {
       const resetQuery = `
         DELETE FROM users;
+        INSERT INTO users(email, first_name, last_name, password, type, isAdmin)
+        VALUES('osaukhu.bi@gmail.com', 'Osaukhumwen', 'Iyamuosa',
+        '$2b$10$1LKVJijqyFJyPDFxECov2OJId6pIPlFHYCETV2LgLK0LqO0U2cwKW',
+        'staff', true);
       `;
 
       users.query(resetQuery)
@@ -88,7 +120,7 @@ describe('TRANSACTIONS', () => {
       const creditTransDetails = {
         type: 'credit',
         accountNumber: String(userAccountNum),
-        amount: '400.50',
+        amount: '400',
         token: cashierToken,
       };
 
@@ -99,8 +131,8 @@ describe('TRANSACTIONS', () => {
           response.should.have.status(201);
           response.body.should.be.a('object');
           response.body.should.have.keys('status', 'data');
-          response.body.data.should.be.a('object');
-          response.body.data.should.have
+          response.body.data.should.be.a('array');
+          response.body.data[0].should.have
             .keys('transactionId', 'accountNumber', 'amount', 'cashier',
               'transactionType', 'accountBalance');
           done();
@@ -133,8 +165,8 @@ describe('TRANSACTIONS', () => {
 
   describe('POST /transactions/<accountNumber>/debit', () => {
     let userToken;
-    let userid;
     let cashierToken;
+    let adminToken;
     let userAccountNum;
 
     before((done) => {
@@ -143,42 +175,68 @@ describe('TRANSACTIONS', () => {
         firstName: 'Money',
         lastName: 'Withdrawer',
         password: 'debit1',
-        type: 'client',
-        isAdmin: 'false',
       };
 
       chai.request(app)
         .post('/api/v1/auth/signup')
         .send(userDetails)
         .end((error, response) => {
-          userid = response.body.data.id;
-          userToken = response.body.data.token;
+          userToken = response.body.data[0].token;
           done();
         });
     });
 
     before((done) => {
       const cashierDetails = {
-        email: 'cashier2@gmail.com',
-        firstName: 'Staff',
-        lastName: 'Cashier',
-        password: 'cashier2',
-        type: 'staff',
-        isAdmin: 'false',
+        email: 'osaukhu.bi@gmail.com',
+        password: 'chelsea7',
       };
 
       chai.request(app)
-        .post('/api/v1/auth/signup')
+        .post('/api/v1/auth/signin')
         .send(cashierDetails)
         .end((error, response) => {
-          cashierToken = response.body.data.token;
+          adminToken = response.body.data[0].token;
+          done();
+        });
+    });
+
+    before((done) => {
+      const createCashier = {
+        email: 'cashier@gmail.com',
+        firstName: 'Dummy',
+        lastName: 'Cashier',
+        password: '000000',
+        type: 'staff',
+        isAdmin: 'false',
+        token: adminToken,
+      };
+
+      chai.request(app)
+        .post('/api/v1/auth/create-staff')
+        .send(createCashier)
+        .end(() => {
+          done();
+        });
+    });
+
+    before((done) => {
+      const cashierDetails = {
+        email: 'cashier@gmail.com',
+        password: '000000',
+      };
+
+      chai.request(app)
+        .post('/api/v1/auth/signin')
+        .send(cashierDetails)
+        .end((error, response) => {
+          cashierToken = response.body.data[0].token;
           done();
         });
     });
 
     before((done) => {
       const userCreateAccDetails = {
-        userId: userid,
         type: 'savings',
         token: userToken,
       };
@@ -187,7 +245,7 @@ describe('TRANSACTIONS', () => {
         .post('/api/v1/accounts')
         .send(userCreateAccDetails)
         .end((error, response) => {
-          userAccountNum = response.body.data.accountNumber;
+          userAccountNum = response.body.data[0].accountNumber;
           done();
         });
     });
@@ -211,6 +269,10 @@ describe('TRANSACTIONS', () => {
     after((done) => {
       const resetQuery = `
         DELETE FROM users;
+        INSERT INTO users(email, first_name, last_name, password, type, isAdmin)
+        VALUES('osaukhu.bi@gmail.com', 'Osaukhumwen', 'Iyamuosa',
+        '$2b$10$1LKVJijqyFJyPDFxECov2OJId6pIPlFHYCETV2LgLK0LqO0U2cwKW',
+        'staff', true);
       `;
 
       users.query(resetQuery)
@@ -238,8 +300,8 @@ describe('TRANSACTIONS', () => {
           response.should.have.status(201);
           response.body.should.be.a('object');
           response.body.should.have.keys('status', 'data');
-          response.body.data.should.be.a('object');
-          response.body.data.should.have
+          response.body.data.should.be.a('array');
+          response.body.data[0].should.have
             .keys('transactionId', 'accountNumber', 'amount', 'cashier',
               'transactionType', 'accountBalance');
           done();
@@ -308,8 +370,9 @@ describe('TRANSACTIONS', () => {
           response.body.should.be.a('object');
           response.body.should.have.property('error');
           response.body.error.should.be.a('string');
-          response.body.error.should
-            .equal('Forbidden Access! Only a cashier can make this transaction');
+          response.body.error.should.equal(
+            'Forbidden Access! Only a cashier can make this transaction',
+          );
           done();
         });
     });
@@ -319,6 +382,7 @@ describe('TRANSACTIONS', () => {
     let userToken;
     let userToken2;
     let cashierToken;
+    let adminToken;
     let userAccountNum;
     let id;
 
@@ -328,15 +392,13 @@ describe('TRANSACTIONS', () => {
         firstName: 'Money',
         lastName: 'Withdrawer',
         password: 'debit1',
-        type: 'client',
-        isAdmin: 'false',
       };
 
       chai.request(app)
         .post('/api/v1/auth/signup')
         .send(userDetails)
         .end((error, response) => {
-          userToken = response.body.data.token;
+          userToken = response.body.data[0].token;
           done();
         });
     });
@@ -347,15 +409,47 @@ describe('TRANSACTIONS', () => {
         firstName: 'Money',
         lastName: 'Withdrawer',
         password: 'debit1',
-        type: 'client',
-        isAdmin: 'false',
       };
 
       chai.request(app)
         .post('/api/v1/auth/signup')
         .send(userDetails)
         .end((error, response) => {
-          userToken2 = response.body.data.token;
+          userToken2 = response.body.data[0].token;
+          done();
+        });
+    });
+
+    before((done) => {
+      const cashierDetails = {
+        email: 'osaukhu.bi@gmail.com',
+        password: 'chelsea7',
+      };
+
+      chai.request(app)
+        .post('/api/v1/auth/signin')
+        .send(cashierDetails)
+        .end((error, response) => {
+          adminToken = response.body.data[0].token;
+          done();
+        });
+    });
+
+    before((done) => {
+      const createCashier = {
+        email: 'cashier@gmail.com',
+        firstName: 'Dummy',
+        lastName: 'Cashier',
+        password: '000000',
+        type: 'staff',
+        isAdmin: 'false',
+        token: adminToken,
+      };
+
+      chai.request(app)
+        .post('/api/v1/auth/create-staff')
+        .send(createCashier)
+        .end(() => {
           done();
         });
     });
@@ -363,18 +457,14 @@ describe('TRANSACTIONS', () => {
     before((done) => {
       const cashierDetails = {
         email: 'cashier@gmail.com',
-        firstName: 'Staff',
-        lastName: 'Cashier',
-        password: 'c@SHIer_',
-        type: 'staff',
-        isAdmin: 'false',
+        password: '000000',
       };
 
       chai.request(app)
-        .post('/api/v1/auth/signup')
+        .post('/api/v1/auth/signin')
         .send(cashierDetails)
         .end((error, response) => {
-          cashierToken = response.body.data.token;
+          cashierToken = response.body.data[0].token;
           done();
         });
     });
@@ -389,7 +479,7 @@ describe('TRANSACTIONS', () => {
         .post('/api/v1/accounts')
         .send(userCreateAccDetails)
         .end((error, response) => {
-          userAccountNum = response.body.data.accountNumber;
+          userAccountNum = response.body.data[0].accountNumber;
           done();
         });
     });
@@ -404,7 +494,7 @@ describe('TRANSACTIONS', () => {
         .post(`/api/v1/transactions/${userAccountNum}/credit`)
         .send(creditTransDetails)
         .end((error, response) => {
-          id = response.body.data.transactionId;
+          id = response.body.data[0].transactionId;
           done();
         });
     });
@@ -412,6 +502,10 @@ describe('TRANSACTIONS', () => {
     after((done) => {
       const resetQuery = `
         DELETE FROM users;
+        INSERT INTO users(email, first_name, last_name, password, type, isAdmin)
+        VALUES('osaukhu.bi@gmail.com', 'Osaukhumwen', 'Iyamuosa',
+        '$2b$10$1LKVJijqyFJyPDFxECov2OJId6pIPlFHYCETV2LgLK0LqO0U2cwKW',
+        'staff', true);
       `;
 
       users.query(resetQuery)
