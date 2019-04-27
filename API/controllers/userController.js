@@ -1,11 +1,9 @@
 import bcrypt from 'bcrypt';
 import isLoggedIn from '../helpers/isLoggedIn';
 import handlePasswordComparison from '../helpers/handlePasswordComparison';
-import hanldeNewUser from '../helpers/handleNewUser';
+import { handleNewUser } from '../helpers/handleNewEntity';
 import users from '../models/user';
 import accounts from '../models/account';
-
-// export const users = [];
 
 /**
  * @class UserController
@@ -38,37 +36,67 @@ export default class UserController {
     }
 
     const {
+      email, firstName, lastName,
+    } = request.body;
+
+    bcrypt.hash(request.body.password, 10, (error, hash) => {
+      if (error) {
+        response.status(500).json({ status: 500, error });
+      }
+      const password = hash;
+
+      const queryString = `
+            INSERT INTO
+            users(email, first_name, last_name, password)
+            VALUES($1, $2, $3, $4)
+            returning *;
+          `;
+
+      users.query(queryString,
+        [email, firstName, lastName, password])
+        .then(queryResponse => handleNewUser(response, queryResponse.rows[0]))
+        .catch(() => response.status(500).json({
+          status: 500,
+          error: 'Error occured!',
+        }));
+    });
+  }
+
+  /**
+   * Adds a new staff to the database
+   * @param {object} request
+   * @param {object} response
+   * @returns {object}
+   * A response status and the created staff or an error message
+   * @memberof UserController
+   */
+
+  static createStaff(request, response) {
+    const {
       email, firstName, lastName, type, isAdmin,
     } = request.body;
 
-    if (type === 'client' && isAdmin === 'true') {
-      response.status(400).json({
-        status: 400,
-        error: 'Client cannot be an admin',
-      });
-    } else {
-      bcrypt.hash(request.body.password, 10, (error, hash) => {
-        if (error) {
-          response.status(500).json({ status: 500, error });
-        }
-        const password = hash;
+    bcrypt.hash(request.body.password, 10, (error, hash) => {
+      if (error) {
+        response.status(500).json({ status: 500, error });
+      }
+      const password = hash;
 
-        const queryString = `
+      const queryString = `
             INSERT INTO
             users(email, first_name, last_name, password, type, isAdmin)
             VALUES($1, $2, $3, $4, $5, $6)
             returning *;
           `;
 
-        users.query(queryString,
-          [email, firstName, lastName, password, type, isAdmin])
-          .then(queryResponse => hanldeNewUser(response, queryResponse.rows[0]))
-          .catch(() => response.status(500).json({
-            status: 500,
-            error: 'Error occured!',
-          }));
-      });
-    }
+      users.query(queryString,
+        [email, firstName, lastName, password, type, isAdmin])
+        .then(queryResponse => handleNewUser(response, queryResponse.rows[0]))
+        .catch(() => response.status(500).json({
+          status: 500,
+          error: 'Error occured!',
+        }));
+    });
   }
 
   /**
@@ -95,7 +123,7 @@ export default class UserController {
     }
     const queryString = `
         SELECT * FROM users
-        WHERE email=$1
+        WHERE email=$1;
       `;
 
     return users.query(queryString, [request.body.email])
@@ -161,9 +189,18 @@ export default class UserController {
 
               accounts.query(accountsQuery, [`{${id}}`])
                 .then((accountResponse) => {
+                  const formattedRows = accountResponse.rows
+                    .map(userAccounts => ({
+                      createdOn: userAccounts.created_on,
+                      accountNumber: userAccounts.account_number,
+                      type: userAccounts.type,
+                      status: userAccounts.status,
+                      balance: parseFloat(userAccounts.balance),
+                    }));
+
                   response.status(200).json({
                     status: 200,
-                    data: accountResponse.rows,
+                    data: formattedRows,
                   });
                 });
             });

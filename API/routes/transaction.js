@@ -1,7 +1,7 @@
 import express from 'express';
 import TransactionController from '../controllers/transactionController';
 import isAuthorized from '../middlewares/isAuthorized';
-import isCashier from '../middlewares/isCashier';
+import { isCashier } from '../middlewares/checkUser';
 import transactionValidation from '../validations/transactionValidations';
 import idValidation from '../validations/idValidation';
 import errorHandler from '../middlewares/errorHandler';

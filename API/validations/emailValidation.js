@@ -1,4 +1,5 @@
 import { param } from 'express-validator/check';
+import { makeLowerCase } from './customValidation';
 
 /**
 * Adds validations to the routes
@@ -16,7 +17,7 @@ const emailValidation = () => [
     )
     .isEmail()
     .withMessage('Not a valid email address')
-    .normalizeEmail()
+    .customSanitizer(value => makeLowerCase(value))
     .blacklist(' '),
 ];
 

@@ -6,7 +6,7 @@
   "scripts": {
     "start": "cross-env NODE_ENV=production babel-node API/app.js",
     "dev": "cross-env NODE_ENV=development nodemon --exec babel-node API/app.js",
-    "dev:test": "cross-env NODE_ENV=development nyc --reporter=lcov --reporter=text --register @babel/register mocha test --timeout 20000 --recursive --exit",
+    "dev:test": "cross-env NODE_ENV=test nyc --reporter=lcov --reporter=text --register @babel/register mocha test --timeout 20000 --recursive --exit",
     "test": "cross-env NODE_ENV=travis nyc --reporter=lcov --reporter=text --register @babel/register mocha test --timeout 20000 --recursive --exit",
     "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "codeclimate": "codeclimate-test-reporter < ./coverage/lcov.info"

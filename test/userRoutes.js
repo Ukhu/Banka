@@ -12,22 +12,21 @@ describe('USER', () => {
     let userToken;
     let userToken2;
     let cashierToken;
+    let adminToken;
 
     before((done) => {
       const userDetails = {
         email: 'user@gmail.com',
         firstName: 'dummy',
         lastName: 'user',
-        password: '_useR@',
-        type: 'client',
-        isAdmin: 'false',
+        password: '_useR@123',
       };
 
       chai.request(app)
         .post('/api/v1/auth/signup')
         .send(userDetails)
         .end((error, response) => {
-          userToken = response.body.data.token;
+          userToken = response.body.data[0].token;
           done();
         });
     });
@@ -46,26 +45,56 @@ describe('USER', () => {
         .post('/api/v1/auth/signup')
         .send(userDetails)
         .end((error, response) => {
-          userToken2 = response.body.data.token;
+          userToken2 = response.body.data[0].token;
           done();
         });
     });
 
     before((done) => {
       const cashierDetails = {
-        email: 'staff@gmail.com',
-        firstName: 'Staff',
-        lastName: 'Cashier',
-        password: 'c@SHIer_',
-        type: 'staff',
-        isAdmin: 'false',
+        email: 'osaukhu.bi@gmail.com',
+        password: 'chelsea7',
       };
 
       chai.request(app)
-        .post('/api/v1/auth/signup')
+        .post('/api/v1/auth/signin')
         .send(cashierDetails)
         .end((error, response) => {
-          cashierToken = response.body.data.token;
+          adminToken = response.body.data[0].token;
+          done();
+        });
+    });
+
+    before((done) => {
+      const createCashier = {
+        email: 'cashier@gmail.com',
+        firstName: 'Dummy',
+        lastName: 'Cashier',
+        password: '000000',
+        type: 'staff',
+        isAdmin: 'false',
+        token: adminToken,
+      };
+
+      chai.request(app)
+        .post('/api/v1/auth/create-staff')
+        .send(createCashier)
+        .end(() => {
+          done();
+        });
+    });
+
+    before((done) => {
+      const cashierDetails = {
+        email: 'cashier@gmail.com',
+        password: '000000',
+      };
+
+      chai.request(app)
+        .post('/api/v1/auth/signin')
+        .send(cashierDetails)
+        .end((error, response) => {
+          cashierToken = response.body.data[0].token;
           done();
         });
     });
@@ -115,6 +144,10 @@ describe('USER', () => {
     after((done) => {
       const resetQuery = `
         DELETE FROM users;
+        INSERT INTO users(email, first_name, last_name, password, type, isAdmin)
+        VALUES('osaukhu.bi@gmail.com', 'Osaukhumwen', 'Iyamuosa',
+        '$2b$10$1LKVJijqyFJyPDFxECov2OJId6pIPlFHYCETV2LgLK0LqO0U2cwKW',
+        'staff', true);
       `;
 
       users.query(resetQuery)

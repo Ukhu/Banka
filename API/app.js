@@ -53,16 +53,19 @@ app.use('/api/v1/transactions', transactionRoutes);
 // Catch all unavailable endpoints
 app.all('*', (request, response) => {
   response.status(404).json({
-    message: 'Endpoint not found, check the root route to know the available routes',
+    message:
+    'Endpoint not found, check root route for available endpoints',
   });
 });
 
 // Error handling middleware
 app.use((error, request, response) => {
   debug('errorHandlingMidware')(error.stack);
-  response.status(500).json({ message: 'Something went wrong. Its our fault not yours!' });
+  response.status(500).json(
+    { message: 'Something went wrong. Its our fault not yours!' },
+  );
 });
 
-app.listen(process.env.PORT, () => debug('server-start')('Server Has Started!!!'));
+app.listen(process.env.PORT);
 
 export default app;

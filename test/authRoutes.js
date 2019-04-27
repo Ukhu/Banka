@@ -14,6 +14,10 @@ describe('AUTHENTICATION', () => {
     after((done) => {
       const resetQuery = `
         DELETE FROM users;
+        INSERT INTO users(email, first_name, last_name, password, type, isAdmin)
+        VALUES('osaukhu.bi@gmail.com', 'Osaukhumwen', 'Iyamuosa',
+        '$2b$10$1LKVJijqyFJyPDFxECov2OJId6pIPlFHYCETV2LgLK0LqO0U2cwKW',
+        'staff', true);
       `;
 
       users.query(resetQuery)
@@ -28,12 +32,10 @@ describe('AUTHENTICATION', () => {
     it(`should create user account if all fields are
     filled correctly`, (done) => {
       const userDetails1 = {
-        email: 'osaukhu.bi@gmail.com',
-        firstName: 'Osaukhu',
-        lastName: 'Iyamuosa',
+        email: 'ukhu.bi1@gmail.com',
+        firstName: 'Ukhu',
+        lastName: 'Seven',
         password: 'ukhu123',
-        type: 'client',
-        isAdmin: 'false',
       };
       chai.request(app)
         .post(signUpURL)
@@ -42,7 +44,7 @@ describe('AUTHENTICATION', () => {
           response.should.have.status(201);
           response.body.should.be.a('object');
           response.body.should.have.property('data');
-          response.body.data.should.have.property('token');
+          response.body.data[0].should.have.property('token');
           done();
         });
     });
@@ -54,8 +56,6 @@ describe('AUTHENTICATION', () => {
         firstName: 'Osaukhu',
         lastName: 'Iyamuosa',
         password: 'ukhu123',
-        type: 'client',
-        isAdmin: 'false',
       };
       chai.request(app)
         .post('/api/v1/auth/signup')
@@ -75,8 +75,6 @@ describe('AUTHENTICATION', () => {
         email: 'osaukhu4.bi@gmail.com',
         lastName: 'Iyamuosa',
         password: 'ukhu7',
-        type: 'client',
-        isAdmin: 'false',
       };
       chai.request(app)
         .post('/api/v1/auth/signup')
@@ -97,8 +95,6 @@ describe('AUTHENTICATION', () => {
         firstName: '',
         lastName: 'Iyamuosa',
         password: 'ukhu7',
-        type: 'client',
-        isAdmin: 'false',
       };
       chai.request(app)
         .post('/api/v1/auth/signup')
@@ -116,52 +112,21 @@ describe('AUTHENTICATION', () => {
   describe('POST /auth/signin', () => {
     let resToken;
 
-    before((done) => {
-      const userDetails = {
-        email: 'lylsoul@gmail.com',
-        firstName: 'Osaukhu',
-        lastName: 'Iyamuosa',
-        password: 'ukhu123',
-        type: 'client',
-        isAdmin: 'false',
-      };
-      chai.request(app)
-        .post('/api/v1/auth/signup')
-        .send(userDetails)
-        .end((error, response) => {
-          resToken = response.body.data.token;
-          done();
-        });
-    });
-
-    after((done) => {
-      const resetQuery = `
-        DELETE FROM users;
-      `;
-
-      users.query(resetQuery)
-        .then(() => {
-          done();
-        })
-        .catch((error) => {
-          done(error);
-        });
-    });
-
     it(`should sign the user in if the user provides
     the correct sign in details`, (done) => {
       const loginDetails = {
-        email: 'lylsoul@gmail.com',
-        password: 'ukhu123',
+        email: 'osaukhu.bi@gmail.com',
+        password: 'chelsea7',
       };
       chai.request(app)
         .post('/api/v1/auth/signin')
         .send(loginDetails)
         .end((error, response) => {
+          resToken = response.body.data[0].token;
           response.should.have.status(200);
           response.body.should.be.a('object');
           response.body.should.have.property('data');
-          response.body.data.should.have
+          response.body.data[0].should.have
             .keys('token', 'id', 'firstName', 'email', 'lastName');
           done();
         });
@@ -170,8 +135,8 @@ describe('AUTHENTICATION', () => {
     it(`should return a 428 Precondition Required error stating that
     an already logged in user should log out first`, (done) => {
       const loginDetails = {
-        email: 'lylsoul@gmail.com',
-        password: 'ukhu123',
+        email: 'osaukhu.bi@gmail.com',
+        password: 'chelsea7',
         token: resToken,
       };
       chai.request(app)
@@ -208,7 +173,7 @@ describe('AUTHENTICATION', () => {
     it(`should return a 401 Unauthorized Error if the
     password entered is incorrect`, (done) => {
       const loginDetails = {
-        email: 'lylsoul@gmail.com',
+        email: 'osaukhu.bi@gmail.com',
         password: 'ukhu777',
       };
       chai.request(app)

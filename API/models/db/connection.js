@@ -16,6 +16,10 @@ class Model {
       connectObj = {
         connectionString: process.env.DATABASE_URL,
       };
+    } else if (process.env.NODE_ENV === 'test') {
+      connectObj = {
+        connectionString: process.env.DATABASE_URL_TEST,
+      };
     } else if (process.env.NODE_ENV === 'production') {
       connectObj = {
         connectionString: process.env.DATABASE_URL,

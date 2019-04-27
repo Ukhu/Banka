@@ -10,23 +10,19 @@ chai.use(chaiHttp);
 describe('ACCOUNTS', () => {
   describe('POST /accounts', () => {
     let resToken;
-    let userid;
 
     before((done) => {
       const userDetails = {
-        email: 'osaukhu.bi@gmail.com',
-        firstName: 'Osaukhu',
+        email: 'ukhu.bi@gmail.com',
+        firstName: 'Ukhu',
         lastName: 'Iyamuosa',
         password: 'ukhu123',
-        type: 'client',
-        isAdmin: 'false',
       };
       chai.request(app)
         .post('/api/v1/auth/signup')
         .send(userDetails)
         .end((error, response) => {
-          userid = response.body.data.id;
-          resToken = response.body.data.token;
+          resToken = response.body.data[0].token;
           done();
         });
     });
@@ -34,6 +30,10 @@ describe('ACCOUNTS', () => {
     after((done) => {
       const resetQuery = `
         DELETE FROM users;
+        INSERT INTO users(email, first_name, last_name, password, type, isAdmin)
+        VALUES('osaukhu.bi@gmail.com', 'Osaukhumwen', 'Iyamuosa',
+        '$2b$10$1LKVJijqyFJyPDFxECov2OJId6pIPlFHYCETV2LgLK0LqO0U2cwKW',
+        'staff', true);
       `;
 
       users.query(resetQuery)
@@ -48,7 +48,6 @@ describe('ACCOUNTS', () => {
     it('should create a bank account if all fields are filled correctly',
       (done) => {
         const accountOpeningDetails = {
-          userId: userid,
           type: 'current',
           token: resToken,
         };
@@ -59,17 +58,16 @@ describe('ACCOUNTS', () => {
             response.should.have.status(201);
             response.body.should.be.a('object');
             response.body.should.have.property('data');
-            response.body.data.should.have.property('firstName');
-            response.body.data.should.have.property('lastName');
-            response.body.data.should.have.property('email');
+            response.body.data[0].should.have.property('firstName');
+            response.body.data[0].should.have.property('lastName');
+            response.body.data[0].should.have.property('email');
             done();
           });
       });
 
-    it('should return a 403 Forbidden Error if no token is provided',
+    it('should return a 401 Unauthorized Error if no token is provided',
       (done) => {
         const accountOpeningDetails = {
-          userId: userid,
           type: 'current',
         };
         chai.request(app)
@@ -84,10 +82,9 @@ describe('ACCOUNTS', () => {
           });
       });
 
-    it('should return a 403 Forbidden Error if a wrong token is provided',
+    it('should return a 401 Unauthorized Error if a wrong token is provided',
       (done) => {
         const accountOpeningDetails = {
-          userId: userid,
           type: 'current',
           token: 'wr@ngtoke#',
         };
@@ -106,24 +103,6 @@ describe('ACCOUNTS', () => {
     it(`should return a 400 Bad Request Error if any of the
     other fields are missing`, (done) => {
       const accountOpeningDetails = {
-        userId: userid,
-        token: resToken,
-      };
-      chai.request(app)
-        .post('/api/v1/accounts')
-        .send(accountOpeningDetails)
-        .end((error, response) => {
-          response.should.have.status(400);
-          response.body.should.be.a('object');
-          response.body.should.have.property('errors');
-          done();
-        });
-    });
-
-    it(`should return a 400 Bad Request Error if any of the other 
-    fields are of the wrong type or value`, (done) => {
-      const accountOpeningDetails = {
-        userId: userid,
         token: resToken,
       };
       chai.request(app)
@@ -140,7 +119,6 @@ describe('ACCOUNTS', () => {
 
   describe('GET /accounts', () => {
     let userToken;
-    let userid;
     let staffToken;
 
     before((done) => {
@@ -149,15 +127,12 @@ describe('ACCOUNTS', () => {
         firstName: 'Dummy',
         lastName: 'User',
         password: 'userdummy1',
-        type: 'client',
-        isAdmin: 'false',
       };
 
       chai.request(app)
         .post('/api/v1/auth/signup')
         .send(userDetails)
         .end((error, response) => {
-          userid = response.body.data.id;
           userToken = response.body.data.token;
           done();
         });
@@ -165,26 +140,21 @@ describe('ACCOUNTS', () => {
 
     before((done) => {
       const staffDetails = {
-        email: 'staff@gmail.com',
-        firstName: 'Staff',
-        lastName: 'Admin',
-        password: 'admin123',
-        type: 'staff',
-        isAdmin: 'true',
+        email: 'osaukhu.bi@gmail.com',
+        password: 'chelsea7',
       };
 
       chai.request(app)
-        .post('/api/v1/auth/signup')
+        .post('/api/v1/auth/signin')
         .send(staffDetails)
         .end((error, response) => {
-          staffToken = response.body.data.token;
+          staffToken = response.body.data[0].token;
           done();
         });
     });
 
     before((done) => {
       const userCreateAccDetails = {
-        userId: userid,
         type: 'current',
         token: userToken,
       };
@@ -214,6 +184,10 @@ describe('ACCOUNTS', () => {
     after((done) => {
       const resetQuery = `
         DELETE FROM users;
+        INSERT INTO users(email, first_name, last_name, password, type, isAdmin)
+        VALUES('osaukhu.bi@gmail.com', 'Osaukhumwen', 'Iyamuosa',
+        '$2b$10$1LKVJijqyFJyPDFxECov2OJId6pIPlFHYCETV2LgLK0LqO0U2cwKW',
+        'staff', true);
       `;
 
       users.query(resetQuery)
@@ -250,8 +224,6 @@ describe('ACCOUNTS', () => {
         firstName: 'Dummy',
         lastName: 'User',
         password: 'userdummy1',
-        type: 'client',
-        isAdmin: 'false',
       };
 
       chai.request(app)
@@ -265,19 +237,15 @@ describe('ACCOUNTS', () => {
 
     before((done) => {
       const staffDetails = {
-        email: 'staff@gmail.com',
-        firstName: 'Staff',
-        lastName: 'Admin',
-        password: 'admin123',
-        type: 'staff',
-        isAdmin: 'true',
+        email: 'osaukhu.bi@gmail.com',
+        password: 'chelsea7',
       };
 
       chai.request(app)
-        .post('/api/v1/auth/signup')
+        .post('/api/v1/auth/signin')
         .send(staffDetails)
         .end((error, response) => {
-          staffToken = response.body.data.token;
+          staffToken = response.body.data[0].token;
           done();
         });
     });
@@ -291,7 +259,7 @@ describe('ACCOUNTS', () => {
       chai.request(app)
         .post('/api/v1/accounts')
         .send(userCreateAccDetails)
-        .end((error, response) => {
+        .end(() => {
           done();
         });
     });
@@ -305,7 +273,7 @@ describe('ACCOUNTS', () => {
       chai.request(app)
         .post('/api/v1/accounts')
         .send(userCreateAccDetails)
-        .end((error, response) => {
+        .end(() => {
           done();
         });
     });
@@ -319,7 +287,7 @@ describe('ACCOUNTS', () => {
       chai.request(app)
         .post('/api/v1/accounts')
         .send(userCreateAccDetails)
-        .end((error, response) => {
+        .end(() => {
           done();
         });
     });
@@ -327,6 +295,10 @@ describe('ACCOUNTS', () => {
     after((done) => {
       const resetQuery = `
         DELETE FROM users;
+        INSERT INTO users(email, first_name, last_name, password, type, isAdmin)
+        VALUES('osaukhu.bi@gmail.com', 'Osaukhumwen', 'Iyamuosa',
+        '$2b$10$1LKVJijqyFJyPDFxECov2OJId6pIPlFHYCETV2LgLK0LqO0U2cwKW',
+        'staff', true);
       `;
 
       users.query(resetQuery)
@@ -366,35 +338,28 @@ describe('ACCOUNTS', () => {
         firstName: 'Dummy',
         lastName: 'User',
         password: 'userdummy1',
-        type: 'client',
-        isAdmin: 'false',
       };
 
       chai.request(app)
         .post('/api/v1/auth/signup')
         .send(userDetails)
         .end((error, response) => {
-          userid = response.body.data.id;
-          userToken = response.body.data.token;
+          userToken = response.body.data[0].token;
           done();
         });
     });
 
     before((done) => {
       const staffDetails = {
-        email: 'staff@gmail.com',
-        firstName: 'Staff',
-        lastName: 'Admin',
-        password: 'admin123',
-        type: 'staff',
-        isAdmin: 'true',
+        email: 'osaukhu.bi@gmail.com',
+        password: 'chelsea7',
       };
 
       chai.request(app)
-        .post('/api/v1/auth/signup')
+        .post('/api/v1/auth/signin')
         .send(staffDetails)
         .end((error, response) => {
-          staffToken = response.body.data.token;
+          staffToken = response.body.data[0].token;
           done();
         });
     });
@@ -410,7 +375,7 @@ describe('ACCOUNTS', () => {
         .post('/api/v1/accounts')
         .send(userCreateAccDetails)
         .end((error, response) => {
-          userAccountNumber = response.body.data.accountNumber;
+          userAccountNumber = response.body.data[0].accountNumber;
           done();
         });
     });
@@ -418,6 +383,10 @@ describe('ACCOUNTS', () => {
     after((done) => {
       const resetQuery = `
         DELETE FROM users;
+        INSERT INTO users(email, first_name, last_name, password, type, isAdmin)
+        VALUES('osaukhu.bi@gmail.com', 'Osaukhumwen', 'Iyamuosa',
+        '$2b$10$1LKVJijqyFJyPDFxECov2OJId6pIPlFHYCETV2LgLK0LqO0U2cwKW',
+        'staff', true);
       `;
 
       users.query(resetQuery)
@@ -443,7 +412,7 @@ describe('ACCOUNTS', () => {
             response.should.have.status(200);
             response.body.should.be.a('object');
             response.body.should.have.property('data');
-            response.body.data.should.have.keys('accountNumber', 'status');
+            response.body.data[0].should.have.keys('accountNumber', 'status');
             done();
           });
       });
@@ -483,8 +452,9 @@ describe('ACCOUNTS', () => {
           response.body.should.be.a('object');
           response.body.should.have.property('error');
           response.body.error.should.be.a('string');
-          response.body.error.should
-            .equal('Forbidden Access! Only a staff can carry out this operation');
+          response.body.error.should.equal(
+            'Forbidden Access! Only a staff can carry out this operation',
+          );
           done();
         });
     });
@@ -492,7 +462,6 @@ describe('ACCOUNTS', () => {
 
   describe('DELETE /accounts/<accountNumber>', () => {
     let userToken;
-    let userid;
     let staffToken;
     let userAccountNum;
 
@@ -502,42 +471,34 @@ describe('ACCOUNTS', () => {
         firstName: 'Dummyy',
         lastName: 'User',
         password: 'userdummy2',
-        type: 'client',
-        isAdmin: 'false',
       };
 
       chai.request(app)
         .post('/api/v1/auth/signup')
         .send(userDetails)
         .end((error, response) => {
-          userid = response.body.data.id;
-          userToken = response.body.data.token;
+          userToken = response.body.data[0].token;
           done();
         });
     });
 
     before((done) => {
       const staffDetails = {
-        email: 'admin2@gmail.com',
-        firstName: 'Staff',
-        lastName: 'Adminn',
-        password: 'admin2',
-        type: 'staff',
-        isAdmin: 'true',
+        email: 'osaukhu.bi@gmail.com',
+        password: 'chelsea7',
       };
 
       chai.request(app)
-        .post('/api/v1/auth/signup')
+        .post('/api/v1/auth/signin')
         .send(staffDetails)
         .end((error, response) => {
-          staffToken = response.body.data.token;
+          staffToken = response.body.data[0].token;
           done();
         });
     });
 
     before((done) => {
       const userCreateAccDetails = {
-        userId: userid,
         type: 'current',
         token: userToken,
       };
@@ -546,7 +507,7 @@ describe('ACCOUNTS', () => {
         .post('/api/v1/accounts')
         .send(userCreateAccDetails)
         .end((error, response) => {
-          userAccountNum = response.body.data.accountNumber;
+          userAccountNum = response.body.data[0].accountNumber;
           done();
         });
     });
@@ -554,6 +515,10 @@ describe('ACCOUNTS', () => {
     after((done) => {
       const resetQuery = `
         DELETE FROM users;
+        INSERT INTO users(email, first_name, last_name, password, type, isAdmin)
+        VALUES('osaukhu.bi@gmail.com', 'Osaukhumwen', 'Iyamuosa',
+        '$2b$10$1LKVJijqyFJyPDFxECov2OJId6pIPlFHYCETV2LgLK0LqO0U2cwKW',
+        'staff', true);
       `;
 
       users.query(resetQuery)
@@ -605,6 +570,7 @@ describe('ACCOUNTS', () => {
 
   describe('GET /accounts/<accountNumber>/transactions', () => {
     let userToken;
+    let adminToken;
     let userToken2;
     let cashierToken;
     let userAccountNum;
@@ -615,15 +581,13 @@ describe('ACCOUNTS', () => {
         firstName: 'Money',
         lastName: 'Withdrawer',
         password: 'debit1',
-        type: 'client',
-        isAdmin: 'false',
       };
 
       chai.request(app)
         .post('/api/v1/auth/signup')
         .send(userDetails)
         .end((error, response) => {
-          userToken = response.body.data.token;
+          userToken = response.body.data[0].token;
           done();
         });
     });
@@ -634,15 +598,47 @@ describe('ACCOUNTS', () => {
         firstName: 'Dummy',
         lastName: 'Owner',
         password: 'dmmyOwn12',
-        type: 'client',
-        isAdmin: 'false',
       };
 
       chai.request(app)
         .post('/api/v1/auth/signup')
         .send(userDetails)
         .end((error, response) => {
-          userToken2 = response.body.data.token;
+          userToken2 = response.body.data[0].token;
+          done();
+        });
+    });
+
+    before((done) => {
+      const cashierDetails = {
+        email: 'osaukhu.bi@gmail.com',
+        password: 'chelsea7',
+      };
+
+      chai.request(app)
+        .post('/api/v1/auth/signin')
+        .send(cashierDetails)
+        .end((error, response) => {
+          adminToken = response.body.data[0].token;
+          done();
+        });
+    });
+
+    before((done) => {
+      const createCashier = {
+        email: 'cashier@gmail.com',
+        firstName: 'Dummy',
+        lastName: 'Cashier',
+        password: '000000',
+        type: 'staff',
+        isAdmin: 'false',
+        token: adminToken,
+      };
+
+      chai.request(app)
+        .post('/api/v1/auth/create-staff')
+        .send(createCashier)
+        .end(() => {
           done();
         });
     });
@@ -650,18 +646,14 @@ describe('ACCOUNTS', () => {
     before((done) => {
       const cashierDetails = {
         email: 'cashier@gmail.com',
-        firstName: 'Staff',
-        lastName: 'Cashier',
-        password: 'c@SHIer_',
-        type: 'staff',
-        isAdmin: 'false',
+        password: '000000',
       };
 
       chai.request(app)
-        .post('/api/v1/auth/signup')
+        .post('/api/v1/auth/signin')
         .send(cashierDetails)
         .end((error, response) => {
-          cashierToken = response.body.data.token;
+          cashierToken = response.body.data[0].token;
           done();
         });
     });
@@ -676,7 +668,7 @@ describe('ACCOUNTS', () => {
         .post('/api/v1/accounts')
         .send(userCreateAccDetails)
         .end((error, response) => {
-          userAccountNum = response.body.data.accountNumber;
+          userAccountNum = response.body.data[0].accountNumber;
           done();
         });
     });
@@ -698,6 +690,10 @@ describe('ACCOUNTS', () => {
     after((done) => {
       const resetQuery = `
         DELETE FROM users;
+        INSERT INTO users(email, first_name, last_name, password, type, isAdmin)
+        VALUES('osaukhu.bi@gmail.com', 'Osaukhumwen', 'Iyamuosa',
+        '$2b$10$1LKVJijqyFJyPDFxECov2OJId6pIPlFHYCETV2LgLK0LqO0U2cwKW',
+        'staff', true);
       `;
 
       users.query(resetQuery)
@@ -709,7 +705,7 @@ describe('ACCOUNTS', () => {
         });
     });
 
-    it(`should successfully get the transaction details of a
+    it(`should successfully get the transaction history of a
     particular account`, (done) => {
       chai.request(app)
         .get(`/api/v1/accounts/${userAccountNum}/transactions`)
@@ -760,7 +756,6 @@ describe('ACCOUNTS', () => {
   describe('GET /accounts/accountNumber>', () => {
     let userToken;
     let userToken2;
-    let cashierToken;
     let userAccountNum;
 
     before((done) => {
@@ -769,15 +764,13 @@ describe('ACCOUNTS', () => {
         firstName: 'Money',
         lastName: 'Withdrawer',
         password: 'debit1',
-        type: 'client',
-        isAdmin: 'false',
       };
 
       chai.request(app)
         .post('/api/v1/auth/signup')
         .send(userDetails)
         .end((error, response) => {
-          userToken = response.body.data.token;
+          userToken = response.body.data[0].token;
           done();
         });
     });
@@ -796,26 +789,7 @@ describe('ACCOUNTS', () => {
         .post('/api/v1/auth/signup')
         .send(userDetails)
         .end((error, response) => {
-          userToken2 = response.body.data.token;
-          done();
-        });
-    });
-
-    before((done) => {
-      const cashierDetails = {
-        email: 'cashier@gmail.com',
-        firstName: 'Staff',
-        lastName: 'Cashier',
-        password: 'c@SHIer_',
-        type: 'staff',
-        isAdmin: 'false',
-      };
-
-      chai.request(app)
-        .post('/api/v1/auth/signup')
-        .send(cashierDetails)
-        .end((error, response) => {
-          cashierToken = response.body.data.token;
+          userToken2 = response.body.data[0].token;
           done();
         });
     });
@@ -830,7 +804,7 @@ describe('ACCOUNTS', () => {
         .post('/api/v1/accounts')
         .send(userCreateAccDetails)
         .end((error, response) => {
-          userAccountNum = response.body.data.accountNumber;
+          userAccountNum = response.body.data[0].accountNumber;
           done();
         });
     });
@@ -838,6 +812,10 @@ describe('ACCOUNTS', () => {
     after((done) => {
       const resetQuery = `
         DELETE FROM users;
+        INSERT INTO users(email, first_name, last_name, password, type, isAdmin)
+        VALUES('osaukhu.bi@gmail.com', 'Osaukhumwen', 'Iyamuosa',
+        '$2b$10$1LKVJijqyFJyPDFxECov2OJId6pIPlFHYCETV2LgLK0LqO0U2cwKW',
+        'staff', true);
       `;
 
       users.query(resetQuery)

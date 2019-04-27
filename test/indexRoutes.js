@@ -16,7 +16,9 @@ describe('GENERAL', () => {
           response.body.should.be.a('object');
           response.body.should.have.keys('message', 'endpoints');
           response.body.message.should
-            .equal('Welcome to Banka API, check out the available endpoints below');
+            .equal(
+              'Welcome to Banka API, check out the available endpoints below',
+            );
           response.body.endpoints.should.have
             .keys('createUser', 'loginUser', 'createBankAccount',
               'activateDeactivate', 'deleteUser', 'debitBankAccount',
@@ -35,7 +37,9 @@ describe('GENERAL', () => {
           response.body.should.be.a('object');
           response.body.should.have.property('message');
           response.body.message.should
-            .equal('Endpoint not found, check the root route to know the available routes');
+            .equal(
+              'Endpoint not found, check root route for available endpoints',
+            );
           done();
         });
     });

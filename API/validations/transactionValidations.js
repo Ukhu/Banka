@@ -12,8 +12,8 @@ const transactionValidation = () => [
     .not()
     .isEmpty({ ignore_whitespace: true })
     .withMessage('Acount number cannot be blank')
-    .isNumeric()
-    .withMessage('Account number must be a number')
+    .isNumeric({ no_symbols: true })
+    .withMessage('Account number must be a valid number')
     .isLength({ min: 7, max: 7 })
     .withMessage('Account number must be 7 digits'),
   check('amount')
@@ -21,8 +21,8 @@ const transactionValidation = () => [
     .not()
     .isEmpty({ ignore_whitespace: true })
     .withMessage('Amount cannot be blank')
-    .isFloat()
-    .withMessage('Amount must be a Floating point number')
+    .isFloat({ min: 0 })
+    .withMessage('Amount must be a valid number')
     .blacklist(' '),
 ];
 

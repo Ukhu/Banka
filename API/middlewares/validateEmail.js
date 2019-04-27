@@ -25,7 +25,7 @@ const validateEmail = (request, response, next) => {
           error: 'Email already exists',
         });
       }
-    }).catch((error) => {
+    }).catch(() => {
       response.status(500).json({
         status: 500,
         error: 'Error occured!',

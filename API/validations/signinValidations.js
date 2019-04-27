@@ -1,4 +1,5 @@
 import { check } from 'express-validator/check';
+import { makeLowerCase } from './customValidation';
 
 /**
 * Adds validations to the user routes
@@ -16,8 +17,8 @@ const signinValidation = () => [
     )
     .isEmail()
     .withMessage('Not a valid email address')
-    .normalizeEmail()
-    .blacklist(' '),
+    .blacklist(' ')
+    .customSanitizer(value => makeLowerCase(value)),
   check('password')
     .exists().withMessage('Password is missing')
     .not()
