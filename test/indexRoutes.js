@@ -19,10 +19,6 @@ describe('GENERAL', () => {
             .equal(
               'Welcome to Banka API, check out the available endpoints below',
             );
-          response.body.endpoints.should.have
-            .keys('createUser', 'loginUser', 'createBankAccount',
-              'activateDeactivate', 'deleteUser', 'debitBankAccount',
-              'creditBankAccount');
           done();
         });
     });

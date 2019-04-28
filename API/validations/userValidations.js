@@ -111,18 +111,6 @@ export const staffValidation = () => [
     .isLength({ min: 6 })
     .withMessage('Password must be at least 6 characters')
     .blacklist(' '),
-  check('type')
-    .exists()
-    .withMessage('User type missing')
-    .not()
-    .isEmpty({ ignore_whitespace: true })
-    .withMessage(
-      'User type cannot be blank. It must be either client or staff',
-    )
-    .blacklist(' ')
-    .customSanitizer(value => makeLowerCase(value))
-    .isIn(['staff'])
-    .withMessage('User type can only be staff'),
   check('isAdmin')
     .exists()
     .withMessage('Admin status is missing')

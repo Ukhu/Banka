@@ -44,10 +44,13 @@ Create a database
 
 ## Setting up environmental variables
 Create a .env file in the root directory of the repo
-Add the following environmental variables:
+Add the following environment variables:
 NODE_ENV= Your default Node environment
 JWT_KEY= Your JSON web token secret key 
 PORT= The port your server will run on
+NODE_MAILER_EMAIL= The email address from which to send the mail
+NODE_MAILER_PASSWORD= Password for the email address above
+NODE_MAILER_SERVICE= Your email service
 DATABASE_URL= Your local database URL
 DATABASE_URL_TEST= Your local test database URL
 PG_CLOUD= Your cloud-based test database URL
@@ -77,6 +80,11 @@ Download Postman to interact with the endpoints below
       <td>POST</td>
       <td>/api/v1/auth/signup</td>
       <td>Create user account</td>
+  </tr>
+  <tr>
+      <td>POST</td>
+      <td>/api/v1/auth/create-staff</td>
+      <td>Create staff account</td>
   </tr>
   <tr>
       <td>POST</td>

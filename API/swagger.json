@@ -25,8 +25,7 @@
     }
   ],
   "schemes": [
-    "https",
-    "http"
+    "https"
   ],
   "paths": {
     "/auth/signup": {
@@ -61,16 +60,10 @@
                 },
                 "password": {
                   "type": "string"
-                },
-                "type": {
-                  "type": "string"
-                },
-                "isAdmin": {
-                  "type": "string"
                 }
               }
             },
-            "required": "true"
+            "required": true
           }
         ],
         "responses": {
@@ -85,6 +78,76 @@
           },
           "428": {
             "description": "Already logged in. Log out first"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/auth/create-staff": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Registers a staff",
+        "description": "This endpoint creates a new cashier or admin account",
+        "operationId": "createStaff",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-access-token",
+            "description": "JWT Token Authentication",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string"
+                },
+                "firstName": {
+                  "type": "string"
+                },
+                "lastName": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                },
+                "isAdmin": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Staff successfully registered"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized request"
+          },
+          "403": {
+            "description": "Forbidden access"
+          },
+          "409": {
+            "description": "Email already exists"
           },
           "500": {
             "description": "Server error"
@@ -121,7 +184,7 @@
                 }
               }
             },
-            "required": "true"
+            "required": true
           }
         ],
         "responses": {
@@ -143,7 +206,7 @@
         }
       }
     },
-    "/users/:userEmail/accounts": {
+    "/users/{userEmail}/accounts": {
       "get": {
         "tags": [
           "Users"
@@ -159,7 +222,7 @@
             "in": "header",
             "name": "x-access-token",
             "description": "JWT Token Authentication",
-            "required": "true",
+            "required": true,
             "type": "string"
           },
           {
@@ -208,7 +271,7 @@
             "in": "header",
             "name": "x-access-token",
             "description": "JWT Token Authentication",
-            "required": "true",
+            "required": true,
             "type": "string"
           },
           {
@@ -222,7 +285,7 @@
                 }
               }
             },
-            "required": "true"
+            "required": true
           }
         ],
         "responses": {
@@ -247,7 +310,7 @@
         "tags": [
           "Accounts"
         ],
-        "summary": "Gets businesses in database",
+        "summary": "Gets accounts in database",
         "decription": "Gets all the accounts in the database or based on some query",
         "operationId": "listAccounts",
         "produces": [
@@ -285,7 +348,7 @@
         }
       }
     },
-    "/accounts/:accountNumber": {
+    "/accounts/{accountNumber}": {
       "get": {
         "tags": [
           "Accounts"
@@ -301,7 +364,7 @@
             "in": "header",
             "name": "x-access-token",
             "description": "JWT Token Authentication",
-            "required": "true",
+            "required": true,
             "type": "string"
           },
           {
@@ -348,14 +411,20 @@
             "in": "header",
             "name": "x-access-token",
             "description": "JWT Token Authentication",
-            "required": "true",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "accountNumber",
+            "in": "path",
+            "description": "account number of particular account to return",
+            "required": true,
             "type": "string"
           },
           {
             "in": "body",
             "name": "body",
             "schema": {
-              "$ref": "#/definitions/Accounts",
               "type": "object",
               "properties": {
                 "status": {
@@ -363,7 +432,7 @@
                 }
               }
             },
-            "required": "true"
+            "required": true
           }
         ],
         "responses": {
@@ -378,6 +447,9 @@
           },
           "403": {
             "description": "Forbidden Access"
+          },
+          "404": {
+            "description": "Account not found"
           },
           "500": {
             "description": "Server error"
@@ -399,7 +471,7 @@
             "in": "header",
             "name": "x-access-token",
             "description": "JWT Token Authentication",
-            "required": "true",
+            "required": true,
             "type": "string"
           },
           {
@@ -429,7 +501,7 @@
         }
       }
     },
-    "/accounts/:accountNumber/transactions": {
+    "/accounts/{accountNumber}/transactions": {
       "get": {
         "tags": [
           "Accounts"
@@ -445,7 +517,7 @@
             "in": "header",
             "name": "x-access-token",
             "description": "JWT Token Authentication",
-            "required": "true",
+            "required": true,
             "type": "string"
           },
           {
@@ -453,7 +525,7 @@
             "in": "path",
             "description": "account number of particular account to return",
             "required": true,
-            "type": "string"
+            "type": "number"
           }
         ],
         "responses": {
@@ -475,7 +547,7 @@
         }
       }
     },
-    "/transactions/:transactionId": {
+    "/transactions/{transactionId}": {
       "get": {
         "tags": [
           "Transactions"
@@ -491,7 +563,7 @@
             "in": "header",
             "name": "x-access-token",
             "description": "JWT Token Authentication",
-            "required": "true",
+            "required": true,
             "type": "string"
           },
           {
@@ -521,7 +593,7 @@
         }
       }
     },
-    "/transactions/:accountNumber/credit": {
+    "/transactions/{accountNumber}/credit": {
       "post": {
         "tags": [
           "Transactions"
@@ -540,14 +612,14 @@
             "in": "header",
             "name": "x-access-token",
             "description": "JWT Token Authentication",
-            "required": "true",
+            "required": true,
             "type": "string"
           },
           {
             "in": "path",
             "name": "accountNumber",
             "description": "Account number of the account to be credited",
-            "required": "true",
+            "required": true,
             "type": "string"
           },
           {
@@ -561,7 +633,7 @@
                 }
               }
             },
-            "required": "true"
+            "required": true
           }
         ],
         "responses": {
@@ -577,13 +649,16 @@
           "403": {
             "description": "Forbidden Access"
           },
+          "404": {
+            "description": "Account not found"
+          },
           "500": {
             "description": "Server error"
           }
         }
       }
     },
-    "/transactions/:accountNumber/debit": {
+    "/transactions/{accountNumber}/debit": {
       "post": {
         "tags": [
           "Transactions"
@@ -602,7 +677,14 @@
             "in": "header",
             "name": "x-access-token",
             "description": "JWT Token Authentication",
-            "required": "true",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "accountNumber",
+            "description": "Account number of the account to be debited",
+            "required": true,
             "type": "string"
           },
           {
@@ -616,7 +698,7 @@
                 }
               }
             },
-            "required": "true"
+            "required": true
           }
         ],
         "responses": {
@@ -631,6 +713,9 @@
           },
           "403": {
             "description": "Forbidden Access"
+          },
+          "404": {
+            "description": "Account not found"
           },
           "500": {
             "description": "Server error"
