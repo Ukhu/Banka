@@ -201,7 +201,7 @@ describe('USER', () => {
           response.body.should.have.property('error');
           response.body.error.should.be.a('string');
           response.body.error
-            .should.equal('You can only view your own transaction history');
+            .should.equal('You can only view your own accounts');
           done();
         });
     });

@@ -141,7 +141,7 @@
             "description": "Bad request"
           },
           "401": {
-            "description": "Unauthorized request"
+            "description": "Unauthorized access"
           },
           "403": {
             "description": "Forbidden access"
@@ -236,6 +236,9 @@
         "responses": {
           "200": {
             "description": "Found user's accounts"
+          },
+          "400": {
+            "description": "Bad request"
           },
           "401": {
             "description": "Unauthorized Access"
@@ -378,6 +381,9 @@
         "responses": {
           "200": {
             "description": "Account found"
+          },
+          "400": {
+            "description": "Bad request"
           },
           "401": {
             "description": "Unauthorized Access"
@@ -532,6 +538,9 @@
           "200": {
             "description": "Found account transaction history"
           },
+          "400": {
+            "description": "Bad request"
+          },
           "401": {
             "description": "Unauthorized Access"
           },
@@ -577,6 +586,9 @@
         "responses": {
           "200": {
             "description": "Found transaction"
+          },
+          "400": {
+            "description": "Bad request"
           },
           "401": {
             "description": "Unauthorized Access"
