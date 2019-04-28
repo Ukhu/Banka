@@ -31,36 +31,34 @@
     <section id="signup" class="container">
       <div id="signup-form" class="all-form">
         <h2 class="form-title">Step 1: Register As A Banka User</h2>
-        <form>
+        <form id="sign_up">
           <div>
-            <input type="text" placeholder="First Name" pattern="[a-zA-Z]{2,15}"
+            <input id="firstName" type="text" placeholder="First Name" pattern="[a-zA-Z]{2,15}"
               title="Alphabets only. Max 15 characters" required />
           </div>
           <div>
-            <input type="text" placeholder="Last Name" pattern="[a-zA-Z]{2,15}"
+            <input id="lastName" type="text" placeholder="Last Name" pattern="[a-zA-Z]{2,15}"
               title="Alphabets only. Max 15 characters" required />
           </div>
-          <input type="email" placeholder="Email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+          <input id="email" type="email" placeholder="Email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
             title="Must follow standard email format" required />
           <div>
-            <input type="password" placeholder="Password" name="password" pattern=".{6,10}"
+            <input id="password" type="password" placeholder="Password" name="password" pattern=".{6,10}"
               title="Must be between Six(6) to Ten(10) characters" required />
           </div>
           <div>
-            <input type="password" placeholder="Confirm Password" name="password" pattern=".{6,10}"
+            <input id="confirmPassword" type="password" placeholder="Confirm Password" name="password" pattern=".{6,10}"
               title="Must be between Six(6) to Ten(10) characters" required />
           </div>
+          <button class="form-button" type="submit">Sign Up</button>
         </form>
-        <!-- <button class="form-button" type="submit">Sign Up</button> -->
-        <!-- I placed the button here so that it doesn't submit the form just yet,
-          but should rather serve as a link to the Create Account page -->
-        <a href="create_account.html"><button class="form-button">Sign Up</button></a>
+        <p id="message"></p>
       </div>
     </section>
   </main>
   <footer>
     <p>Banka, Copyright &copy; 2019</p>
   </footer>
+  <script src="./assets/js/Fetch_API/sign_up.js"></script>
 </body>
-
 </html>
