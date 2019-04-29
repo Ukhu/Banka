@@ -42,6 +42,7 @@ select {
 
 main {
   overflow: auto;
+  min-height: calc(100vh - 200px);
 }
 
 /******** HEADER *******/

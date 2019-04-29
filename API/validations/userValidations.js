@@ -28,8 +28,8 @@ export const clientValidation = () => [
     )
     .isAlpha()
     .withMessage('Firstname can only contain alphabets')
-    .isLength({ min: 2 })
-    .withMessage('Firstname must be at least 2 characters')
+    .isLength({ min: 2, max: 15 })
+    .withMessage('Firstname must be at least 2 characters, and maximum 15')
     .blacklist(' ')
     .customSanitizer(value => capitaliseFirstLetter(value)),
   check('lastName')
@@ -41,8 +41,8 @@ export const clientValidation = () => [
     )
     .isAlpha()
     .withMessage('Lastname can only contain alphabets')
-    .isLength({ min: 2 })
-    .withMessage('Lastname must be at least 2 characters')
+    .isLength({ min: 2, max: 15 })
+    .withMessage('Lastname must be at least 2 characters, and maximum 15')
     .blacklist(' ')
     .customSanitizer(value => capitaliseFirstLetter(value)),
   check('password')
@@ -52,7 +52,7 @@ export const clientValidation = () => [
     .withMessage(
       'Lastname cannot be blank',
     )
-    .isLength({ min: 6 })
+    .isLength({ min: 6, max: 128 })
     .withMessage('Password must be at least 6 characters')
     .blacklist(' '),
 ];
@@ -84,8 +84,8 @@ export const staffValidation = () => [
     )
     .isAlpha()
     .withMessage('Firstname can only contain alphabets')
-    .isLength({ min: 2 })
-    .withMessage('Firstname must be at least 2 characters')
+    .isLength({ min: 2, max: 15 })
+    .withMessage('Firstname must be at least 2 characters, and maximum 15')
     .blacklist(' ')
     .customSanitizer(value => capitaliseFirstLetter(value)),
   check('lastName')
@@ -97,8 +97,8 @@ export const staffValidation = () => [
     )
     .isAlpha()
     .withMessage('Lastname can only contain alphabets')
-    .isLength({ min: 2 })
-    .withMessage('Lastname must be at least 2 characters')
+    .isLength({ min: 2, max: 15 })
+    .withMessage('Lastname must be at least 2 characters, and maximum 15')
     .blacklist(' ')
     .customSanitizer(value => capitaliseFirstLetter(value)),
   check('password')
@@ -108,7 +108,7 @@ export const staffValidation = () => [
     .withMessage(
       'Lastname cannot be blank',
     )
-    .isLength({ min: 6 })
+    .isLength({ min: 6, max: 128 })
     .withMessage('Password must be at least 6 characters')
     .blacklist(' '),
   check('isAdmin')

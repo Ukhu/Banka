@@ -77,6 +77,11 @@ Download Postman to interact with the endpoints below
       <th>ACTION</th>
   </tr>
   <tr>
+      <td>GET</td>
+      <td>/api-docs</td>
+      <td>View API Documentation</td>
+  </tr>
+  <tr>
       <td>POST</td>
       <td>/api/v1/auth/signup</td>
       <td>Create user account</td>
