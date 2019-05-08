@@ -22,7 +22,7 @@ const transactionValidation = () => [
     .isEmpty({ ignore_whitespace: true })
     .withMessage('Amount cannot be blank')
     .isFloat({ min: 0 })
-    .withMessage('Amount must be a valid number')
+    .withMessage('Amount can only be a positive number')
     .blacklist(' '),
 ];
 

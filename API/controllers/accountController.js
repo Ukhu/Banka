@@ -1,6 +1,8 @@
 import users from '../models/user';
 import accounts from '../models/account';
 import { handleNewAccount } from '../helpers/handleNewEntity';
+import { formatOutgoingCursor, formatIncomingCursor }
+  from '../helpers/formatCursor';
 
 /**
  * @class AccountController
@@ -330,6 +332,7 @@ export default class AccountController {
 
   static transactionHistory(request, response) {
     const { accountNumber } = request.params;
+    const { after } = request.query;
 
     const accountQuery = `
       SELECT account_number FROM accounts
@@ -369,15 +372,37 @@ export default class AccountController {
 
                   const [account] = accountResponse.rows;
 
-                  const transactionQuery = `
+                  let transactionQuery;
+                  let arrayValues = [];
+
+                  if (after) {
+                    transactionQuery = `
                     SELECT id, created_on, type, account_number,
                     amount, old_balance, new_balance
                     FROM transactions
-                    WHERE account_number=$1;
+                    WHERE account_number=$1
+                    AND created_on < $2
+                    ORDER BY created_on DESC
+                    LIMIT 10;
                   `;
 
+                    arrayValues = [account.account_number,
+                      formatIncomingCursor(after)];
+                  } else {
+                    transactionQuery = `
+                    SELECT id, created_on, type, account_number,
+                    amount, old_balance, new_balance
+                    FROM transactions
+                    WHERE account_number=$1
+                    ORDER BY created_on DESC
+                    LIMIT 10;
+                  `;
+
+                    arrayValues = [account.account_number];
+                  }
+
                   return accounts.query(transactionQuery,
-                    [account.account_number])
+                    [...arrayValues])
                     .then((transactionResponse) => {
                       const formattedRows = transactionResponse.rows
                         .map(transactions => ({
@@ -390,9 +415,15 @@ export default class AccountController {
                           newBalance: parseFloat(transactions.new_balance),
                         }));
 
+                      const lastIndex = formattedRows.length - 1;
 
                       response.status(200).json({
                         status: 200,
+                        cursor: {
+                          after: formatOutgoingCursor(
+                            transactionResponse.rows[lastIndex].created_on,
+                          ),
+                        },
                         data: formattedRows,
                       });
                     });

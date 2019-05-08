@@ -1,7 +1,7 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 15px;
-  line-height: 1.5;
+  /* line-height: 1.5; */
   padding: 0;
   margin: 0;
   background-color: #e8ebec;
@@ -42,14 +42,14 @@ select {
 
 main {
   overflow: auto;
-  min-height: calc(100vh - 200px);
+  min-height: calc(100vh - 180px);
 }
 
 /******** HEADER *******/
 
 header {
   background: #013144;
-  height: 100px;
+  height: 80px;
 }
 
 #header-title {
@@ -63,7 +63,7 @@ header {
 
 #header-title h1 {
   margin-bottom: 0;
-  line-height: 100px;
+  line-height: 80px;
   text-decoration: none;
   text-transform: uppercase;
   color: #e8ebec;
@@ -73,7 +73,7 @@ header {
 
 #header-links {
   float: right;
-  line-height: 100px;
+  line-height: 80px;
 }
 
 .unused-link {
@@ -126,7 +126,7 @@ header {
 
 #homepage {
   width: 100%;
-  height: calc(100vh - 200px);
+  height: calc(100vh - 180px);
   background: url("../img/banking.png");
   background-repeat: no-repeat;
   background-position: center;
@@ -839,7 +839,7 @@ footer p {
   }
 
   header #header-title h1 {
-    line-height: 50px;
+    line-height: 40px;
     text-decoration: none;
     text-transform: uppercase;
     color: #e8ebec;
@@ -850,7 +850,7 @@ footer p {
 
   header #header-links {
     float: none;
-    line-height: 40px;
+    line-height: 30px;
     text-align: center;
   }
 

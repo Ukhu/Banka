@@ -31,18 +31,18 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 // Nodemailer Transporter
-const transporter = nodemailer.createTransport({
-  service: process.env.NODE_MAILER_SERVICE,
-  auth: {
-    user: process.env.NODE_MAILER_EMAIL,
-    pass: process.env.NODE_MAILER_PASSWORD,
-  },
-});
+// const transporter = nodemailer.createTransport({
+//   service: process.env.NODE_MAILER_SERVICE,
+//   auth: {
+//     user: process.env.NODE_MAILER_EMAIL,
+//     pass: process.env.NODE_MAILER_PASSWORD,
+//   },
+// });
 
-app.use((request, response, next) => {
-  request.transporter = transporter;
-  next();
-});
+// app.use((request, response, next) => {
+//   request.transporter = transporter;
+//   next();
+// });
 
 // API routes
 app.get('/', (request, response) => {
