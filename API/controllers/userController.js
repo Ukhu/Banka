@@ -177,7 +177,7 @@ export default class UserController {
               if (userEmail !== request.decoded.email && type === 'client') {
                 response.status(403).json({
                   status: 403,
-                  error: 'You can only view your own transaction history',
+                  error: 'You can only view your own accounts',
                 });
                 return;
               }

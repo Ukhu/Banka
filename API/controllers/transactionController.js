@@ -1,7 +1,7 @@
 import users from '../models/user';
 import accounts from '../models/account';
 import { handleNewTransaction } from '../helpers/handleNewEntity';
-import sendNotification from '../helpers/sendNotification';
+// import sendNotification from '../helpers/sendNotification';
 import transactions from '../models/transaction';
 
 /**
@@ -65,8 +65,8 @@ export default class TransactionController {
                 .then((userResponse) => {
                   const { email } = userResponse.rows[0];
 
-                  sendNotification(transporter, transactionResponse.rows[0],
-                    email, 'credit');
+                  // sendNotification(transporter, transactionResponse.rows[0],
+                  //   email, 'credit');
                   handleNewTransaction(response, transactionResponse.rows[0]);
                 });
             });
@@ -146,8 +146,8 @@ export default class TransactionController {
                   .then((userResponse) => {
                     const { email } = userResponse.rows[0];
 
-                    sendNotification(transporter, transactionResponse.rows[0],
-                      email, 'debit');
+                    // sendNotification(transporter, transactionResponse.rows[0],
+                    //   email, 'debit');
                     handleNewTransaction(response, transactionResponse.rows[0]);
                   });
               });
