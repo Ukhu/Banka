@@ -201,6 +201,16 @@ header {
   max-width: 700px;
 } */
 
+#message {
+  display: none;
+  background-color: #f84e4e;
+  color: #e8ebec;
+  text-align: center;
+  line-height: 180%;
+  margin: 10px 0 0 0;
+  min-height: 30px;
+}
+
 #signup-form form {
   /* margin-bottom: 20px; */
   margin-top: 15px;

@@ -50,7 +50,7 @@ export const clientValidation = () => [
     .not()
     .isEmpty({ ignore_whitespace: true })
     .withMessage(
-      'Lastname cannot be blank',
+      'Password cannot be blank',
     )
     .isLength({ min: 6, max: 128 })
     .withMessage('Password must be at least 6 characters')
@@ -106,7 +106,7 @@ export const staffValidation = () => [
     .not()
     .isEmpty({ ignore_whitespace: true })
     .withMessage(
-      'Lastname cannot be blank',
+      'Password cannot be blank',
     )
     .isLength({ min: 6, max: 128 })
     .withMessage('Password must be at least 6 characters')
