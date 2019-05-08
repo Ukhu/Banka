@@ -4,8 +4,6 @@ const messageDisplay = document.getElementById('message');
 
 signupButton.onsubmit = (e) => {
   e.preventDefault();
-  console.log('Hi I\'m working');
-
   const firstname = document.getElementById('firstName');
   const lastname = document.getElementById('lastName');
   const email = document.getElementById('email');
@@ -20,7 +18,7 @@ signupButton.onsubmit = (e) => {
       messageDisplay.style.display = 'none';
     }, 5000);
   } else {
-    fetch('https://osaukhu-banka.herokuapp.com/api/v1/auth/signup', {
+    fetch('http://localhost:3000/api/v1/auth/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -31,16 +29,21 @@ signupButton.onsubmit = (e) => {
         email: email.value,
         password: password.value,
       }),
-    }).then(res => res.json())
+    }).then(response => response.json())
       .then((data) => {
-        if (data.data.token) {
+        if (data.data) {
+          window.sessionStorage.token = data.data.token;
           window.location.assign(
             'file:///C:/Users/uk1/Desktop/PROJECTS/Banka/UI/create_account.html',
           );
         } else {
-          console.log(data);
+          messageDisplay.textContent = data.error;
+          messageDisplay.style.display = 'block';
+
+          setTimeout(() => {
+            messageDisplay.style.display = 'none';
+          }, 5000);
         }
-      })
-      .catch(err => console.log(err));
+      });
   }
 };
