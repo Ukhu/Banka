@@ -187,7 +187,7 @@ describe('AUTHENTICATION', () => {
           response.body.should.be.a('object');
           response.body.should.have.property('data');
           response.body.data[0].should.have
-            .keys('token', 'id', 'firstName', 'email', 'lastName');
+            .keys('token', 'id', 'firstName', 'email', 'lastName', 'type', 'isAdmin');
           done();
         });
     });

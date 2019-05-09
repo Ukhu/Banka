@@ -42,6 +42,8 @@ const handlePasswordComparison = (response, accountOwner,
               firstName: accountOwner.first_name,
               lastName: accountOwner.last_name,
               email: accountOwner.email,
+              type: accountOwner.type,
+              isAdmin: accountOwner.isadmin,
             }],
           },
         );

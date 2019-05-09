@@ -31,31 +31,25 @@
     <section id="login" class="container">
       <div id="login-form" class="all-form">
         <h2>Sign In</h2>
-        <form>
+        <form id="sign-in">
           <div>
-            <input type="email" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+            <input id="email" type="email" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
               title="Must follow standard email format" required />
           </div>
           <div>
-            <input type="password" placeholder="Password" pattern=".{6,10}"
+            <input id="password" type="password" placeholder="Password" pattern=".{6,10}"
               title="Must be between Six(6) to Ten(10) characters" required />
           </div>
+          <button class="form-button">Login</button>
         </form>
-        <!-- I placed the button here so that it doesn't submit the form just yet,
-          but should rather serve as a link to the Dashboard page -->
-        <a href="dashboard.html"><button class="form-button">Login</button></a>
-        <a href="admin_dashboard.html">
-          <p id="admin-link">Admin? Click Here!</p>
-        </a>
-        <a href="cashier_dashboard.html">
-          <p id="admin-link">Cashier? Click Here!</p>
-        </a>
+        <p id="message"></p>
       </div>
     </section>
   </main>
   <footer>
     <p>Banka, Copyright &copy; 2019</p>
   </footer>
+  <script src="./assets/js/Fetch_API/signIn.js"></script>
 </body>
 
 </html>
