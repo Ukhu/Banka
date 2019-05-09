@@ -31,7 +31,7 @@
     <section id="create-account" class="container">
       <div class="all-form">
         <h2>Step 2: Open A Bank Account</h2>
-        <form>
+        <form id="create-account-form">
           <div>
             <select name="accountType" required>
               <option disabled selected value="">Type</option>
@@ -39,16 +39,19 @@
               <option value="current">Current</option>
             </select>
           </div>
+          <button class="form-button">Open Account</button>
         </form>
+        <p id="message"></p>
         <!-- I placed the button here so that it doesn't submit the form just yet,
           but should rather serve as a link to the Dashboard page -->
-        <a href="dashboard.html"><button class="form-button">Open Account</button></a>
+        <!-- <a href="dashboard.html"><button class="form-button">Open Account</button></a> -->
       </div>
     </section>
   </main>
   <footer>
     <p>Banka, Copyright &copy; 2019</p>
   </footer>
+  <script src="./assets/js/Fetch_API/createAccount.js"></script>
 </body>
 
 </html>

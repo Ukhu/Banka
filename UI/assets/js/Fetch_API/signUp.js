@@ -1,8 +1,7 @@
-const signupButton = document.getElementById('sign_up');
-// const signupDiv = document.getElementById('signup-form');
+const signupForm = document.getElementById('sign_up');
 const messageDisplay = document.getElementById('message');
 
-signupButton.onsubmit = (e) => {
+signupForm.onsubmit = (e) => {
   e.preventDefault();
   const firstname = document.getElementById('firstName');
   const lastname = document.getElementById('lastName');
@@ -32,7 +31,7 @@ signupButton.onsubmit = (e) => {
     }).then(response => response.json())
       .then((data) => {
         if (data.data) {
-          window.sessionStorage.token = data.data.token;
+          window.sessionStorage.token = data.data[0].token;
           window.location.assign(
             'file:///C:/Users/uk1/Desktop/PROJECTS/Banka/UI/create_account.html',
           );
