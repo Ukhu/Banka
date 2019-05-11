@@ -6,6 +6,7 @@ closeButton.onclick = () => {
   transactionOverlay.style.display = 'none';
 };
 
+console.log(transactions);
 [...transactions].forEach(container => container.addEventListener('click', () => {
   transactionOverlay.style.display = 'block';
-}))
+}));

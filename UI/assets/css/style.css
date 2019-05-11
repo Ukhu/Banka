@@ -668,20 +668,20 @@ header {
   display: inline;
 }
 
-.display-full-div .acc-list-val-0 {
-  width: 15%;
+.display-full-div .acc-list-val {
+  width: 25%;
   float: left;
   text-align: center;
 }
 
 .display-full-div .acc-list-val-1 {
-  width: 20%;
+  width: 40%;
   float: left;
   text-align: center;
 }
 
-.display-full-div .acc-list-val-2 {
-  width: 50%;
+.display-full-div .acc-list-val-0 {
+  width: 10%;
   float: left;
   text-align: center;
 }

@@ -78,64 +78,55 @@ export default class AccountController {
   static getAccounts(request, response) {
     const { status } = request.query;
 
+    let query;
     if (status) {
       const accountQuery = `
-      SELECT * FROM accounts
+      SELECT accounts.created_on, accounts.account_number, accounts.owner,
+      accounts.type, accounts.status, accounts.balance,
+      users.first_name, users.last_name
+      FROM users
+      JOIN accounts
+      ON users.id = accounts.owner
       WHERE status=$1;
     `;
-
-      accounts.query(accountQuery, [status])
-        .then((accountResponse) => {
-          const formattedRows = accountResponse.rows
-            .map(account => ({
-              createdOn: account.created_on,
-              accountNumber: account.account_number,
-              owner: account.owner,
-              type: account.type,
-              status: account.status,
-              balance: parseFloat(account.balance),
-            }));
-
-          response.status(200).json({
-            status: 200,
-            data: formattedRows,
-          });
-        })
-        .catch(() => {
-          response.status(500).json({
-            status: 500,
-            error: 'Error occured!',
-          });
-        });
+      query = [accountQuery, [status]];
     } else {
       const accountQuery = `
-      SELECT * FROM accounts;
+      SELECT accounts.created_on, accounts.account_number, accounts.owner,
+      accounts.type, accounts.status, accounts.balance,
+      users.first_name, users.last_name
+      FROM users
+      JOIN accounts
+      ON users.id = accounts.owner;
     `;
-
-      accounts.query(accountQuery)
-        .then((accountResponse) => {
-          const formattedRows = accountResponse.rows
-            .map(account => ({
-              createdOn: account.created_on,
-              accountNumber: account.account_number,
-              owner: account.owner,
-              type: account.type,
-              status: account.status,
-              balance: parseFloat(account.balance),
-            }));
-
-          response.status(200).json({
-            status: 200,
-            data: formattedRows,
-          });
-        })
-        .catch(() => {
-          response.status(500).json({
-            status: 500,
-            error: 'Error occured!',
-          });
-        });
+      query = [accountQuery];
     }
+
+    accounts.query(...query)
+      .then((accountResponse) => {
+        const formattedRows = accountResponse.rows
+          .map(account => ({
+            createdOn: account.created_on,
+            accountNumber: account.account_number,
+            owner: account.owner,
+            ownerFirstName: account.first_name,
+            ownerLastName: account.last_name,
+            type: account.type,
+            status: account.status,
+            balance: account.balance,
+          }));
+
+        response.status(200).json({
+          status: 200,
+          data: formattedRows,
+        });
+      })
+      .catch(() => {
+        response.status(500).json({
+          status: 500,
+          error: 'Error occured!',
+        });
+      });
   }
 
 
