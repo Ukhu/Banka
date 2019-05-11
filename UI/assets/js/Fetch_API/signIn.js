@@ -19,7 +19,7 @@ signInForm.onsubmit = (e) => {
     .then((data) => {
       if (data.data) {
         window.sessionStorage.token = data.data[0].token;
-
+        window.sessionStorage.currentUser = JSON.stringify(data.data[0]);
         switch (data.data[0].type) {
           case 'client':
             window.location.assign(
@@ -27,7 +27,6 @@ signInForm.onsubmit = (e) => {
             );
             break;
           default:
-            console.log('hey');
             if (data.data[0].isAdmin === true) {
               window.location.assign(
                 'file:///C:/Users/uk1/Desktop/PROJECTS/Banka/UI/admin_dashboard.html',
