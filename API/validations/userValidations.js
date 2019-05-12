@@ -101,16 +101,6 @@ export const staffValidation = () => [
     .withMessage('Lastname must be at least 2 characters, and maximum 15')
     .blacklist(' ')
     .customSanitizer(value => capitaliseFirstLetter(value)),
-  check('password')
-    .exists().withMessage('Password is missing')
-    .not()
-    .isEmpty({ ignore_whitespace: true })
-    .withMessage(
-      'Password cannot be blank',
-    )
-    .isLength({ min: 6, max: 128 })
-    .withMessage('Password must be at least 6 characters')
-    .blacklist(' '),
   check('isAdmin')
     .exists()
     .withMessage('Admin status is missing')
