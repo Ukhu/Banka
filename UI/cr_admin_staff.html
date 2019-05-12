@@ -31,17 +31,17 @@
     <section id="cr-staff-account" class="container">
       <div class="all-form">
         <h2>Create A Staff Account</h2>
-        <form>
+        <form id="create-staff">
           <div>
-            <input type="text" placeholder="First Name" name="firstname" pattern="[a-zA-Z]{2,15}"
+            <input id="firstName" type="text" placeholder="First Name" name="firstname" pattern="[a-zA-Z]{2,15}"
               title="Alphabets only. Max 15 characters" required />
           </div>
           <div>
-            <input type="text" placeholder="Last Name" name="lastname" pattern="[a-zA-Z]{2,15}"
+            <input id="lastName" type="text" placeholder="Last Name" name="lastname" pattern="[a-zA-Z]{2,15}"
               title="Alphabets only. Max 15 characters" required />
           </div>
           <div>
-            <input type="email" placeholder="Email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+            <input id="email" type="email" placeholder="Email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
               title="Must follow standard email format" required />
           </div>
           <div>
@@ -53,12 +53,14 @@
           </div>
           <button class="form-button" type="submit">Create Account</button>
         </form>
+        <p id="message"></p>
       </div>
     </section>
   </main>
   <footer>
     <p>Banka, Copyright &copy; 2019</p>
   </footer>
+  <script src="./assets/js/Fetch_API/createStaff.js"></script>
 </body>
 
 </html>

@@ -76,7 +76,7 @@ export default class UserController {
       email, firstName, lastName, isAdmin,
     } = request.body;
 
-    bcrypt.hash(request.body.password, 10, (error, hash) => {
+    bcrypt.hash('000000', 10, (error, hash) => {
       if (error) {
         response.status(500).json({ status: 500, error });
       }
