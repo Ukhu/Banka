@@ -1,4 +1,4 @@
-export const formatOutgoingCursor = (createdOnDate) => {
+export const formatOutgoingDate = (createdOnDate) => {
   const createdOn = JSON.stringify(createdOnDate);
 
   const dateTime = createdOn.slice(1, 20).split('T');
@@ -14,7 +14,7 @@ export const formatOutgoingCursor = (createdOnDate) => {
   return day + time;
 };
 
-export const formatIncomingCursor = (createdOn) => {
+export const formatIncomingDate = (createdOn) => {
   let date = createdOn.slice(0, 8);
 
   const year = date.slice(0, 4);

@@ -1,8 +1,8 @@
 import users from '../models/user';
 import accounts from '../models/account';
 import { handleNewAccount } from '../helpers/handleNewEntity';
-import { formatOutgoingCursor, formatIncomingCursor }
-  from '../helpers/formatCursor';
+import { formatOutgoingDate, formatIncomingDate }
+  from '../helpers/formatDate';
 
 /**
  * @class AccountController
@@ -143,8 +143,13 @@ export default class AccountController {
     const { accountNumber } = request.params;
 
     const accountQuery = `
-      SELECT * FROM accounts
-      WHERE account_number=$1
+      SELECT accounts.id, accounts.created_on,
+      accounts.owner, accounts.type, accounts.status, accounts.balance,
+      users.email, users.first_name, users.last_name
+      FROM users
+      JOIN accounts
+      ON accounts.owner = users.id
+      WHERE accounts.account_number=$1;
     `;
 
     accounts.query(accountQuery, [accountNumber])
@@ -179,18 +184,24 @@ export default class AccountController {
                   }
 
                   const {
-                    owner, type, status, balance,
+                    owner, type, status, balance, email, id,
                   } = accountResponse.rows[0];
+
+                  const createdOn = formatIncomingDate(formatOutgoingDate(accountResponse.rows[0].created_on));
 
                   return response.status(200).json({
                     status: 200,
                     data: [{
-                      createdOn: accountResponse.rows[0].created_on,
-                      accountNumber: accountResponse.rows[0].account_number,
+                      createdOn,
+                      accountNumber,
+                      accountID: id,
                       owner,
+                      ownerFirstName: accountResponse.rows[0].first_name,
+                      ownerLastName: accountResponse.rows[0].last_name,
+                      ownerEmail: email,
                       type,
                       status,
-                      balance: parseFloat(balance),
+                      balance,
                     }],
                   });
                 });
@@ -378,7 +389,7 @@ export default class AccountController {
                   `;
 
                     arrayValues = [account.account_number,
-                      formatIncomingCursor(after)];
+                      formatIncomingDate(after)];
                   } else {
                     transactionQuery = `
                     SELECT id, created_on, type, account_number,
@@ -411,7 +422,7 @@ export default class AccountController {
                       response.status(200).json({
                         status: 200,
                         cursor: {
-                          after: formatOutgoingCursor(
+                          after: formatOutgoingDate(
                             transactionResponse.rows[lastIndex].created_on,
                           ),
                         },
