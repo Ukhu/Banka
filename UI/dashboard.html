@@ -77,11 +77,11 @@
       <div class="details-div">
         <div class="acc-details-div">
           <p class="acc-details-title">Account Number</p>
-          <p class="acc-details-val">2002483059</p>
+          <p id="accountNumber" class="acc-details-val"> </p>
         </div>
         <div class="acc-details-div left">
           <p class="acc-details-title total-bal">Total Balance</p>
-          <p class="acc-details-val">N2,600,000.00</p>
+          <p id="accountBalance" class="acc-details-val"> </p>
         </div>
       </div>
     </section>
@@ -91,142 +91,46 @@
       <div class="details-div">
         <div class="display-full-div">
           <div class="display-half-div left-side">
-            <p><span>First Name:</span> Osaukhumwen</p>
+            <p id="firstName"> </p>
           </div>
           <div class="display-half-div right-side">
-            <p><span>Last Name:</span> Iyamuosa</p>
+            <p id="lastName"> </p>
           </div>
         </div>
 
         <div class="display-full-div">
           <div class="display-half-div left-side">
-            <p><span>Gender:</span> Male</p>
+            <p><span>Gender:</span> </p>
           </div>
           <div class="display-half-div right-side">
-            <p><span>Age:</span> 22</p>
+            <p><span>Age:</span> </p>
           </div>
         </div>
 
         <div class="display-full-div">
           <div class="display-half-div left-side">
-            <p><span>Email:</span> osaukhu.bi@gmail.com</p>
+            <p id="email"> </p>
           </div>
           <div class="display-half-div right-side">
-            <p><span>Phone Number:</span> 07068412039</p>
+            <p><span>Phone Number:</span> </p>
           </div>
         </div>
 
         <div class="display-full-div">
           <div class="display-half-div left-side">
-            <p><span>City:</span> Benin</p>
+            <p><span>City:</span> </p>
           </div>
           <div class="display-half-div right-side">
-            <p><span>State:</span> Edo</p>
+            <p><span>State:</span> </p>
           </div>
         </div>
       </div>
     </section>
-    <!-- <section id="trnsc-hstr" class="container account-details">
-      <h3 class="dashboard-section-title">Transaction History</h3>
-      <div id="transaction-history-div" class="details-div">
-        <div class="display-full-div">
-          <p class="trans-hist-title trns-details-side">date</p>
-          <p class="trans-hist-title trns-details-mid">amount</p>
-          <p class="trans-hist-title trns-details-side">type</p>
-        </div>
-        <div class="trns-hist-details">
-          <ul>
-            <a href="transaction.html">
-              <li>
-                <div class="display-full-div">
-                  <p class="trns-details-side">23 MAR 2019</p>
-                  <p class="trns-details-mid">N720,000</p>
-                  <p class="trns-details-side">CREDIT</p>
-                </div>
-              </li>
-            </a>
-            <a href="transaction.html">
-              <li>
-                <div class="display-full-div">
-                  <p class="trns-details-side">16 FEB 2019</p>
-                  <p class="trns-details-mid">N380,000</p>
-                  <p class="trns-details-side">CREDIT</p>
-                </div>
-              </li>
-            </a>
-            <a href="transaction.html">
-              <li>
-                <div class="display-full-div">
-                  <p class="trns-details-side">26 JAN 2019</p>
-                  <p class="trns-details-mid">N31,000</p>
-                  <p class="trns-details-side">DEBIT</p>
-                </div>
-              </li>
-            </a>
-            <a href="transaction.html">
-              <li>
-                <div class="display-full-div">
-                  <p class="trns-details-side">7 DEC 2018</p>
-                  <p class="trns-details-mid">N160,000</p>
-                  <p class="trns-details-side">DEBIT</p>
-                </div>
-              </li>
-            </a>
-            <a href="transaction.html">
-              <li>
-                <div class="display-full-div">
-                  <p class="trns-details-side">1 DEC 2018</p>
-                  <p class="trns-details-mid">N1,650,000</p>
-                  <p class="trns-details-side">CREDIT</p>
-                </div>
-              </li>
-            </a>
-            <a href="transaction.html">
-              <li>
-                <div class="display-full-div">
-                  <p class="trns-details-side">20 NOV 2018</p>
-                  <p class="trns-details-mid">N50,000</p>
-                  <p class="trns-details-side">CREDIT</p>
-                </div>
-              </li>
-            </a>
-            <a href="transaction.html">
-              <li>
-                <div class="display-full-div">
-                  <p class="trns-details-side">16 FEB 2019</p>
-                  <p class="trns-details-mid">N380,000</p>
-                  <p class="trns-details-side">CREDIT</p>
-                </div>
-              </li>
-            </a>
-            <a href="transaction.html">
-              <li>
-                <div class="display-full-div">
-                  <p class="trns-details-side">26 JAN 2019</p>
-                  <p class="trns-details-mid">N31,000</p>
-                  <p class="trns-details-side">DEBIT</p>
-                </div>
-              </li>
-            </a>
-            <a href="transaction.html">
-              <li>
-                <div class="display-full-div">
-                  <p class="trns-details-side">7 DEC 2018</p>
-                  <p class="trns-details-mid">N160,000</p>
-                  <p class="trns-details-side">DEBIT</p>
-                </div>
-              </li>
-            </a>
-          </ul>
-        </div>
-      </div>
-
-    </section> -->
   </main>
   <footer>
     <p>Banka, Copyright &copy; 2019</p>
   </footer>
-</body>
 <script src="./assets/js/dashboardScript.js"></script>
-
+<script src="./assets/js/Fetch_API/clientAccountDetails.js"></script>
+</body>
 </html>

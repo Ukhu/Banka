@@ -32,6 +32,7 @@ signupForm.onsubmit = (e) => {
       .then((data) => {
         if (data.data) {
           window.sessionStorage.token = data.data[0].token;
+          window.sessionStorage.currentUser = JSON.stringify(data.data[0]);
           window.location.assign(
             'file:///C:/Users/uk1/Desktop/PROJECTS/Banka/UI/create_account.html',
           );

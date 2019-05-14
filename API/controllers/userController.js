@@ -195,7 +195,7 @@ export default class UserController {
                       accountNumber: userAccounts.account_number,
                       type: userAccounts.type,
                       status: userAccounts.status,
-                      balance: parseFloat(userAccounts.balance),
+                      balance: userAccounts.balance,
                     }));
 
                   response.status(200).json({
