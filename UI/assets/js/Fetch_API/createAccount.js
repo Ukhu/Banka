@@ -16,7 +16,7 @@ createAccountForm.onsubmit = (e) => {
   }).then(response => response.json())
     .then((data) => {
       if (data.data) {
-        [window.sessionStorage.accountDetails] = data.data;
+        window.sessionStorage.accountDetails = JSON.stringify(data.data[0]);
         window.location.assign(
           'file:///C:/Users/uk1/Desktop/PROJECTS/Banka/UI/dashboard.html',
         );
