@@ -31,20 +31,21 @@
     <div id="perform-transaction-overlay">
       <div id="trans-overlay-content">
         <h3 class="modal-title">Credit or Debit Account <i id="close-modal" class="fas fa-times"></i></h3>
-        <form>
+        <form id="creditDebitForm">
           <div>
-            <select name="transactionType" required>
+            <select id="transactionType" name="transactionType" required>
               <option disabled selected value="">Transaction Type</option>
               <option value="credit">Credit</option>
               <option value="debit">Debit</option>
             </select>
           </div>
           <div>
-            <input type="text" placeholder="Amount" name="amount" pattern="[0-9]{1,10}" title="Max Ten(10) digits"
+            <input id="amount" type="text" placeholder="Amount" name="amount" pattern="[0-9]{1,10}" title="Max Ten(10) digits"
               required />
           </div>
           <button class="form-button" type="submit">Make Transaction</button>
         </form>
+        <p id="message"></p>
       </div>
       <div id="delete-account-modal">
         <p>Are you sure you want to delete this account?</p>
@@ -154,6 +155,7 @@
   </footer>
   <script src="./assets/js/bankAccountRecordCashierScript.js"></script>
   <script src="./assets/js/Fetch_API/accountDetails.js"></script>
+  <script src="./assets/js/Fetch_API/creditDebitAccount.js"></script>
 </body>
 
 </html>
