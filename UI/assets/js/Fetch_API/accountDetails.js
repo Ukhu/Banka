@@ -1,5 +1,6 @@
 const activateDeactivateButton = document.getElementById('activateDeactivateButton');
 const activateDeactivateForm = document.getElementById('activateDeactivateForm');
+const deleteAccountForm = document.getElementById('deleteAccountForm');
 const accountId = document.getElementById('accountId');
 const accountNumber = document.getElementById('accountNumber');
 const ownerId = document.getElementById('ownerId');
@@ -51,6 +52,26 @@ window.onload = () => {
       .then((data) => {
         accountStatus.innerHTML = `<span>Status:</span> ${data.data[0].status}`;
         activateDeactivateButton.textContent = (data.data[0].status === 'active') ? 'Deactivate' : 'Activate';
+      });
+  };
+
+  deleteAccountForm.onsubmit = (e) => {
+    e.preventDefault();
+    
+    fetch(`http://localhost:3000/api/v1/accounts/${window.sessionStorage.currentAccountNumber}`, {
+      method: 'DELETE',
+      headers: {
+        'x-access-token': `${window.sessionStorage.token}`,
+      },
+    }).then(response => response.json())
+      .then(() => {
+        const nextURL = (JSON.parse(window.sessionStorage.currentUser).isAdmin === true)
+          ? 'file:///C:/Users/uk1/Desktop/PROJECTS/Banka/UI/admin_dashboard.html'
+          : 'file:///C:/Users/uk1/Desktop/PROJECTS/Banka/UI/cashier_dashboard.html';
+
+        window.location.assign(
+          nextURL,
+        );
       });
   };
 };
