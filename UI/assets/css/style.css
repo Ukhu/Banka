@@ -474,6 +474,13 @@ header {
   margin-bottom: 10px;
 }
 
+#view-more {
+  text-align: center;
+  text-decoration: underline;
+  color: #013144;
+  cursor: pointer;
+}
+
 .modal-full-div {
   width: 100%;
 }
