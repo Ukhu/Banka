@@ -406,25 +406,32 @@ export default class AccountController {
                   return accounts.query(transactionQuery,
                     [...arrayValues])
                     .then((transactionResponse) => {
-                      const formattedRows = transactionResponse.rows
-                        .map(transactions => ({
-                          transactionId: transactions.id,
-                          createdOn: transactions.created_on,
-                          type: transactions.type,
-                          accountNumber: transactions.account_number,
-                          amount: parseFloat(transactions.amount),
-                          oldBalance: parseFloat(transactions.old_balance),
-                          newBalance: parseFloat(transactions.new_balance),
-                        }));
+                      let formattedRows;
+                      let afterCursor;
+                      if (transactionResponse.rows.length > 0) {
+                        formattedRows = transactionResponse.rows
+                          .map(transactions => ({
+                            transactionId: transactions.id,
+                            createdOn: formatIncomingDate(formatOutgoingDate(transactions.created_on)),
+                            type: transactions.type,
+                            accountNumber: transactions.account_number,
+                            amount: transactions.amount,
+                            oldBalance: parseFloat(transactions.old_balance),
+                            newBalance: transactions.new_balance,
+                          }));
 
-                      const lastIndex = formattedRows.length - 1;
+                        const lastIndex = formattedRows.length - 1;
+                        afterCursor = formatOutgoingDate(
+                          transactionResponse.rows[lastIndex].created_on,
+                        );
+                      } else {
+                        afterCursor = '';
+                      }
 
                       response.status(200).json({
                         status: 200,
                         cursor: {
-                          after: formatOutgoingDate(
-                            transactionResponse.rows[lastIndex].created_on,
-                          ),
+                          after: afterCursor,
                         },
                         data: formattedRows,
                       });
