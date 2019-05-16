@@ -12,6 +12,7 @@ window.onload = () => {
     },
   }).then(response => response.json())
     .then((data) => {
+      window.sessionStorage.currentAccountNumber = data.data[0].accountNumber;
       accountNumber.innerHTML = `${data.data[0].accountNumber}`;
       accountBalance.innerHTML = `N${data.data[0].balance}`;
       firstName.innerHTML = `<span>First Name:</span> ${JSON.parse(window.sessionStorage.currentUser).firstName}`;

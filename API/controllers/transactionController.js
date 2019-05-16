@@ -3,6 +3,8 @@ import accounts from '../models/account';
 import { handleNewTransaction } from '../helpers/handleNewEntity';
 // import sendNotification from '../helpers/sendNotification';
 import transactions from '../models/transaction';
+import { formatOutgoingDate, formatIncomingDate }
+  from '../helpers/formatDate';
 
 /**
  * @class TransactionController
@@ -221,7 +223,7 @@ export default class TransactionController {
                     status: 200,
                     data: [{
                       transactionId: id,
-                      createdOn: transactionResponse.rows[0].created_on,
+                      createdOn: formatIncomingDate(formatOutgoingDate(transactionResponse.rows[0].created_on)),
                       type,
                       accountNumber: transactionResponse.rows[0].account_number,
                       amount,
