@@ -3,7 +3,7 @@ const accounts = document.getElementsByClassName('account');
 
 
 window.onload = () => {
-  fetch('http://localhost:3000/api/v1/accounts', {
+  fetch('https://osaukhu-banka.herokuapp.com/api/v1/accounts', {
     headers: {
       'x-access-token': `${window.sessionStorage.token}`,
     },

@@ -16,7 +16,7 @@ createStaffForm.onsubmit = (e) => {
     isAdmin = true;
   }
 
-  fetch('http://localhost:3000/api/v1/auth/create-staff', {
+  fetch('https://osaukhu-banka.herokuapp.com/api/v1/auth/create-staff', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

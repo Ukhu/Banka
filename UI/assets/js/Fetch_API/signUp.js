@@ -17,7 +17,7 @@ signupForm.onsubmit = (e) => {
       messageDisplay.style.display = 'none';
     }, 5000);
   } else {
-    fetch('http://localhost:3000/api/v1/auth/signup', {
+    fetch('https://osaukhu-banka.herokuapp.com/api/v1/auth/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -34,7 +34,7 @@ signupForm.onsubmit = (e) => {
           window.sessionStorage.token = data.data[0].token;
           window.sessionStorage.currentUser = JSON.stringify(data.data[0]);
           window.location.assign(
-            'file:///C:/Users/uk1/Desktop/PROJECTS/Banka/UI/create_account.html',
+            'https://ukhu.github.io/Banka/UI/create_account.html',
           );
         } else {
           messageDisplay.textContent = data.error;

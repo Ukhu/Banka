@@ -6,7 +6,7 @@ signInForm.onsubmit = (e) => {
   const email = document.getElementById('email');
   const password = document.getElementById('password');
 
-  fetch('http://localhost:3000/api/v1/auth/signin', {
+  fetch('https://osaukhu-banka.herokuapp.com/api/v1/auth/signin', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -23,17 +23,17 @@ signInForm.onsubmit = (e) => {
         switch (data.data[0].type) {
           case 'client':
             window.location.assign(
-              'file:///C:/Users/uk1/Desktop/PROJECTS/Banka/UI/dashboard.html',
+              'https://ukhu.github.io/Banka/UI/dashboard.html',
             );
             break;
           default:
             if (data.data[0].isAdmin === true) {
               window.location.assign(
-                'file:///C:/Users/uk1/Desktop/PROJECTS/Banka/UI/admin_dashboard.html',
+                'https://ukhu.github.io/Banka/UI/admin_dashboard.html',
               );
             } else {
               window.location.assign(
-                'file:///C:/Users/uk1/Desktop/PROJECTS/Banka/UI/cashier_dashboard.html',
+                'https://ukhu.github.io/Banka/UI/cashier_dashboard.html',
               );
             }
             break;
