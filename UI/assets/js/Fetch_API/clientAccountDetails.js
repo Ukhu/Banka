@@ -6,7 +6,7 @@ const email = document.getElementById('email');
 
 
 window.onload = () => {
-  fetch(`http://localhost:3000/api/v1/users/${JSON.parse(window.sessionStorage.currentUser).email}/accounts`, {
+  fetch(`https://osaukhu-banka.herokuapp.com/api/v1/users/${JSON.parse(window.sessionStorage.currentUser).email}/accounts`, {
     headers: {
       'x-access-token': `${window.sessionStorage.token}`,
     },

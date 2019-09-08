@@ -4,7 +4,7 @@ const messageDisplay = document.getElementById('message');
 createAccountForm.onsubmit = (e) => {
   e.preventDefault();
   const accountType = document.querySelector('select');
-  fetch('http://localhost:3000/api/v1/accounts', {
+  fetch('https://osaukhu-banka.herokuapp.com/api/v1/accounts', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -18,7 +18,7 @@ createAccountForm.onsubmit = (e) => {
       if (data.data) {
         window.sessionStorage.accountDetails = JSON.stringify(data.data[0]);
         window.location.assign(
-          'file:///C:/Users/uk1/Desktop/PROJECTS/Banka/UI/dashboard.html',
+          'https://ukhu.github.io/Banka/UI/dashboard.html',
         );
       } else {
         messageDisplay.textContent = data.errors;

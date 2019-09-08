@@ -12,9 +12,11 @@ const firstName = document.getElementById('firstName');
 const lastName = document.getElementById('lastName');
 const email = document.getElementById('email');
 
+const URL = 'https://osaukhu-banka.herokuapp.com/api/v1';
+
 
 window.onload = () => {
-  fetch(`http://localhost:3000/api/v1/accounts/${window.sessionStorage.currentAccountNumber}`, {
+  fetch(`${URL}/accounts/${window.sessionStorage.currentAccountNumber}`, {
     headers: {
       'x-access-token': `${window.sessionStorage.token}`,
     },
@@ -39,7 +41,7 @@ window.onload = () => {
 
     const status = (activateDeactivateButton.textContent === 'Activate') ? 'active' : 'dormant';
 
-    fetch(`http://localhost:3000/api/v1/accounts/${window.sessionStorage.currentAccountNumber}`, {
+    fetch(`${URL}/accounts/${window.sessionStorage.currentAccountNumber}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -57,8 +59,8 @@ window.onload = () => {
 
   deleteAccountForm.onsubmit = (e) => {
     e.preventDefault();
-    
-    fetch(`http://localhost:3000/api/v1/accounts/${window.sessionStorage.currentAccountNumber}`, {
+
+    fetch(`${URL}/accounts/${window.sessionStorage.currentAccountNumber}`, {
       method: 'DELETE',
       headers: {
         'x-access-token': `${window.sessionStorage.token}`,
@@ -66,8 +68,8 @@ window.onload = () => {
     }).then(response => response.json())
       .then(() => {
         const nextURL = (JSON.parse(window.sessionStorage.currentUser).isAdmin === true)
-          ? 'file:///C:/Users/uk1/Desktop/PROJECTS/Banka/UI/admin_dashboard.html'
-          : 'file:///C:/Users/uk1/Desktop/PROJECTS/Banka/UI/cashier_dashboard.html';
+          ? 'https://ukhu.github.io/Banka/UI/admin_dashboard.html'
+          : 'https://ukhu.github.io/Banka/UI/cashier_dashboard.html';
 
         window.location.assign(
           nextURL,

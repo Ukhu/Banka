@@ -13,13 +13,12 @@ const newBalance = document.getElementById('newBalance');
 let afterCursor;
 
 window.onload = () => {
-  fetch(`http://localhost:3000/api/v1/accounts/${window.sessionStorage.currentAccountNumber}/transactions`, {
+  fetch(`https://osaukhu-banka.herokuapp.com/api/v1/accounts/${window.sessionStorage.currentAccountNumber}/transactions`, {
     headers: {
       'x-access-token': `${window.sessionStorage.token}`,
     },
   }).then(response => response.json())
     .then((data) => {
-      console.log(data);
       afterCursor = data.cursor.after;
 
       data.data.forEach((transaction) => {
@@ -41,7 +40,7 @@ window.onload = () => {
           transactionOverlay.style.display = 'block';
 
 
-          fetch(`http://localhost:3000/api/v1/transactions/${window.sessionStorage.transactionId}`, {
+          fetch(`https://osaukhu-banka.herokuapp.com/api/v1/transactions/${window.sessionStorage.transactionId}`, {
             headers: {
               'x-access-token': `${window.sessionStorage.token}`,
             },
@@ -63,7 +62,7 @@ window.onload = () => {
 
   viewMoreButton.onclick = () => {
     if (afterCursor) {
-      fetch(`http://localhost:3000/api/v1/accounts/${window.sessionStorage.currentAccountNumber}/transactions?after=${afterCursor}`, {
+      fetch(`https://osaukhu-banka.herokuapp.com/api/v1/accounts/${window.sessionStorage.currentAccountNumber}/transactions?after=${afterCursor}`, {
         headers: {
           'x-access-token': `${window.sessionStorage.token}`,
         },
@@ -91,7 +90,7 @@ window.onload = () => {
                 transactionOverlay.style.display = 'block';
 
 
-                fetch(`http://localhost:3000/api/v1/transactions/${window.sessionStorage.transactionId}`, {
+                fetch(`https://osaukhu-banka.herokuapp.com/api/v1/transactions/${window.sessionStorage.transactionId}`, {
                   headers: {
                     'x-access-token': `${window.sessionStorage.token}`,
                   },

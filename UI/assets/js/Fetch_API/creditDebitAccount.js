@@ -9,7 +9,7 @@ const { currentAccountNumber } = window.sessionStorage;
 
 creditDebitForm.onsubmit = (e) => {
   e.preventDefault();
-  fetch(`http://localhost:3000/api/v1/transactions/${currentAccountNumber}/${transactionType.value}`, {
+  fetch(`https://osaukhu-banka.herokuapp.com/api/v1/transactions/${currentAccountNumber}/${transactionType.value}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
